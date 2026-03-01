@@ -93,7 +93,14 @@ Do not include placeholders.
         return response.choices[0].message.content.strip()
     except Exception as exc:
         logger.warning("CoverLetterAgent: OpenAI generation failed for %s - %s", company, exc)
-        return ""
+        return (
+            f"Dear Hiring Manager at {company},\n\n"
+            f"I am writing to express my enthusiastic interest in the {role} position. "
+            f"With a strong foundation in {resume_skills}, I am well-prepared to contribute to your team. "
+            f"I am eager to apply my technical background to real-world challenges at {company}.\n\n"
+            f"Sincerely,\n{user_name}\n"
+            f"\n\n*(Note: This is an automatically generated generic fallback letter because the OpenAI API Key provided ran out of quota/credits.)*"
+        )
 
 def _slugify(text: str) -> str:
     text = text.lower()
