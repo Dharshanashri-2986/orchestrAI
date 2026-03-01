@@ -114,7 +114,7 @@ if __name__ == "__main__":
 
     # Allow running: python scheduler.py [--now]
     sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
-    from backend.agents.career_agent import run_career_agent  # noqa: E402
+    from backend.agents.execution_agent import run_orchestrai_pipeline  # noqa: E402
 
     logging.basicConfig(
         level=logging.INFO,
@@ -122,6 +122,6 @@ if __name__ == "__main__":
     )
 
     if len(sys.argv) > 1 and sys.argv[1] == "--now":
-        run_once_now(run_career_agent)
+        run_once_now(run_orchestrai_pipeline)
     else:
-        schedule_daily_internship_email(run_career_agent)
+        schedule_daily_internship_email(run_orchestrai_pipeline)

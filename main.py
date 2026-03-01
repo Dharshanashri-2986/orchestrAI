@@ -46,15 +46,8 @@ def _check_env() -> None:
 
 # ── Entry point ───────────────────────────────────────────────────────────────
 def run_full_pipeline():
-    from backend.agents.career_agent import run_career_agent
-    from backend.agents.skill_agent import run_skill_agent
-    from backend.agents.execution_agent import run_execution_agent
-    
-    logger.info("Starting Full OrchestrAI Pipeline...")
-    run_career_agent()
-    run_skill_agent()
-    run_execution_agent()
-    logger.info("Pipeline Execution Complete!")
+    from backend.agents.execution_agent import run_orchestrai_pipeline
+    run_orchestrai_pipeline()
 
 
 if __name__ == "__main__":
