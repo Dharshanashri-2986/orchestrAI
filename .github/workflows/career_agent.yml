@@ -14,8 +14,8 @@ jobs:
 
     env:
       GITHUB_TOKEN:    ${{ secrets.GH_PAT }}
-      GITHUB_USERNAME: ${{ secrets.GITHUB_USERNAME }}
-      GITHUB_REPO:     ${{ secrets.GITHUB_REPO }}
+      GITHUB_USERNAME: ${{ secrets.GH_USERNAME }}
+      GITHUB_REPO:     ${{ secrets.GH_REPO }}
       GITHUB_BRANCH:   main
       OPENAI_API_KEY:  ${{ secrets.OPENAI_API_KEY }}
       EMAIL_USER:      ${{ secrets.EMAIL_USER }}
