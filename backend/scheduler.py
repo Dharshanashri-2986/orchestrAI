@@ -51,7 +51,7 @@ def _job_listener(event: JobExecutionEvent) -> None:
 # Public API
 # ──────────────────────────────────────────────
 
-def schedule_daily_internship_email(job_func, hour: int = 10, minute: int = 15) -> None:
+def schedule_daily_internship_email(job_func, hour: int = 10, minute: int = 45) -> None:
     """
     Schedule `job_func` to run every day at `hour`:`minute` IST.
 
@@ -62,7 +62,7 @@ def schedule_daily_internship_email(job_func, hour: int = 10, minute: int = 15) 
     hour : int
         Hour in IST (24-hour format). Default 10.
     minute : int
-        Minute in IST. Default 15.
+        Minute in IST. Default 45.
     """
     scheduler = _build_scheduler()
     scheduler.add_listener(_job_listener, EVENT_JOB_EXECUTED | EVENT_JOB_ERROR)
