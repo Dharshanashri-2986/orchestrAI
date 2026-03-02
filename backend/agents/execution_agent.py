@@ -16,6 +16,7 @@ load_dotenv()
 from backend.agents.career_agent import run_career_agent
 from backend.agents.skill_agent import run_skill_agent
 from backend.agents.cover_letter_agent import run_cover_letter_agent
+from backend.agents.practice_agent import run_practice_agent
 from backend.agents.resume_optimization_agent import run_resume_optimization_agent
 from backend.agents.auto_apply_agent import run_auto_apply_agent
 from backend.agents.opportunity_matching_agent import run_opportunity_matching_agent
@@ -79,6 +80,9 @@ def run_orchestrai_pipeline():
     # STEP 2.5: Generate cover letters
     run_cover_letter_agent()
 
+    # STEP 2.55: Generate interview practice portals
+    run_practice_agent()
+
     # STEP 2.6: Optimize Resumes
     run_resume_optimization_agent()
 
@@ -95,6 +99,7 @@ def run_orchestrai_pipeline():
     optimization_data = read_yaml_from_github("database/resume_optimizations.yaml")
     apply_packages_data = read_yaml_from_github("database/application_packages.yaml")
     scores_data = read_yaml_from_github("database/opportunity_scores.yaml")
+    practice_data = read_yaml_from_github("database/practice_sessions.yaml")
 
     jobs = jobs_data.get("jobs", []) if isinstance(jobs_data, dict) else []
     skill_analysis = skill_gap_data.get("job_skill_analysis", []) if isinstance(skill_gap_data, dict) else []
@@ -127,6 +132,12 @@ def run_orchestrai_pipeline():
     score_lookup = {
         (item.get("company", ""), item.get("role", "")): item
         for item in scores_list if isinstance(item, dict)
+    }
+
+    practice_list = practice_data if isinstance(practice_data, list) else []
+    practice_lookup = {
+        (item.get("company", ""), item.get("role", "")): item.get("practice_link", "")
+        for item in practice_list if isinstance(item, dict)
     }
 
     # STEP 5: Generate HTML table rows
@@ -178,6 +189,12 @@ def run_orchestrai_pipeline():
         <span style="font-size:11px; background:#f1f3f4; padding:2px 4px; border-radius:3px;">{priority}</span>
         """
 
+        practice_link = practice_lookup.get(key, "")
+        if practice_link:
+            practice_html = f'<a href="{practice_link}" style="background:#1976d2; color:white; padding:8px 14px; border-radius:6px; text-decoration:none; display:inline-block; font-weight:600;">Start Practice</a>'
+        else:
+            practice_html = '<span style="color:#999;">Not Generated</span>'
+
         rows += f"""
         <tr>
             <td>{job.get('company', '')}</td>
@@ -189,6 +206,7 @@ def run_orchestrai_pipeline():
             <td>{missing_skills}</td>
             <td>{roadmap}</td>
             <td>{cl_html}<br><br>{opt_html}</td>
+            <td>{practice_html}</td>
         </tr>
         """
 
@@ -209,6 +227,7 @@ def run_orchestrai_pipeline():
                 <th>Skill Gap</th>
                 <th>Learning Roadmap</th>
                 <th>Generated Assets</th>
+                <th>Practice Time</th>
             </tr>
             {rows}
         </table>
