@@ -145,29 +145,24 @@ def load_resume_text() -> str:
 
 def generate_interview_qa(company: str, role: str, skills: list[str],
                           resume_text: str, user_skills: list[str]) -> list[dict]:
-    """Generate top 10 interview questions + personalized answers."""
+    """Generate 10 real, role-specific interview Q&A pairs using Gemini."""
     system = (
-        "You are an expert technical interviewer. Generate exactly 10 interview "
-        "questions specific to the role given. For each question, produce a "
-        "personalized answer using the candidate's skills and projects. "
-        "Return as numbered Q&A pairs."
+        "You are a senior technical interviewer at a top tech company. "
+        "Generate exactly 10 highly specific interview questions for the given role and company. "
+        "Each answer must be personalized using the candidate's actual skills and resume content. "
+        "Make answers detailed, confident, and interview-ready — not generic. "
+        "Format strictly as:\nQ1: <question>\nA1: <answer>\nQ2: <question>\nA2: <answer> (and so on)"
     )
     prompt = (
         f"Company: {company}\nRole: {role}\n"
         f"Required Skills: {', '.join(skills)}\n"
         f"Candidate Skills: {', '.join(user_skills)}\n"
-        f"Resume Excerpt:\n{resume_text[:1500]}\n\n"
-        "Generate 10 Q&A pairs. Format:\nQ1: ...\nA1: ...\nQ2: ...\nA2: ..."
+        f"Resume Excerpt (use this for personalized answers):\n{resume_text[:2000]}\n\n"
+        "Generate 10 interview Q&A pairs. Each answer should be 2-4 sentences, specific, and confident."
     )
-    raw = _ai_chat(system, prompt, max_tokens=1500)
+    raw = _ai_chat(system, prompt, max_tokens=2000)
     if not raw:
-        # Fallback
-        return [
-            {"question": f"Tell me about your experience with {s}.",
-             "answer": f"I have worked with {s} in multiple projects and am eager to deepen my expertise."}
-            for s in (skills[:10] if skills else ["this role"])
-        ]
-    # Parse Q&A
+        raise RuntimeError(f"Gemini failed to generate interview Q&A for {company} - {role}")
     pairs = []
     lines = raw.split("\n")
     q, a = "", ""
@@ -182,11 +177,13 @@ def generate_interview_qa(company: str, role: str, skills: list[str],
             a = re.sub(r'^A\d+[:.\s]*', '', line).strip()
         elif a:
             a += " " + line
-        elif q:
+        elif q and line:
             q += " " + line
     if q and a:
         pairs.append({"question": q, "answer": a})
-    return pairs if pairs else [{"question": "Describe your background.", "answer": "I am an aspiring professional."}]
+    if not pairs:
+        raise RuntimeError(f"Gemini returned unparseable Q&A for {company} - {role}")
+    return pairs
 
 
 # ==============================================================================
@@ -194,27 +191,33 @@ def generate_interview_qa(company: str, role: str, skills: list[str],
 # ==============================================================================
 
 def generate_hr_introduction(user: dict, company: str, role: str, resume_text: str) -> str:
+    """Generate a real personalized HR self-introduction using Gemini."""
     name = user.get("name", "Applicant")
     skills = ", ".join(user.get("resume_skills", []))
     goals = ", ".join(user.get("career_goals", []))
+    education = user.get("education", "")
+    projects = user.get("projects", [])
+    projects_str = ", ".join(projects) if projects else ""
 
     system = (
-        "You are a career coach. Generate a polished, professional self-introduction "
-        "for a job interview. It must feel natural and confident."
+        "You are an expert career coach. Write a polished, natural, confident self-introduction "
+        "for a job interview HR round. It must sound like a real person speaking — "
+        "specific, warm, and professional. Mention real skills and career direction. "
+        "Length: exactly 80-100 words. No bullet points, just fluent speech."
     )
     prompt = (
-        f"Candidate: {name}\nSkills: {skills}\nCareer Goals: {goals}\n"
+        f"Candidate Name: {name}\n"
+        f"Education: {education}\n"
+        f"Technical Skills: {skills}\n"
+        f"Projects: {projects_str}\n"
+        f"Career Goals: {goals}\n"
         f"Applying for: {role} at {company}\n"
-        f"Resume Excerpt:\n{resume_text[:800]}\n\n"
-        "Generate a 100-word self-introduction suitable for HR round."
+        f"Resume Context:\n{resume_text[:1000]}\n\n"
+        "Write a compelling 80-100 word interview self-introduction in first person."
     )
-    result = _ai_chat(system, prompt, max_tokens=300)
+    result = _ai_chat(system, prompt, max_tokens=400)
     if not result:
-        result = (
-            f"Hello, my name is {name}. I am a passionate student with experience in "
-            f"{skills}. My career goals include {goals}. I am excited to apply for the "
-            f"{role} position at {company} and contribute to the team."
-        )
+        raise RuntimeError(f"Gemini failed to generate HR introduction for {name} at {company}")
     return result
 
 
@@ -260,78 +263,98 @@ def translate_tamil_to_interview_english(user_input: str) -> dict:
     }
 
 
-def _generate_sample_translations() -> list[dict]:
-    """Return a few pre-built Tamil → English examples for the HTML page."""
-    samples = [
-        {
-            "tamil": "nan enna intro kudukurathu",
-            "professional": "Hello, allow me to introduce myself. My name is Swathiga and I am an aspiring data professional.",
-            "practice": "My name is Swathiga. I am a data science student.",
-        },
-        {
-            "tamil": "enakku Python theriyum",
-            "professional": "I possess strong proficiency in Python programming and have applied it extensively in data analysis and machine learning projects.",
-            "practice": "I know Python. I use it for projects.",
-        },
-        {
-            "tamil": "nan oru project panniruken",
-            "professional": "I have successfully completed a project that demonstrates my technical capabilities and problem-solving skills.",
-            "practice": "I did a project. It was about building an AI model.",
-        },
-    ]
-    return samples
+def _generate_ai_translations(role: str, company: str, user_skills: list[str]) -> list[dict]:
+    """
+    Use Gemini to generate 5 real Tamil interview phrases + both English versions,
+    tailored to the specific role and company context.
+    """
+    system = (
+        "You are a Tamil-English bilingual interview coach. "
+        "Generate 5 real Tamil interview phrases a candidate might naturally say, "
+        "then provide two English versions for each: "
+        "1) Professional English suitable for a formal job interview "
+        "2) Simple practice version for beginners. "
+        "Make the Tamil phrases realistic and role-specific. "
+        "Format strictly as:\n"
+        "TAMIL: <tamil phrase>\n"
+        "PROFESSIONAL: <professional english>\n"
+        "PRACTICE: <simple english>\n"
+        "(repeat for all 5)"
+    )
+    prompt = (
+        f"Role: {role} at {company}\n"
+        f"Key Skills: {', '.join(user_skills[:6])}\n\n"
+        "Generate 5 Tamil interview phrases with professional and simple English translations."
+    )
+    raw = _ai_chat(system, prompt, max_tokens=1000)
+    if not raw:
+        raise RuntimeError("Gemini failed to generate Tamil translations")
+
+    translations = []
+    current = {}
+    for line in raw.split("\n"):
+        line = line.strip()
+        if line.upper().startswith("TAMIL:"):
+            if current.get("tamil") and current.get("professional"):
+                translations.append(current)
+            current = {"tamil": line.split(":", 1)[1].strip()}
+        elif line.upper().startswith("PROFESSIONAL:"):
+            current["professional"] = line.split(":", 1)[1].strip()
+        elif line.upper().startswith("PRACTICE:"):
+            current["practice"] = line.split(":", 1)[1].strip()
+    if current.get("tamil") and current.get("professional"):
+        translations.append(current)
+
+    if not translations:
+        raise RuntimeError("Gemini returned unparseable translations")
+    return translations
 
 
 # ==============================================================================
 # FEATURE 4 — English Speaking Practice
 # ==============================================================================
 
-def generate_speaking_practice(role: str, skills: list[str]) -> list[dict]:
+def generate_speaking_practice(role: str, company: str, skills: list[str], user_skills: list[str]) -> list[dict]:
+    """Generate real, role-specific English speaking practice sentences and tips using Gemini."""
     system = (
-        "You are an English speaking coach for job interviews. "
-        "Generate 8 practice sentences a candidate should rehearse. "
-        "Also provide 5 confidence tips. "
-        "Format:\nPractice Sentences:\n1. ...\n...\nConfidence Tips:\n1. ..."
+        "You are an expert English speaking coach for technical job interviews. "
+        "Generate exactly 8 practice sentences tailored to the specific role and company. "
+        "Each sentence should sound natural and be something a candidate would actually say. "
+        "Then generate 5 actionable confidence tips specific to this role. "
+        "Format strictly as:\n"
+        "PRACTICE SENTENCES:\n1. ...\n2. ...\n(up to 8)\n\n"
+        "CONFIDENCE TIPS:\n1. ...\n2. ...\n(up to 5)"
     )
-    prompt = f"Role: {role}\nKey Skills: {', '.join(skills)}"
-    raw = _ai_chat(system, prompt, max_tokens=600)
+    prompt = (
+        f"Role: {role} at {company}\n"
+        f"Required Skills: {', '.join(skills)}\n"
+        f"Candidate Skills: {', '.join(user_skills)}\n\n"
+        "Generate 8 practice sentences and 5 confidence tips specific to this role."
+    )
+    raw = _ai_chat(system, prompt, max_tokens=800)
+    if not raw:
+        raise RuntimeError(f"Gemini failed to generate speaking practice for {role} at {company}")
 
-    sentences = []
-    tips = []
-    if raw:
-        mode = None
-        for line in raw.split("\n"):
-            line = line.strip()
-            if "practice" in line.lower() and "sentence" in line.lower():
-                mode = "sentences"
-                continue
-            if "confidence" in line.lower() and "tip" in line.lower():
-                mode = "tips"
-                continue
-            cleaned = re.sub(r'^\d+[.)]\s*', '', line).strip()
-            if cleaned:
-                if mode == "sentences":
-                    sentences.append(cleaned)
-                elif mode == "tips":
-                    tips.append(cleaned)
+    sentences, tips = [], []
+    mode = None
+    for line in raw.split("\n"):
+        line = line.strip()
+        if "PRACTICE SENTENCES" in line.upper():
+            mode = "sentences"
+            continue
+        if "CONFIDENCE TIPS" in line.upper():
+            mode = "tips"
+            continue
+        cleaned = re.sub(r'^\d+[.)\-]\s*', '', line).strip()
+        if cleaned:
+            if mode == "sentences":
+                sentences.append(cleaned)
+            elif mode == "tips":
+                tips.append(cleaned)
 
-    if not sentences:
-        sentences = [
-            f"I am passionate about building scalable {role.lower()} solutions.",
-            "I have hands-on experience with Python, SQL, and data analysis.",
-            "I thrive in collaborative environments and enjoy solving complex problems.",
-            "My strongest skill is my ability to learn new technologies quickly.",
-            "I am eager to apply my academic knowledge in a real-world setting.",
-        ]
-    if not tips:
-        tips = [
-            "Speak slowly and clearly.",
-            "Maintain eye contact with the interviewer.",
-            "Use the STAR method for behavioral questions.",
-            "Take a breath before answering complex questions.",
-            "Practice in front of a mirror daily.",
-        ]
-    return [{"sentences": sentences, "tips": tips}]
+    if not sentences or not tips:
+        raise RuntimeError(f"Gemini returned unparseable speaking practice for {role}")
+    return [{"sentences": sentences[:8], "tips": tips[:5]}]
 
 
 # ==============================================================================
@@ -374,37 +397,46 @@ def generate_coding_sheets(role: str, skills: list[str]) -> list[dict]:
 # FEATURE 6 — Project Recommendations
 # ==============================================================================
 
-def generate_project_recommendations(missing_skills: list[str], role: str) -> list[dict]:
+def generate_project_recommendations(missing_skills: list[str], role: str, company: str) -> list[dict]:
+    """Generate real, specific project ideas for each missing skill using Gemini."""
     if not missing_skills:
-        return [{"skill": "General", "project": f"Build a portfolio project relevant to {role}."}]
+        system = "You are a technical mentor. Suggest 2 portfolio projects for a strong candidate."
+        prompt = f"Role: {role} at {company}. The candidate has all required skills. Suggest 2 impressive portfolio projects."
+        raw = _ai_chat(system, prompt, max_tokens=400)
+        if not raw:
+            raise RuntimeError("Gemini failed to generate project recommendations")
+        return [{"skill": "Portfolio Enhancement", "project": raw.strip()}]
 
     system = (
-        "You are a technical mentor. For each missing skill, suggest one concrete "
-        "project idea that a student can build to learn that skill. "
-        "Format: Skill: ...\nProject: ..."
+        "You are a senior technical mentor. For each missing skill, suggest ONE concrete, "
+        "buildable project idea that directly demonstrates that skill. "
+        "The project must be specific, realistic, and impressive for a portfolio. "
+        "Include tech stack hints. "
+        "Format strictly as:\nSkill: <skill name>\nProject: <detailed project idea>\n"
+        "(repeat for each skill)"
     )
-    prompt = f"Role: {role}\nMissing Skills: {', '.join(missing_skills)}"
-    raw = _ai_chat(system, prompt, max_tokens=600)
+    prompt = (
+        f"Target Role: {role} at {company}\n"
+        f"Missing Skills: {', '.join(missing_skills)}\n\n"
+        "Suggest one specific buildable project per missing skill."
+    )
+    raw = _ai_chat(system, prompt, max_tokens=800)
+    if not raw:
+        raise RuntimeError(f"Gemini failed to generate project recommendations for {role}")
 
     recommendations = []
-    if raw:
-        current_skill = ""
-        for line in raw.split("\n"):
-            line = line.strip()
-            if line.lower().startswith("skill:"):
-                current_skill = line.split(":", 1)[1].strip()
-            elif line.lower().startswith("project:") and current_skill:
-                proj = line.split(":", 1)[1].strip()
-                recommendations.append({"skill": current_skill, "project": proj})
-                current_skill = ""
+    current_skill = ""
+    for line in raw.split("\n"):
+        line = line.strip()
+        if line.lower().startswith("skill:"):
+            current_skill = line.split(":", 1)[1].strip()
+        elif line.lower().startswith("project:") and current_skill:
+            proj = line.split(":", 1)[1].strip()
+            recommendations.append({"skill": current_skill, "project": proj})
+            current_skill = ""
 
     if not recommendations:
-        for skill in missing_skills:
-            recommendations.append({
-                "skill": skill,
-                "project": f"Build a hands-on project using {skill} (e.g., data pipeline, ML model, or API).",
-            })
-
+        raise RuntimeError(f"Gemini returned unparseable project recommendations for {role}")
     return recommendations
 
 
@@ -412,36 +444,41 @@ def generate_project_recommendations(missing_skills: list[str], role: str) -> li
 # FEATURE 7 — Course Recommendations
 # ==============================================================================
 
-def generate_course_recommendations(missing_skills: list[str], role: str) -> list[dict]:
+def generate_course_recommendations(missing_skills: list[str], role: str, company: str) -> list[dict]:
+    """Generate real, specific course and resource links for each missing skill using Gemini."""
+    if not missing_skills:
+        return []
+
     system = (
-        "You are a learning advisor. For each skill, recommend 2-3 free courses or resources. "
-        "Include YouTube, Coursera, and official docs where possible. "
-        "Format:\nSkill: ...\n- Course: ... | Link: ..."
+        "You are an expert learning advisor. For each missing skill, recommend 3 specific "
+        "free learning resources. Include actual YouTube channel names, real Coursera course titles, "
+        "and official documentation links. Be specific — no generic suggestions. "
+        "Format strictly as:\nSkill: <skill name>\n- <resource description>\n- <resource description>\n- <resource description>\n"
+        "(repeat for each skill)"
     )
-    prompt = f"Role: {role}\nSkills to learn: {', '.join(missing_skills)}"
-    raw = _ai_chat(system, prompt, max_tokens=800)
+    prompt = (
+        f"Target Role: {role} at {company}\n"
+        f"Skills to learn: {', '.join(missing_skills)}\n\n"
+        "For each skill, provide 3 specific free learning resources with real names and links."
+    )
+    raw = _ai_chat(system, prompt, max_tokens=1200)
+    if not raw:
+        raise RuntimeError(f"Gemini failed to generate course recommendations for {role}")
 
     courses = []
-    if raw:
-        current_skill = ""
-        for line in raw.split("\n"):
-            line = line.strip()
-            if line.lower().startswith("skill:"):
-                current_skill = line.split(":", 1)[1].strip()
-            elif line.startswith("-") and current_skill:
-                courses.append({
-                    "skill": current_skill,
-                    "recommendation": line.lstrip("- ").strip(),
-                })
+    current_skill = ""
+    for line in raw.split("\n"):
+        line = line.strip()
+        if line.lower().startswith("skill:"):
+            current_skill = line.split(":", 1)[1].strip()
+        elif (line.startswith("-") or line.startswith("•")) and current_skill:
+            courses.append({
+                "skill": current_skill,
+                "recommendation": line.lstrip("-•").strip(),
+            })
 
     if not courses:
-        for skill in missing_skills:
-            courses.extend([
-                {"skill": skill, "recommendation": f"YouTube: Search '{skill} full course for beginners'"},
-                {"skill": skill, "recommendation": f"Coursera: {skill} Specialization"},
-                {"skill": skill, "recommendation": f"Official Docs: {skill} documentation"},
-            ])
-
+        raise RuntimeError(f"Gemini returned unparseable course recommendations for {role}")
     return courses
 
 
@@ -817,52 +854,58 @@ def run_practice_agent() -> list[dict]:
         gap_info = gap_lookup.get(key, {})
         missing_skills = gap_info.get("missing_skills", [])
 
-        # -- Feature 1: Interview Q&A --
-        qa_pairs = generate_interview_qa(company, role, tech_skills, resume_text, user_skills)
+        try:
+            # -- Feature 1: Interview Q&A --
+            qa_pairs = generate_interview_qa(company, role, tech_skills, resume_text, user_skills)
 
-        # -- Feature 2: HR Introduction --
-        hr_intro = generate_hr_introduction(user, company, role, resume_text)
+            # -- Feature 2: HR Introduction --
+            hr_intro = generate_hr_introduction(user, company, role, resume_text)
 
-        # -- Feature 3: Tamil → English samples --
-        translations = _generate_sample_translations()
+            # -- Feature 3: Tamil → English (AI-generated, role-specific) --
+            translations = _generate_ai_translations(role, company, user_skills)
 
-        # -- Feature 4: Speaking Practice --
-        speaking = generate_speaking_practice(role, tech_skills)
+            # -- Feature 4: Speaking Practice --
+            speaking = generate_speaking_practice(role, company, tech_skills, user_skills)
 
-        # -- Feature 5: Coding Sheets --
-        coding_sheets = generate_coding_sheets(role, tech_skills)
+            # -- Feature 5: Coding Sheets --
+            coding_sheets = generate_coding_sheets(role, tech_skills)
 
-        # -- Feature 6: Project Recommendations --
-        projects = generate_project_recommendations(missing_skills, role)
+            # -- Feature 6: Project Recommendations --
+            projects = generate_project_recommendations(missing_skills, role, company)
 
-        # -- Feature 7: Course Recommendations --
-        courses = generate_course_recommendations(
-            missing_skills if missing_skills else tech_skills[:5], role
-        )
+            # -- Feature 7: Course Recommendations --
+            courses = generate_course_recommendations(
+                missing_skills if missing_skills else tech_skills[:5], role, company
+            )
 
-        # -- Feature 8: Generate HTML --
-        html = _render_practice_html(
-            company, role, qa_pairs, hr_intro,
-            translations, speaking, coding_sheets,
-            projects, courses,
-        )
+            # -- Feature 8: Generate HTML --
+            html = _render_practice_html(
+                company, role, qa_pairs, hr_intro,
+                translations, speaking, coding_sheets,
+                projects, courses,
+            )
 
-        # -- Upload to GitHub --
-        practice_link = save_practice_html_to_github(company, role, html)
+            # -- Upload to GitHub --
+            practice_link = save_practice_html_to_github(company, role, html)
 
-        # -- Feature 9 & 10: Record session --
-        practice_sessions.append({
-            "company": company,
-            "role": role,
-            "practice_link": practice_link,
-        })
+            # -- Feature 9 & 10: Record session --
+            practice_sessions.append({
+                "company": company,
+                "role": role,
+                "practice_link": practice_link,
+            })
+            logger.info("PracticeAgent: ✅ Portal done for %s — %s", company, role)
 
-    # ── Save practice sessions database ──
+        except Exception as exc:
+            logger.error("PracticeAgent: ❌ Failed for %s — %s: %s", company, role, exc)
+            log_agent_activity(f"Failed portal for {company} {role}: {exc}", "error")
+            continue
+
     if practice_sessions:
         save_practice_sessions(practice_sessions)
         log_agent_activity(f"Generated practice portals for {len(practice_sessions)} internships")
 
-    logger.info("PracticeAgent: Completed successfully.")
+    logger.info("PracticeAgent: Completed — %d/%d portals generated.", len(practice_sessions), len(jobs))
     return practice_sessions
 
 
