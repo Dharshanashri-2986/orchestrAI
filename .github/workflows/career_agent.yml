@@ -3,14 +3,14 @@ name: OrchestrAI Career Agent Daily Run
 
 on:
   schedule:
-    - cron: "05 6 * * *"  # 6:05 AM UTC -> 11:35 AM IST
+    - cron: "0 5 * * *"  # 5:00 AM UTC -> 10:30 AM IST (Runs early, waits until 11:30 to send email)
   workflow_dispatch:
 
 jobs:
   run-career-agent:
     name: Fetch Internships and Send Email
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 120
 
     env:
       GITHUB_TOKEN:    ${{ secrets.GH_PAT }}
