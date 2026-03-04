@@ -207,6 +207,9 @@ def run_orchestrai_pipeline():
     portfolio_html = f'<a href="{portfolio_url}" style="background:#2e7d32;color:white;padding:8px 14px;border-radius:6px;text-decoration:none;display:inline-block;font-weight:600;min-width:max-content;">View Portfolio</a>' if portfolio_url != "#" else "Not Generated"
 
     security_reports = security_data.get("security_reports", []) if isinstance(security_data, dict) else []
+    
+    # Build per-repo security lookup {repo_name: {level, top_issue}}
+    sec_report_lookup = {}
     sec_insights_html = ""
     if security_reports:
         for report in security_reports:
@@ -215,11 +218,27 @@ def run_orchestrai_pipeline():
             issues = report.get("issues", [])
             risk_level = "High" if risk_score > 4 else "Medium" if risk_score > 1 else "Low"
             risk_color = "red" if risk_level == "High" else "orange" if risk_level == "Medium" else "green"
-            
             top_issue = str(issues[0]) if issues else "No issues found."
-            sec_insights_html += f"<li><strong>{repo_name}</strong> - Risk Level: <span style='color:{risk_color};font-weight:bold;'>{risk_level}</span><br><i>Recommended Fix:</i> {top_issue}</li>"
+            sec_report_lookup[repo_name] = {"level": risk_level, "color": risk_color, "top_issue": top_issue}
+            sec_insights_html += f"<li><strong>{repo_name}</strong> — Risk: <span style='color:{risk_color};font-weight:bold'>{risk_level}</span><br><i>Fix:</i> {top_issue}</li>"
     else:
         sec_insights_html = "<li>No security scans performed yet.</li>"
+    
+    # Overall security summary for email table (worst level across all repos)
+    if sec_report_lookup:
+        levels = [v["level"] for v in sec_report_lookup.values()]
+        overall_level = "High" if "High" in levels else "Medium" if "Medium" in levels else "Low"
+        overall_color = "red" if overall_level == "High" else "orange" if overall_level == "Medium" else "green"
+        overall_repos = len(sec_report_lookup)
+        high_count = sum(1 for v in sec_report_lookup.values() if v["level"] == "High")
+        med_count = sum(1 for v in sec_report_lookup.values() if v["level"] == "Medium")
+        overall_sec_html = (
+            f'<span style="background:{overall_color};color:white;padding:3px 8px;border-radius:4px;font-size:12px;font-weight:600">{overall_level}</span>'
+            f'<br><span style="font-size:11px;color:#555">{overall_repos} repos scanned<br>'
+            f'{high_count} High · {med_count} Medium</span>'
+        )
+    else:
+        overall_sec_html = '<span style="color:#999;font-size:12px">Not Scanned</span>'
         
     strategy = strategy_data.get("strategy", {}) if isinstance(strategy_data, dict) else {}
     strategy_goal = strategy.get("goal", "Data Engineer")
@@ -284,65 +303,67 @@ def run_orchestrai_pipeline():
         else:
             practice_html = '<span style="color:#999;">Not Generated</span>'
 
-        # Per-internship customized portfolio
+        # Per-internship customized portfolio (separate column)
         pip_url = per_internship_lookup.get(key, "")
         if pip_url:
-            row_portfolio_html = f'<a href="{pip_url}" style="background:#2e7d32;color:white;padding:8px 14px;border-radius:6px;text-decoration:none;display:inline-block;font-weight:600;min-width:max-content;">View My Portfolio →</a><br/><span style="font-size:10px;color:#888">Customized for this role</span>'
-        elif portfolio_url and portfolio_url != "#":
-            row_portfolio_html = f'<a href="{portfolio_url}" style="background:#558b2f;color:white;padding:8px 14px;border-radius:6px;text-decoration:none;display:inline-block;font-weight:600;">View Portfolio</a>'
+            custom_portfolio_html = f'<a href="{pip_url}" style="background:#1565c0;color:white;padding:8px 14px;border-radius:6px;text-decoration:none;display:inline-block;font-weight:600;font-size:12px">🎯 Custom Portfolio</a><br/><span style="font-size:10px;color:#888">Tailored for this role</span>'
         else:
-            row_portfolio_html = '<span style="color:#999;">Not Generated</span>'
+            custom_portfolio_html = '<span style="color:#999;font-size:12px">Not Generated</span>'
 
         rows += f"""
         <tr>
-            <td>{job.get('company', '')}</td>
-            <td>{job.get('role', '')}</td>
-            <td>{job.get('location', '')}</td>
-            <td>{', '.join(job.get('technical_skills', []))}</td>
-            <td><a href="{job.get('apply_link','#')}" style="font-weight:bold;">Apply</a>{app_html}</td>
-            <td>{score_html}</td>
-            <td>{missing_skills}</td>
-            <td>{roadmap}</td>
-            <td>{cl_html}<br><br>{opt_html}</td>
-            <td>{practice_html}</td>
-            <td>{row_portfolio_html}</td>
+            <td style='padding:8px;border:1px solid #ddd'>{job.get('company', '')}</td>
+            <td style='padding:8px;border:1px solid #ddd'>{job.get('role', '')}</td>
+            <td style='padding:8px;border:1px solid #ddd;font-size:12px;color:#555'>{job.get('location', '')}</td>
+            <td style='padding:8px;border:1px solid #ddd;font-size:12px'>{', '.join(job.get('technical_skills', []))}</td>
+            <td style='padding:8px;border:1px solid #ddd'><a href="{job.get('apply_link','#')}" style="font-weight:bold;color:#1565c0">Apply</a>{app_html}</td>
+            <td style='padding:8px;border:1px solid #ddd'>{score_html}</td>
+            <td style='padding:8px;border:1px solid #ddd;color:#c62828;font-size:12px'>{missing_skills or '<span style="color:green">✓ All covered</span>'}</td>
+            <td style='padding:8px;border:1px solid #ddd;font-size:12px;color:#1565c0'>{roadmap or '—'}</td>
+            <td style='padding:8px;border:1px solid #ddd'>{cl_html}<br><br>{opt_html}</td>
+            <td style='padding:8px;border:1px solid #ddd;text-align:center'>{overall_sec_html}</td>
+            <td style='padding:8px;border:1px solid #ddd;text-align:center'>{portfolio_html}</td>
+            <td style='padding:8px;border:1px solid #ddd;text-align:center'>{custom_portfolio_html}</td>
         </tr>
         """
 
     # STEP 6: Generate full HTML email
     html = f"""
     <html>
+    <head><style>
+      body {{ font-family: Arial, sans-serif; font-size: 13px; background: #f8f9fa; margin: 0; padding: 20px; }}
+      h2, h3 {{ color: #1a237e; }}
+      table {{ border-collapse: collapse; width: 100%; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }}
+      th {{ background: #1a237e; color: white; padding: 10px 8px; text-align: left; font-size: 12px; white-space: nowrap; }}
+      tr:nth-child(even) td {{ background: #f5f5f5; }}
+    </style></head>
     <body>
-        <h2>Daily AI & Data Science Internship Report</h2>
-
-        <table border="1" cellpadding="8" style="border-collapse: collapse;">
-            <tr style="background-color: #f1f3f4; text-align: left;">
+        <h2>&#x1F916; Daily AI &amp; Data Science Internship Report</h2>
+        <table>
+            <tr>
                 <th>Company</th>
                 <th>Role</th>
                 <th>Location</th>
-                <th>Technical Skills</th>
+                <th>Required Skills</th>
                 <th>Apply</th>
                 <th>Match Score</th>
                 <th>Skill Gap</th>
                 <th>Learning Roadmap</th>
                 <th>Generated Assets</th>
-                <th>Practice Time</th>
-                <th>Portfolio</th>
+                <th>&#x1F512; Security Risk</th>
+                <th>&#x1F310; Main Portfolio</th>
+                <th>&#x1F3AF; Custom Portfolio</th>
             </tr>
             {rows}
         </table>
 
-        <h3>Career Strategy Recommendation</h3>
+        <h3>&#x1F9ED; Career Strategy Recommendation</h3>
         <p><b>Goal:</b> {strategy_goal}</p>
         <p><b>This Week's Focus:</b></p>
-        <ul>
-            {strategy_html}
-        </ul>
+        <ul>{strategy_html}</ul>
 
-        <h3>Security Insights</h3>
-        <ul>
-            {sec_insights_html}
-        </ul>
+        <h3>&#x1F510; Security Insights &mdash; All GitHub Repos</h3>
+        <ul>{sec_insights_html}</ul>
     </body>
     </html>
     """
