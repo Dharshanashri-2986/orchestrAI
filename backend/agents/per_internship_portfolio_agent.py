@@ -226,12 +226,18 @@ def run_per_internship_portfolio_agent() -> list[dict]:
                 cover_letter_link=cl_link
             )
             slug = f"{_slugify(company)}_{_slugify(role)}"
-            file_path = f"frontend/portfolio/internships/{slug}.html"
+            # Save to GitHub repo so it's accessible via raw URL
+            github_username = os.getenv("GITHUB_USERNAME", "Swathy1209")
+            github_repo = os.getenv("GITHUB_REPO", "orchestrai-db")
+            file_path = f"portfolios/{slug}.html"
             _, sha = _get_raw_file(file_path)
             _put_raw_file(file_path, html, sha, f"feat: per-internship portfolio for {company} {role}")
 
-            pub_url = f"{base_url}/portfolio/internships/{slug}.html"
-            index.append({"company": company, "role": role, "portfolio_url": pub_url})
+            # Use GitHub raw URL so it's immediately accessible
+            pub_url = f"https://raw.githubusercontent.com/{github_username}/{github_repo}/main/{file_path}"
+            # Wrap in htmlpreview.github.io for rendered HTML
+            rendered_url = f"https://htmlpreview.github.io/?{pub_url}"
+            index.append({"company": company, "role": role, "portfolio_url": rendered_url})
             generated += 1
             logger.info("PerInternshipPortfolioAgent: ✓ %s — %s", company, role)
         except Exception as exc:

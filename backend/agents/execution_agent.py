@@ -23,6 +23,7 @@ from backend.agents.resume_optimization_agent import run_resume_optimization_age
 from backend.agents.portfolio_builder_agent import run_portfolio_builder_agent
 from backend.agents.per_internship_portfolio_agent import run_per_internship_portfolio_agent
 from backend.agents.repo_security_scanner_agent import run_repo_security_scanner_agent
+from backend.agents.auto_fix_pr_agent import run_auto_fix_pr_agent
 from backend.agents.career_strategy_agent import run_career_strategy_agent
 from backend.agents.auto_apply_agent import run_auto_apply_agent
 from backend.agents.opportunity_matching_agent import run_opportunity_matching_agent
@@ -118,10 +119,13 @@ def run_orchestrai_pipeline():
     # STEP 2: Generate per-job skill gap analysis
     run_skill_agent()
 
-    # STEP 2.45: Scan Repositories for Security Vulnerabilities
+    # STEP 2.45: Scan ALL Repositories for Security Vulnerabilities (no cloning)
     run_repo_security_scanner_agent()
 
-    # STEP 2.5: Generate Portfolio Website
+    # STEP 2.46: Auto-generate security fix PRs for risky repos
+    run_auto_fix_pr_agent()
+
+    # STEP 2.47: Generate Portfolio Website
     run_portfolio_builder_agent()
 
     # STEP 2.5: Generate cover letters
@@ -138,7 +142,7 @@ def run_orchestrai_pipeline():
 
     # STEP 2.8: Compute Opportunity Matching
     run_opportunity_matching_agent()
-    
+
     # STEP 2.9: Generate Career Strategy
     run_career_strategy_agent()
 
@@ -207,35 +211,52 @@ def run_orchestrai_pipeline():
     portfolio_html = f'<a href="{portfolio_url}" style="background:#2e7d32;color:white;padding:8px 14px;border-radius:6px;text-decoration:none;display:inline-block;font-weight:600;min-width:max-content;">View Portfolio</a>' if portfolio_url != "#" else "Not Generated"
 
     security_reports = security_data.get("security_reports", []) if isinstance(security_data, dict) else []
-    
-    # Build per-repo security lookup {repo_name: {level, top_issue}}
+
+    # Build per-repo security lookup
     sec_report_lookup = {}
     sec_insights_html = ""
     if security_reports:
         for report in security_reports:
             repo_name = report.get("repo", "Unknown")
-            risk_score = report.get("risk_score", 0)
+            repo_url = report.get("repo_url", f"https://github.com/Swathy1209/{repo_name}")
+            # Use risk_level field from new scanner, fallback to score-based
+            risk_level = report.get("risk_level", "")
+            if not risk_level:
+                rs = report.get("risk_score", 0)
+                risk_level = "High" if rs > 7 else "Medium" if rs > 3 else "Low" if rs > 0 else "Safe"
+            risk_color = {"High": "red", "Medium": "orange", "Low": "#f9a825", "Safe": "green"}.get(risk_level, "gray")
             issues = report.get("issues", [])
-            risk_level = "High" if risk_score > 4 else "Medium" if risk_score > 1 else "Low"
-            risk_color = "red" if risk_level == "High" else "orange" if risk_level == "Medium" else "green"
             top_issue = str(issues[0]) if issues else "No issues found."
-            sec_report_lookup[repo_name] = {"level": risk_level, "color": risk_color, "top_issue": top_issue}
-            sec_insights_html += f"<li><strong>{repo_name}</strong> — Risk: <span style='color:{risk_color};font-weight:bold'>{risk_level}</span><br><i>Fix:</i> {top_issue}</li>"
+            pr_url = report.get("auto_fix_pr", "")
+            total_vulns = report.get("total_vulnerabilities", 0)
+            scanned_files = report.get("scanned_files", 0)
+
+            sec_report_lookup[repo_name] = {"level": risk_level, "color": risk_color}
+
+            pr_html = f' <a href="{pr_url}" style="background:#1565c0;color:white;padding:2px 8px;border-radius:3px;text-decoration:none;font-size:11px">View PR →</a>' if pr_url else ""
+            sec_insights_html += (
+                f'<li style="margin-bottom:10px">'
+                f'<a href="{repo_url}" style="font-weight:bold;color:#1a237e">{repo_name}</a> — '
+                f'Risk: <span style="color:{risk_color};font-weight:bold">{risk_level}</span>'
+                f' | {total_vulns} vulns | {scanned_files} files scanned{pr_html}'
+                f'<br><span style="font-size:12px;color:#555;margin-left:10px">⤷ {top_issue[:100]}</span>'
+                f'</li>'
+            )
     else:
-        sec_insights_html = "<li>No security scans performed yet.</li>"
-    
-    # Overall security summary for email table (worst level across all repos)
+        sec_insights_html = "<li>No security scans performed yet. Scanner runs automatically each day.</li>"
+
+    # Overall security summary for email table column
     if sec_report_lookup:
         levels = [v["level"] for v in sec_report_lookup.values()]
-        overall_level = "High" if "High" in levels else "Medium" if "Medium" in levels else "Low"
-        overall_color = "red" if overall_level == "High" else "orange" if overall_level == "Medium" else "green"
-        overall_repos = len(sec_report_lookup)
+        overall_level = "High" if "High" in levels else "Medium" if "Medium" in levels else "Low" if "Low" in levels else "Safe"
+        overall_color = {"High": "red", "Medium": "orange", "Low": "#f9a825", "Safe": "green"}.get(overall_level, "gray")
+        total_repos = len(sec_report_lookup)
         high_count = sum(1 for v in sec_report_lookup.values() if v["level"] == "High")
         med_count = sum(1 for v in sec_report_lookup.values() if v["level"] == "Medium")
         overall_sec_html = (
             f'<span style="background:{overall_color};color:white;padding:3px 8px;border-radius:4px;font-size:12px;font-weight:600">{overall_level}</span>'
-            f'<br><span style="font-size:11px;color:#555">{overall_repos} repos scanned<br>'
-            f'{high_count} High · {med_count} Medium</span>'
+            f'<br><span style="font-size:11px;color:#555">{total_repos} repos scanned<br>'
+            f'{high_count} High &middot; {med_count} Medium</span>'
         )
     else:
         overall_sec_html = '<span style="color:#999;font-size:12px">Not Scanned</span>'
