@@ -49,7 +49,7 @@ def get_github_repos(username: str) -> list[dict]:
 def clone_repo(clone_url: str, repo_name: str) -> str:
     path = os.path.join(TEMP_DIR, repo_name)
     if os.path.exists(path):
-        shutil.rmtree(path)
+        shutil.rmtree(path, ignore_errors=True)
     os.makedirs(TEMP_DIR, exist_ok=True)
     subprocess.run(["git", "clone", "--depth", "1", clone_url, path], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     return path

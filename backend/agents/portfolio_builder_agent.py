@@ -439,7 +439,7 @@ def run_portfolio_builder_agent():
         desc = _generate_project_description(repo, readme)
         
         has_demo = any(topic in repo.get("topics", []) for topic in ["streamlit", "fastapi", "flask"]) or \
-                   any(tech in desc.get("technologies", "").lower() for tech in ["streamlit", "fastapi", "flask"])
+                   any(tech in str(desc.get("technologies") or "").lower() for tech in ["streamlit", "fastapi", "flask"])
         
         demo_link = f"https://{name}.onrender.com" if has_demo else "#"
         
