@@ -6,6 +6,8 @@ OrchestrAI Autonomous Multi-Agent System
 import logging
 import os
 import smtplib
+import json
+import requests
 from datetime import datetime, timezone
 from email.message import EmailMessage
 
@@ -33,32 +35,67 @@ EMAIL_PASS     = os.getenv("EMAIL_PASS", "")
 EMAIL_RECEIVER = os.getenv("EMAIL_RECEIVER", EMAIL_USER)
 SMTP_HOST      = os.getenv("SMTP_HOST", "smtp.gmail.com")
 SMTP_PORT      = int(os.getenv("SMTP_PORT", 587))
+RESEND_API_KEY = os.getenv("RESEND_API_KEY", "")
 
-def send_email(subject: str, html_content: str) -> bool:
-    """Send the HTML email using SMTP."""
-    if not EMAIL_USER or not EMAIL_PASS:
-        logger.error("ExecutionAgent: EMAIL_USER or EMAIL_PASS not configured in .env")
+def _send_via_resend(subject: str, html_content: str) -> bool:
+    """Send email via Resend HTTP API (works on Render free tier)."""
+    if not RESEND_API_KEY:
+        return False
+    try:
+        payload = {
+            "from": "OrchestrAI <onboarding@resend.dev>",
+            "to": [EMAIL_RECEIVER],
+            "subject": subject,
+            "html": html_content,
+        }
+        resp = requests.post(
+            "https://api.resend.com/emails",
+            headers={
+                "Authorization": f"Bearer {RESEND_API_KEY}",
+                "Content-Type": "application/json",
+            },
+            data=json.dumps(payload),
+            timeout=30,
+        )
+        if resp.status_code in (200, 201):
+            logger.info("ExecutionAgent: Email sent via Resend API to %s", EMAIL_RECEIVER)
+            return True
+        else:
+            logger.error("ExecutionAgent: Resend API error %s - %s", resp.status_code, resp.text)
+            return False
+    except Exception as e:
+        logger.error("ExecutionAgent: Resend send failed - %s", e)
         return False
 
-    msg = EmailMessage()
-    msg["Subject"] = subject
-    msg["From"] = f"OrchestrAI <{EMAIL_USER}>"
-    msg["To"] = EMAIL_RECEIVER
-
-    # Set content type to HTML
-    msg.set_content("Your email client does not support HTML. Please view it in a modern client.")
-    msg.add_alternative(html_content, subtype="html")
-
+def _send_via_smtp(subject: str, html_content: str) -> bool:
+    """Send email via SMTP (works locally, may be blocked on Render free tier)."""
+    if not EMAIL_USER or not EMAIL_PASS:
+        logger.error("ExecutionAgent: EMAIL_USER or EMAIL_PASS not configured")
+        return False
     try:
+        msg = EmailMessage()
+        msg["Subject"] = subject
+        msg["From"] = f"OrchestrAI <{EMAIL_USER}>"
+        msg["To"] = EMAIL_RECEIVER
+        msg.set_content("Your email client does not support HTML. Please view it in a modern client.")
+        msg.add_alternative(html_content, subtype="html")
         with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as server:
             server.starttls()
             server.login(EMAIL_USER, EMAIL_PASS)
             server.send_message(msg)
-        logger.info("ExecutionAgent: Successfully sent email to %s", EMAIL_RECEIVER)
+        logger.info("ExecutionAgent: Email sent via SMTP to %s", EMAIL_RECEIVER)
         return True
     except Exception as e:
-        logger.error("ExecutionAgent: Failed to send email - %s", e)
+        logger.error("ExecutionAgent: SMTP send failed - %s", e)
         return False
+
+def send_email(subject: str, html_content: str) -> bool:
+    """Send HTML email. Tries Resend HTTP API first (Render-compatible), falls back to SMTP."""
+    if RESEND_API_KEY:
+        if _send_via_resend(subject, html_content):
+            return True
+        logger.warning("ExecutionAgent: Resend failed, falling back to SMTP...")
+    return _send_via_smtp(subject, html_content)
 
 def __log_activity(action: str):
     try:

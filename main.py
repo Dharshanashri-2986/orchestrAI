@@ -145,34 +145,67 @@ def trigger_pipeline_sync():
 
 @app.get("/test-email", response_class=HTMLResponse)
 def test_email_endpoint():
-    """Send a quick test email to verify SMTP credentials are working."""
-    import smtplib
+    """Send a quick test email to verify email credentials are working."""
+    import smtplib, json, requests as req
     from email.message import EmailMessage
+
     eu = os.getenv("EMAIL_USER", "")
     ep = os.getenv("EMAIL_PASS", "")
     er = os.getenv("EMAIL_RECEIVER", eu)
     sh = os.getenv("SMTP_HOST", "smtp.gmail.com")
     sp = int(os.getenv("SMTP_PORT", 587))
+    resend_key = os.getenv("RESEND_API_KEY", "")
 
+    # ── Try Resend first ──────────────────────────────────────────────────────
+    if resend_key:
+        try:
+            payload = {
+                "from": "OrchestrAI <onboarding@resend.dev>",
+                "to": [er or eu],
+                "subject": "OrchestrAI Test Email 🚀",
+                "html": "<h1>OrchestrAI Test 🚀</h1><p>Resend API is working! You will receive the daily reports at this address.</p>",
+            }
+            resp = req.post(
+                "https://api.resend.com/emails",
+                headers={"Authorization": f"Bearer {resend_key}", "Content-Type": "application/json"},
+                data=json.dumps(payload), timeout=30
+            )
+            if resp.status_code in (200, 201):
+                return f"<h1>✅ Test Email Sent via Resend!</h1><p>Successfully sent to <b>{er or eu}</b>. Check your inbox now!</p><p><a href='/trigger'>Now run the full pipeline →</a></p>"
+            else:
+                return f"<h1>❌ Resend API Error</h1><p style='color:red'>{resp.status_code}: {resp.text}</p><p>Check your RESEND_API_KEY in Render Environment Variables.</p>"
+        except Exception as e:
+            return f"<h1>❌ Resend Failed</h1><p style='color:red'>{e}</p>"
+
+    # ── Fall back to SMTP ─────────────────────────────────────────────────────
     if not eu or eu in ("your-gmail@gmail.com", ""):
-        return f"<h1>❌ Email Not Configured</h1><p><b>EMAIL_USER</b> is not set or is still the placeholder value.</p><p>Go to your <b>Render Dashboard → Environment</b> and set EMAIL_USER, EMAIL_PASS, EMAIL_RECEIVER.</p>"
+        return """<h1>❌ Email Not Configured</h1>
+        <p>Neither <b>RESEND_API_KEY</b> nor <b>EMAIL_USER</b> is set.</p>
+        <h3>Recommended Fix (free, works on Render):</h3>
+        <ol>
+          <li>Go to <a href='https://resend.com'>resend.com</a> → Sign up free</li>
+          <li>Create an API Key</li>
+          <li>Add <b>RESEND_API_KEY</b> to your Render Environment Variables</li>
+          <li>Add <b>EMAIL_RECEIVER</b> = your Gmail address</li>
+          <li>Come back and visit /test-email again</li>
+        </ol>"""
 
     if not ep or ep in ("xxxx-xxxx-xxxx-xxxx", ""):
-        return f"<h1>❌ App Password Not Set</h1><p><b>EMAIL_PASS</b> is not set or is still the placeholder value.</p><p>Generate a Gmail App Password at: <a href='https://myaccount.google.com/apppasswords'>myaccount.google.com/apppasswords</a></p>"
+        return "<h1>❌ App Password Not Set</h1><p><b>EMAIL_PASS</b> is missing. Generate a Gmail App Password at: <a href='https://myaccount.google.com/apppasswords'>myaccount.google.com/apppasswords</a></p>"
 
     try:
         msg = EmailMessage()
         msg["Subject"] = "OrchestrAI Test Email 🚀"
         msg["From"] = eu
-        msg["To"] = er
-        msg.set_content("This is a test email from OrchestrAI. SMTP is working correctly!")
+        msg["To"] = er or eu
+        msg.set_content("Test email from OrchestrAI. SMTP is working!")
         with smtplib.SMTP(sh, sp) as server:
             server.starttls()
             server.login(eu, ep)
             server.send_message(msg)
-        return f"<h1>✅ Test Email Sent!</h1><p>Successfully sent a test email to <b>{er}</b>. Check your inbox now!</p><p><a href='/trigger'>Now run the full pipeline →</a></p>"
+        return f"<h1>✅ Test Email Sent via SMTP!</h1><p>Successfully sent to <b>{er or eu}</b>. Check your inbox!</p><p><a href='/trigger'>Now run the full pipeline →</a></p>"
     except Exception as e:
-        return f"<h1>❌ Email Failed</h1><p style='color:red'><b>Error:</b> {e}</p><p>Common fixes:</p><ul><li>Make sure 2-Step Verification is enabled on your Google account</li><li>Generate an App Password at <a href='https://myaccount.google.com/apppasswords'>myaccount.google.com/apppasswords</a></li><li>Use the 16-character App Password (not your regular Gmail password)</li></ul>"
+        return f"<h1>❌ SMTP Failed</h1><p style='color:red'><b>Error:</b> {e}</p><p>Render blocks SMTP on free tier. <a href='https://resend.com'>Use Resend instead</a> — it's free!</p>"
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "--now":
