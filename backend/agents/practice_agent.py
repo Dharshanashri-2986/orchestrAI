@@ -79,13 +79,12 @@ def _get_public_url(file_path: str) -> str:
 
 import time
 def _ai_chat(system_prompt: str, user_prompt: str, max_tokens: int = 800) -> str:
-    """Send a chat completion request to OpenAI with robust exponential backoff."""
+    """Send a chat completion request to OpenAI."""
     if not openai_client:
         logger.warning("PracticeAgent: OpenAI API key missing — returning fallback.")
         return ""
     
     max_retries = 3
-    base_wait = 20  # Gemini free tier has strict 15 RPM
     
     for attempt in range(max_retries):
         try:
@@ -100,17 +99,11 @@ def _ai_chat(system_prompt: str, user_prompt: str, max_tokens: int = 800) -> str
             )
             return resp.choices[0].message.content.strip()
         except Exception as exc:
-            if "429" in str(exc):
-                # Rate limit hit, wait and retry
-                wait_time = base_wait * (2 ** attempt)
-                logger.warning(f"PracticeAgent: Rate limit hit. Retrying in {wait_time}s... (Attempt {attempt+1}/{max_retries})")
-                time.sleep(wait_time)
-            elif attempt == max_retries - 1:
+            if attempt == max_retries - 1:
                 logger.warning("PracticeAgent: OpenAI call failed after retries — %s", exc)
                 return ""
             else:
                 logger.warning("PracticeAgent: OpenAI call failed. Retrying... — %s", exc)
-                time.sleep(2)
         
     return ""
 
