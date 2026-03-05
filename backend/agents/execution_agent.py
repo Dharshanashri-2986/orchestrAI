@@ -25,6 +25,7 @@ from backend.agents.per_internship_portfolio_agent import run_per_internship_por
 from backend.agents.repo_security_scanner_agent import run_repo_security_scanner_agent
 from backend.agents.auto_fix_pr_agent import run_auto_fix_pr_agent
 from backend.agents.career_strategy_agent import run_career_strategy_agent
+from backend.agents.career_readiness_agent import run_career_readiness_agent
 from backend.agents.auto_apply_agent import run_auto_apply_agent
 from backend.agents.opportunity_matching_agent import run_opportunity_matching_agent
 from backend.github_yaml_db import read_yaml_from_github, append_log_entry
@@ -146,6 +147,9 @@ def run_orchestrai_pipeline():
     # STEP 2.9: Generate Career Strategy
     run_career_strategy_agent()
 
+    # STEP 2.92: Compute Career Readiness Score (uses security + skills + portfolio + practice)
+    run_career_readiness_agent()
+
     # STEP 2.95: Generate per-internship customized portfolio pages
     run_per_internship_portfolio_agent()
 
@@ -160,6 +164,7 @@ def run_orchestrai_pipeline():
     portfolio_data = read_yaml_from_github("database/portfolio.yaml")
     security_data = read_yaml_from_github("database/security_reports.yaml")
     strategy_data = read_yaml_from_github("database/career_strategy.yaml")
+    readiness_data = read_yaml_from_github("database/career_readiness.yaml")
     per_internship_portfolio_data = read_yaml_from_github("database/per_internship_portfolios.yaml")
 
     jobs = jobs_data.get("jobs", []) if isinstance(jobs_data, dict) else []
@@ -289,9 +294,47 @@ def run_orchestrai_pipeline():
 
     opp_list = "".join(f"<li style='font-size:12px;margin:3px 0'>{o}</li>" for o in top_opps[:3]) if top_opps else "<li>Run pipeline to identify top matches</li>"
 
+    # Career Readiness Score badge
+    cr = readiness_data.get("career_readiness", {}) if isinstance(readiness_data, dict) else {}
+    readiness_score = cr.get("readiness_score", 0)
+    readiness_label = cr.get("label", "")
+    readiness_color = (
+        "#2e7d32" if readiness_score >= 85 else
+        "#1565c0" if readiness_score >= 70 else
+        "#e65100" if readiness_score >= 50 else "#c62828"
+    )
+    readiness_html = (
+        f'<div style="background:{readiness_color};color:white;border-radius:10px;padding:14px 20px;'
+        f'display:inline-block;margin-bottom:16px">'
+        f'<span style="font-size:28px;font-weight:700">{readiness_score}</span>'
+        f'<span style="font-size:14px">/100</span>&nbsp;&nbsp;'
+        f'<span style="font-size:15px;font-weight:600">{readiness_label}</span></div>'
+    ) if readiness_score else '<span style="color:#999">Readiness score computing...</span>'
 
+    # Priority Security Fix banner
+    pf = security_data.get("priority_security_fix", {}) if isinstance(security_data, dict) else {}
+    if pf and pf.get("issue") and pf.get("risk") in ("HIGH", "MEDIUM", "HIGH"):
+        pf_risk_color = "red" if pf.get("risk") == "HIGH" else "orange"
+        pf_repo_url = pf.get("repo_url", f"https://github.com/Swathy1209/{pf.get('repo','')}")
+        priority_fix_html = (
+            f'<div style="background:#fff3e0;border:2px solid #e65100;border-radius:10px;padding:16px;margin-bottom:20px">'
+            f'<h3 style="color:#e65100;margin:0 0 10px 0">🚨 Priority Security Fix Required</h3>'
+            f'<table style="width:100%;font-size:13px;border-collapse:collapse">'
+            f'<tr><td style="color:#666;width:100px">Repository</td>'
+            f'<td><a href="{pf_repo_url}" style="color:#1565c0;font-weight:600">{pf.get("repo","")}</a></td></tr>'
+            f'<tr><td style="color:#666">Risk Level</td>'
+            f'<td><span style="background:{pf_risk_color};color:white;padding:2px 8px;border-radius:3px;font-size:12px;font-weight:600">{pf.get("risk","")}</span></td></tr>'
+            f'<tr><td style="color:#666">Vulnerability</td><td style="font-weight:600">{pf.get("issue","")}</td></tr>'
+            f'<tr><td style="color:#666">File</td><td><code style="background:#f5f5f5;padding:2px 6px;border-radius:3px">{pf.get("file","")}:{pf.get("line","")}</code></td></tr>'
+            f'<tr><td style="color:#666">Code</td><td><code style="background:#ffebee;padding:2px 6px;border-radius:3px;color:#b71c1c">{str(pf.get("snippet",""))[:80]}</code></td></tr>'
+            f'<tr><td style="color:#666">Fix</td><td style="color:#2e7d32">{pf.get("fix","")}</td></tr>'
+            f'</table></div>'
+        )
+    else:
+        priority_fix_html = '<div style="background:#e8f5e9;border-radius:8px;padding:12px;margin-bottom:16px;color:#2e7d32">✅ No critical security issues detected across all repositories!</div>'
 
     # STEP 5: Generate HTML table rows
+
     rows = ""
 
     for job in jobs:
@@ -382,6 +425,26 @@ def run_orchestrai_pipeline():
     </style></head>
     <body>
         <h2>&#x1F916; Daily AI &amp; Data Science Internship Report</h2>
+
+        <!-- Career Readiness Score -->
+        <div style="background:white;border-radius:12px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.08);margin-bottom:20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+          <div>
+            <p style="color:#666;font-size:12px;margin:0 0 6px 0;font-weight:600">&#x1F3AF; CAREER READINESS SCORE</p>
+            {readiness_html}
+          </div>
+          <div style="flex:1;min-width:200px">
+            <p style="font-size:12px;color:#555;margin:0">
+              <b>Skill Coverage:</b> {cr.get('components',{}).get('skill_coverage',{{}}).get('score',0):.0f}/100 &nbsp;|&nbsp;
+              <b>Portfolio:</b> {cr.get('components',{}).get('portfolio_strength',{{}}).get('score',0):.0f}/100 &nbsp;|&nbsp;
+              <b>Practice:</b> {cr.get('components',{}).get('interview_practice',{{}}).get('score',0):.0f}/100 &nbsp;|&nbsp;
+              <b>Security:</b> {cr.get('components',{}).get('security_health',{{}}).get('score',0):.0f}/100
+            </p>
+          </div>
+        </div>
+
+        <!-- Priority Security Fix -->
+        {priority_fix_html}
+
         <table>
             <tr>
                 <th>Company</th>
@@ -399,6 +462,7 @@ def run_orchestrai_pipeline():
             </tr>
             {rows}
         </table>
+
 
         <h3>&#x1F9ED; Career Strategy Recommendation</h3>
         <div style="background:white;border-radius:10px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.08);margin-bottom:20px">

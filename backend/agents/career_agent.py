@@ -33,7 +33,7 @@ import sys
 import time
 from datetime import datetime, timezone
 from typing import Optional
-from urllib.parse import quote_plus
+from urllib.parse import quote_plus, urlparse
 
 import httpx
 import yaml
@@ -130,10 +130,14 @@ def _build_job(
     role_keywords: list[str],
     technical_skills: list[str],
     source: str,
+    description: str = "",
 ) -> dict:
-    """Return a canonical internship record."""
+    """Return a canonical internship record with guaranteed company name."""
+    safe_company = guarantee_company_name(
+        company=company, role=role, apply_link=apply_link, description=description
+    )
     return {
-        "company": company.strip(),
+        "company": safe_company,
         "role": role.strip(),
         "location": location.strip(),
         "apply_link": apply_link.strip(),
@@ -152,6 +156,87 @@ def _keyword_prefilter(title: str) -> bool:
     """
     title_lower = title.lower()
     return any(kw in title_lower for kw in DOMAIN_KEYWORDS)
+
+
+# ── Company Name Extraction (3-layer guarantee) ────────────────────────────────
+
+_KNOWN_JOB_HOSTS = {
+    "greenhouse.io", "lever.co", "workday.com", "workdayjobs.com",
+    "linkedin.com", "indeed.com", "glassdoor.com", "monster.com",
+    "internshala.com", "unstop.com", "naukri.com", "wellfound.com",
+    "smartrecruiters.com", "bamboohr.com", "icims.com", "jobvite.com",
+    "remoteok.com", "remoteok.io",
+}
+
+def _company_from_domain(apply_link: str) -> str:
+    """
+    Extract company name from the apply link domain.
+    Example: https://jobs.tinder.com/apply → 'Tinder'
+    """
+    if not apply_link:
+        return ""
+    try:
+        parsed = urlparse(apply_link)
+        host = parsed.hostname or ""
+        # Strip common job-board hosts — they don't indicate the company
+        if any(jh in host for jh in _KNOWN_JOB_HOSTS):
+            return ""
+        # Remove www., jobs., careers., apply. prefixes
+        parts = re.sub(r'^(www|jobs|careers|apply|join|work|hiring)\.', '', host).split('.')
+        # Take the main domain name (e.g. 'tinder' from 'tinder.com')
+        company_raw = parts[0] if parts else ""
+        if company_raw and len(company_raw) > 1:
+            return company_raw.replace('-', ' ').replace('_', ' ').title()
+    except Exception:
+        pass
+    return ""
+
+
+def _company_via_llm(role: str, apply_link: str, description: str = "") -> str:
+    """Use LLM to extract company name from job metadata."""
+    if not openai_client:
+        return ""
+    prompt = (
+        f"Extract only the company name from this job listing. "
+        f"Reply with just the company name, nothing else.\n"
+        f"Role: {role}\nURL: {apply_link}\nDescription snippet: {description[:200]}"
+    )
+    try:
+        resp = openai_client.chat.completions.create(
+            model="gemini-2.0-flash",
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=20, temperature=0,
+        )
+        name = resp.choices[0].message.content.strip().strip('"').strip("'")
+        if name and 2 < len(name) < 60 and name.lower() not in ("unknown", "n/a", "none", ""):
+            return name
+    except Exception:
+        pass
+    return ""
+
+
+def guarantee_company_name(company: str, role: str = "", apply_link: str = "", description: str = "") -> str:
+    """
+    3-layer company name guarantee:
+      1. Use provided name if valid
+      2. Extract from apply_link domain
+      3. LLM fallback
+      4. Mark as 'Unknown Company – Source Incomplete'
+    """
+    if company and company.strip() and company.strip().lower() not in ("unknown", "", "n/a"):
+        return company.strip()
+    # Layer 1: domain extraction
+    from_domain = _company_from_domain(apply_link)
+    if from_domain:
+        logger.info("CareerAgent: Extracted company '%s' from domain of %s", from_domain, apply_link)
+        return from_domain
+    # Layer 2: LLM fallback
+    from_llm = _company_via_llm(role, apply_link, description)
+    if from_llm:
+        logger.info("CareerAgent: LLM extracted company '%s' for role '%s'", from_llm, role)
+        return from_llm
+    # Layer 3: hard fallback
+    return "Unknown Company – Source Incomplete"
 
 
 def _extract_skills_from_description(description: str) -> tuple[list[str], list[str]]:

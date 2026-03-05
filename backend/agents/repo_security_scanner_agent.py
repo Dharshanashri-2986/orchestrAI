@@ -229,23 +229,23 @@ def scan_repo(owner: str, repo: dict) -> dict:
         "auto_fix_pr": "",  # Will be filled by AutoFixPRGeneratorAgent
     }
 
-def run_repo_security_scanner_agent() -> list[dict]:
+def run_repo_security_scanner_agent() -> dict:
     logger.info("RepoSecurityScannerAgent: Starting FAST scan (no cloning)...")
-    
+
     data = {}
     try:
         data = read_yaml_from_github(USERS_FILE) or {}
     except Exception:
         pass
-    
+
     user = data.get("user", {})
     username = user.get("github_username", "Swathy1209")
-    
+
     repos = get_all_repos(username)
     if not repos:
         logger.warning("RepoSecurityScannerAgent: No repos found.")
-        return []
-    
+        return {}
+
     reports = []
     for repo in repos:
         try:
@@ -254,21 +254,73 @@ def run_repo_security_scanner_agent() -> list[dict]:
             time.sleep(0.5)  # Respect GitHub rate limits
         except Exception as exc:
             logger.error("RepoSecurityScannerAgent: Failed scanning %s - %s", repo.get("name"), exc)
-    
+
+    # Sort repos by risk score (highest first)
+    _risk_order = {"High": 4, "Medium": 3, "Low": 2, "Safe": 1}
+    reports.sort(key=lambda r: _risk_order.get(r.get("risk_level", "Safe"), 0), reverse=True)
+
+    # Build priority_security_fix: single highest-severity issue across ALL repos
+    priority_fix = {}
+    best_score = -1
+    for report in reports:
+        repo_name = report.get("repo", "")
+        repo_url = report.get("repo_url", "")
+        risk_level = report.get("risk_level", "Safe")
+        for vuln in report.get("vulnerabilities", []):
+            sev_score = SEV_SCORE.get(vuln.get("severity", "LOW"), 1)
+            if sev_score > best_score:
+                best_score = sev_score
+                fix_text = vuln.get("fix", vuln.get("recommendation", "Apply secure coding practices."))
+                priority_fix = {
+                    "repo": repo_name,
+                    "repo_url": repo_url,
+                    "risk": vuln.get("severity", ""),
+                    "issue": vuln.get("name", ""),
+                    "file": vuln.get("file", ""),
+                    "line": vuln.get("line", 0),
+                    "snippet": vuln.get("snippet", ""),
+                    "fix": fix_text,
+                }
+
+    if not priority_fix and reports:
+        priority_fix = {
+            "repo": reports[0].get("repo", ""),
+            "risk": "Safe",
+            "issue": "No critical issues detected across all repositories.",
+            "file": "", "line": 0, "fix": "All repositories passed security screening."
+        }
+
+    logger.info("RepoSecurityScannerAgent: Priority fix → %s in %s",
+                priority_fix.get("issue"), priority_fix.get("repo"))
+
+    payload = {
+        "security_reports": reports,
+        "priority_security_fix": priority_fix,
+        "summary": {
+            "total_repos": len(reports),
+            "high_risk": sum(1 for r in reports if r.get("risk_level") == "High"),
+            "medium_risk": sum(1 for r in reports if r.get("risk_level") == "Medium"),
+            "low_risk": sum(1 for r in reports if r.get("risk_level") == "Low"),
+            "safe": sum(1 for r in reports if r.get("risk_level") == "Safe"),
+            "scanned_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S"),
+        }
+    }
+
     try:
-        write_yaml_to_github(SECURITY_REPORTS_FILE, {"security_reports": reports})
+        write_yaml_to_github(SECURITY_REPORTS_FILE, payload)
         append_log_entry({
             "agent": "RepoSecurityScannerAgent",
-            "action": f"Scanned {len(reports)} repos, no cloning required",
+            "action": f"Scanned {len(reports)} repos, priority fix: {priority_fix.get('issue','')}",
             "status": "completed",
             "timestamp": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S")
         })
     except Exception as exc:
         logger.error("RepoSecurityScannerAgent: Failed to save reports - %s", exc)
-    
+
     risky = [r for r in reports if r["risk_level"] not in ("Safe",)]
     logger.info("RepoSecurityScannerAgent: Done. %d repos scanned, %d with issues.", len(reports), len(risky))
-    return reports
+    return payload
+
 
 
 if __name__ == "__main__":
