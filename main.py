@@ -104,6 +104,16 @@ def start_scheduler():
         logger.error("Scheduler startup failed: %s", exc)
 
 from fastapi.responses import JSONResponse
+from fastapi import Request
+from fastapi.middleware.cors import CORSMiddleware
+
+# Allow browser POSTs from interview pages (same Render domain)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["POST", "GET", "HEAD", "OPTIONS"],
+    allow_headers=["*"],
+)
 
 @app.head("/")
 def head_root():
@@ -114,6 +124,31 @@ def head_root():
 def health():
     """Health check endpoint for UptimeRobot monitoring. Always returns 200."""
     return JSONResponse(content={"status": "ok", "service": "OrchestrAI"}, status_code=200)
+
+@app.post("/log-feedback")
+async def log_feedback(request: Request):
+    """
+    Receive interview feedback from the mock interview page.
+    Body: { company, role, questions_faced, confidence_level, difficulty_level }
+    Saves to database/interview_feedback.yaml on GitHub.
+    """
+    try:
+        body = await request.json()
+        from backend.agents.interview_feedback_agent import append_feedback_entry
+        ok = append_feedback_entry({
+            "company":          body.get("company", ""),
+            "role":             body.get("role", ""),
+            "questions_faced":  body.get("questions_faced", []),
+            "confidence":       int(body.get("confidence_level", 5)),
+            "difficulty":       int(body.get("difficulty_level", 5)),
+        })
+        if ok:
+            return JSONResponse({"status": "ok", "message": "Feedback saved! Skill gaps will update in tomorrow's report."})
+        else:
+            return JSONResponse({"status": "error", "message": "Save failed — check server logs."}, status_code=500)
+    except Exception as exc:
+        logger.error("POST /log-feedback error: %s", exc)
+        return JSONResponse({"status": "error", "message": str(exc)}, status_code=500)
 
 @app.get("/", response_class=HTMLResponse)
 def index():

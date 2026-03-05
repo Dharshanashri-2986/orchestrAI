@@ -16,6 +16,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from backend.agents.career_agent import run_career_agent
+from backend.agents.interview_feedback_agent import run_interview_feedback_agent
 from backend.agents.skill_agent import run_skill_agent
 from backend.agents.cover_letter_agent import run_cover_letter_agent
 from backend.agents.practice_agent import run_practice_agent
@@ -117,6 +118,9 @@ def run_orchestrai_pipeline():
 
     # STEP 1: Fetch internships
     run_career_agent()
+
+    # STEP 1.5: Process any stored interview feedback → update skill gaps BEFORE analysis
+    run_interview_feedback_agent()
 
     # STEP 2: Generate per-job skill gap analysis
     run_skill_agent()

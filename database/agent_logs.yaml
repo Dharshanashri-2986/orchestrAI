@@ -1024,3 +1024,38 @@ logs:
     to generate interview Q&A for Zuneko Labs - Artificial Intelligence (AI)'
   status: error
   timestamp: '2026-03-05T04:16:07'
+- agent: PracticeAgent
+  action: 'Failed portal for Mindenious Edutech Data Science: Gemini failed to generate
+    interview Q&A for Mindenious Edutech - Data Science'
+  status: error
+  timestamp: '2026-03-05T04:16:12'
+- agent: PracticeAgent
+  action: 'Failed portal for Emoolar Technology Private Limited Data Science: Gemini
+    failed to generate interview Q&A for Emoolar Technology Private Limited - Data
+    Science'
+  status: error
+  timestamp: '2026-03-05T04:16:18'
+- agent: ResumeOptimizationAgent
+  action: Generated optimizations for 76 internships
+  status: success
+  timestamp: '2026-03-05T04:18:29'
+- agent: AutoApplyAgent
+  action: Generated Application Packages for 76 internships
+  status: success
+  timestamp: '2026-03-05T04:18:30'
+- agent: OpportunityMatchingAgent
+  action: Generated match scores for 76 internships
+  status: success
+  timestamp: '2026-03-05T04:18:30'
+- agent: CareerStrategyAgent
+  action: 'Generated 4-step weekly career strategy for goal: Data Engineering Internship'
+  status: completed
+  timestamp: '2026-03-05T04:18:32'
+- agent: PerInternshipPortfolioAgent
+  action: Generated 0 per-internship portfolio pages
+  status: partial
+  timestamp: '2026-03-05T04:18:32'
+- agent: ExecutionAgent
+  action: Pipeline execution completed and email sent
+  status: success
+  timestamp: '2026-03-05T04:18:37'

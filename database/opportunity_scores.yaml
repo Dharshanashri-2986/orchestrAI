@@ -1,11 +1,11 @@
 - company: RefinedScience
   role: Data Engineering Intern
-  match_score: 30
+  match_score: 27
   selection_probability: Low
   priority: Optional
 - company: Cylinder Health
   role: Junior Data Engineer
-  match_score: 30
+  match_score: 15
   selection_probability: Low
   priority: Optional
 - company: Tinder
@@ -178,12 +178,12 @@
   priority: Strong Consideration
 - company: Stripe
   role: Data Analyst, Intern (Master's degree)
-  match_score: 25
+  match_score: 22
   selection_probability: Low
   priority: Optional
 - company: Stripe
   role: PhD Machine Learning Engineer, Intern
-  match_score: 25
+  match_score: 19
   selection_probability: Low
   priority: Optional
 - company: Storybizz Media Private Limited
@@ -340,6 +340,46 @@
   priority: Strong Consideration
 - company: Credibly
   role: Intern - Data Science/Analyst (Hybrid in NY)
+  match_score: 75
+  selection_probability: Medium
+  priority: Strong Consideration
+- company: Hughes
+  role: ML Engineering Intern
+  match_score: 75
+  selection_probability: Medium
+  priority: Strong Consideration
+- company: The Institute for Advanced Learning and Research
+  role: Artificial Intelligence / Machine Learning Intern
+  match_score: 75
+  selection_probability: Medium
+  priority: Strong Consideration
+- company: Airbnb
+  role: Machine Learning Engineering Intern (PhD)
+  match_score: 75
+  selection_probability: Medium
+  priority: Strong Consideration
+- company: Veolia
+  role: Business Analyst Intern
+  match_score: 75
+  selection_probability: Medium
+  priority: Strong Consideration
+- company: Lensa
+  role: Business Analyst (Intern) - United States
+  match_score: 75
+  selection_probability: Medium
+  priority: Strong Consideration
+- company: Zuneko Labs
+  role: Artificial Intelligence (AI)
+  match_score: 75
+  selection_probability: Medium
+  priority: Strong Consideration
+- company: Mindenious Edutech
+  role: Data Science
+  match_score: 75
+  selection_probability: Medium
+  priority: Strong Consideration
+- company: Emoolar Technology Private Limited
+  role: Data Science
   match_score: 75
   selection_probability: Medium
   priority: Strong Consideration
