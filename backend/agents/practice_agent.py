@@ -51,7 +51,11 @@ GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai/"
 openai_client = OpenAI(
     api_key=OPENAI_API_KEY,
     base_url=GEMINI_BASE_URL,
+    max_retries=0,  # Circuit breaker handles quota errors
 ) if OPENAI_API_KEY else None
+
+# Use shared circuit breaker from ai_engine
+from backend.utils.ai_engine import safe_llm_call as _cb_llm_call, _is_daily_quota_error
 
 JOBS_FILE = "database/jobs.yaml"
 USERS_FILE = "database/users.yaml"
@@ -79,33 +83,19 @@ def _get_public_url(file_path: str) -> str:
 
 import time
 def _ai_chat(system_prompt: str, user_prompt: str, max_tokens: int = 800) -> str:
-    """Send a chat completion request to OpenAI."""
-    if not openai_client:
-        logger.warning("PracticeAgent: OpenAI API key missing — returning fallback.")
+    """Send a chat completion request — circuit breaker aware."""
+    result = _cb_llm_call(
+        messages=[
+            {"role": "system", "content": system_prompt},
+            {"role": "user",   "content": user_prompt},
+        ],
+        max_tokens=max_tokens,
+        temperature=0.7,
+        context=f"practice:{system_prompt[:40]}",
+    )
+    if result is None:
         return ""
-    
-    max_retries = 3
-    
-    for attempt in range(max_retries):
-        try:
-            resp = openai_client.chat.completions.create(
-                model="gemini-2.0-flash",
-                messages=[
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": user_prompt},
-                ],
-                max_tokens=max_tokens,
-                temperature=0.7,
-            )
-            return resp.choices[0].message.content.strip()
-        except Exception as exc:
-            if attempt == max_retries - 1:
-                logger.warning("PracticeAgent: OpenAI call failed after retries — %s", exc)
-                return ""
-            else:
-                logger.warning("PracticeAgent: OpenAI call failed. Retrying... — %s", exc)
-        
-    return ""
+    return result
 
 
 # ==============================================================================
