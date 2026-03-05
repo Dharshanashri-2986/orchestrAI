@@ -64,8 +64,12 @@ logger = logging.getLogger("CareerAgent")
 OPENAI_API_KEY: str = os.getenv("GEMINI_API_KEY", os.getenv("OPENAI_API_KEY", ""))
 openai_client: Optional[OpenAI] = OpenAI(
     api_key=OPENAI_API_KEY,
-    base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
+    base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
+    max_retries=0,  # We do our own retry logic via circuit breaker
 ) if OPENAI_API_KEY else None
+
+# Import shared circuit breaker from ai_engine
+from backend.utils.ai_engine import safe_llm_call, _is_daily_quota_error, _mark_quota_exceeded, _AI_QUOTA_EXCEEDED
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Domain configuration
@@ -644,15 +648,24 @@ def filter_jobs_ai(jobs: list[dict]) -> list[dict]:
     """
     logger.info("CareerAgent: Filtering %d jobs via AI relevance check (batched)…", len(jobs))
 
-    if not openai_client or not jobs:
-        logger.info("CareerAgent: No LLM client — using keyword fallback for all jobs.")
+    # Import here to get the live module-level flag value each time
+    import backend.utils.ai_engine as _ai_eng
+
+    if not openai_client or not jobs or _ai_eng._AI_QUOTA_EXCEEDED:
+        logger.info("CareerAgent: No LLM / quota exceeded — using keyword fallback for all jobs.")
         return [j for j in jobs if _keyword_prefilter(j.get("role", ""))]
 
-    # Build a numbered list of role+company for the LLM to classify in one call
-    BATCH = 50  # send max 50 at a time to stay within token limits
+    BATCH = 50
     relevant: list[dict] = []
+    MODELS = ["gemini-1.5-flash", "gemini-2.0-flash-lite", "gemini-2.0-flash"]
 
     for start in range(0, len(jobs), BATCH):
+        # Check circuit breaker before each batch
+        if _ai_eng._AI_QUOTA_EXCEEDED:
+            logger.warning("CareerAgent: Circuit breaker open — keyword fallback for remaining batches.")
+            relevant.extend([j for j in jobs[start:] if _keyword_prefilter(j.get("role", ""))])
+            break
+
         batch = jobs[start: start + BATCH]
         lines = "\n".join(
             f"{i+1}. {j.get('role','')} @ {j.get('company','')} | skills: {', '.join(j.get('technical_skills',[])[:3])}"
@@ -668,39 +681,34 @@ def filter_jobs_ai(jobs: list[dict]) -> list[dict]:
             "Example: 1,3,5,7\n"
             "If none are relevant, reply: NONE"
         )
-        try:
-            resp = openai_client.chat.completions.create(
-                model="gemini-2.0-flash",
-                messages=[{"role": "user", "content": prompt}],
-                max_tokens=200,
-                temperature=0,
-            )
-            answer = resp.choices[0].message.content.strip()
+
+        answer = safe_llm_call(
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=200, temperature=0,
+            context=f"job filter batch {start+1}-{start+len(batch)}",
+        )
+
+        if answer is None:
+            # Circuit breaker or all models failed — keyword fallback for this batch
+            logger.warning("CareerAgent: LLM unavailable — keyword fallback for batch %d-%d.", start+1, start+len(batch))
+            relevant.extend([j for j in batch if _keyword_prefilter(j.get("role", ""))])
+        elif answer.upper() == "NONE":
+            pass  # No relevant jobs in this batch
+        else:
             logger.info("CareerAgent: Batch %d-%d LLM answer: %s", start+1, start+len(batch), answer[:80])
-
-            if answer.upper() == "NONE":
-                continue
-
-            # Parse "1,3,5" → set of 1-based indices
             indices = set()
             for token in answer.replace(" ", "").split(","):
                 try:
                     idx = int(token)
                     if 1 <= idx <= len(batch):
-                        indices.add(idx - 1)  # convert to 0-based
+                        indices.add(idx - 1)
                 except ValueError:
                     pass
-
             for idx in sorted(indices):
                 relevant.append(batch[idx])
 
-        except Exception as exc:
-            logger.warning("CareerAgent: Batch LLM call failed — %s. Using keyword fallback for this batch.", exc)
-            relevant.extend([j for j in batch if _keyword_prefilter(j.get("role", ""))])
-
-        # Small pause between batches to respect rate limits
-        if start + BATCH < len(jobs):
-            time.sleep(2)
+        if start + BATCH < len(jobs) and not _ai_eng._AI_QUOTA_EXCEEDED:
+            time.sleep(1)  # Reduced from 2s to 1s — breaker handles quota errors now
 
     logger.info("CareerAgent: %d / %d jobs passed relevance filter.", len(relevant), len(jobs))
     return relevant
