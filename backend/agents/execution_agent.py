@@ -27,6 +27,7 @@ from backend.agents.repo_security_scanner_agent import run_repo_security_scanner
 from backend.agents.auto_fix_pr_agent import run_auto_fix_pr_agent
 from backend.agents.career_strategy_agent import run_career_strategy_agent
 from backend.agents.career_readiness_agent import run_career_readiness_agent
+from backend.agents.career_analytics_agent import run_career_analytics_agent
 from backend.agents.interview_coach_agent import run_interview_coach_agent
 from backend.agents.auto_apply_agent import run_auto_apply_agent
 from backend.agents.opportunity_matching_agent import run_opportunity_matching_agent
@@ -116,6 +117,9 @@ def __log_activity(action: str):
 def run_orchestrai_pipeline():
     logging.info("Starting OrchestrAI pipeline")
 
+    base_url      = os.getenv("RENDER_EXTERNAL_URL", "https://orchestrai-agent.onrender.com")
+    analytics_url = f"{base_url}/analytics"
+
     # STEP 1: Fetch internships
     run_career_agent()
 
@@ -154,6 +158,12 @@ def run_orchestrai_pipeline():
 
     # STEP 2.92: Compute Career Readiness Score (uses security + skills + portfolio + practice)
     run_career_readiness_agent()
+
+    # STEP 2.93: Generate Career Analytics Dashboard (Plotly HTML)
+    try:
+        analytics_url = run_career_analytics_agent() or analytics_url
+    except Exception as exc:
+        logger.warning("CareerAnalyticsAgent failed: %s", exc)
 
     # STEP 2.94: Generate per-internship mock interview pages
     run_interview_coach_agent()
@@ -512,6 +522,17 @@ def run_orchestrai_pipeline():
 
         <h3>&#x1F510; Security Insights &mdash; All GitHub Repos</h3>
         <ul style="line-height:1.8">{sec_insights_html}</ul>
+
+        <!-- Footer -->
+        <div style="background:#1a1a2e;border-radius:12px;padding:20px;text-align:center;margin-top:24px">
+          <p style="color:#9ca3af;font-size:12px;margin-bottom:12px">OrchestrAI Autonomous Career Intelligence System</p>
+          <a href="{analytics_url}" style="background:linear-gradient(135deg,#7c3aed,#4f46e5);color:white;
+             padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;
+             display:inline-block;margin:4px">📊 View Career Analytics Dashboard</a>
+          <a href="{base_url}" style="background:#1f2937;color:#9ca3af;
+             padding:12px 24px;border-radius:8px;text-decoration:none;font-size:13px;
+             display:inline-block;margin:4px">🏠 OrchestrAI Dashboard</a>
+        </div>
     </body>
     </html>
     """
