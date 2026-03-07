@@ -38,8 +38,17 @@ async def get_dashboard_data():
     interview_data = read_yaml_from_github("database/interview_sessions.yaml")
     per_internship_data = read_yaml_from_github("database/per_internship_portfolios.yaml")
 
+    def _clean_apply_link(link: str) -> str:
+        if isinstance(link, str) and "linkedin.com/jobs/view/" in link:
+            return link.split("?")[0]
+        return link
+
     # Normalize all data to safe structures
     jobs = jobs_data.get("jobs", []) if isinstance(jobs_data, dict) else []
+    for j in jobs:
+        if "apply_link" in j:
+            j["apply_link"] = _clean_apply_link(j["apply_link"])
+
     skill_analysis = skill_gap_data.get("job_skill_analysis", []) if isinstance(skill_gap_data, dict) else []
     cover_letters = cover_letter_data.get("cover_letters", []) if isinstance(cover_letter_data, dict) else []
     optimizations = optimization_data if isinstance(optimization_data, list) else []

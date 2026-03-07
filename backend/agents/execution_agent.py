@@ -424,7 +424,7 @@ def run_orchestrai_pipeline():
             <td style='padding:12px 8px;border:1px solid #eee'>{job.get('role', '')}</td>
             <td style='padding:12px 8px;border:1px solid #eee;font-size:11px;color:#666'>{location}</td>
             <td style='padding:12px 8px;border:1px solid #eee;font-size:11px;max-width:120px'>{req_skills}</td>
-            <td style='padding:12px 8px;border:1px solid #eee;text-align:center'><a href="{job.get('apply_link','#')}" style="font-weight:700;color:#1565c0;text-decoration:none;display:inline-block;margin-bottom:8px">Apply</a><br><div style="background:#1a73e8;color:white;padding:4px 8px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">Ready to Apply</div></td>
+            <td style='padding:12px 8px;border:1px solid #eee;text-align:center'><a href="{job.get('apply_link','#').split('?')[0] if isinstance(job.get('apply_link'), str) and 'linkedin.com/jobs/view/' in job.get('apply_link') else job.get('apply_link','#')}" style="font-weight:700;color:#1565c0;text-decoration:none;display:inline-block;margin-bottom:8px">Apply</a><br><div style="background:#1a73e8;color:white;padding:4px 8px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">Ready to Apply</div></td>
             <td style='padding:12px 8px;border:1px solid #eee'>{score_html}</td>
             <td style='padding:12px 8px;border:1px solid #eee;color:#c62828;font-size:11px;font-weight:600'>{missing_skills or '<span style="color:#2e7d32">✓ All covered</span>'}</td>
             <td style='padding:12px 8px;border:1px solid #eee;font-size:11px;color:#1565c0;max-width:150px'>{roadmap or '—'}</td>
