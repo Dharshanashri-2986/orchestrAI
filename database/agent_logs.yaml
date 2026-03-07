@@ -1,9 +1,5 @@
 logs:
 - agent: CareerAgent
-  action: 106 jobs fetched
-  level: INFO
-  timestamp: '2026-03-02T15:08:22'
-- agent: CareerAgent
   action: 106 jobs fetched, 59 relevant
   level: INFO
   timestamp: '2026-03-02T15:12:39'
@@ -2588,3 +2584,8 @@ logs:
     2026)'
   status: error
   timestamp: '2026-03-07T10:59:22'
+- agent: PracticeAgent
+  action: 'Failed portal for Staffline Solutions Machine Learning Intern: Gemini failed
+    to generate interview Q&A for Staffline Solutions - Machine Learning Intern'
+  status: error
+  timestamp: '2026-03-07T10:59:25'
