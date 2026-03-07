@@ -1,9 +1,5 @@
 logs:
 - agent: CareerAgent
-  action: 106 jobs fetched, 65 relevant
-  level: INFO
-  timestamp: '2026-03-06T07:13:09'
-- agent: CareerAgent
   action: Stored in GitHub YAML
   level: INFO
   timestamp: '2026-03-06T07:13:11'
@@ -2616,3 +2612,9 @@ logs:
     to generate interview Q&A for PANTHERx Rare Pharmacy - Intern, Data Science'
   status: error
   timestamp: '2026-03-07T11:49:20'
+- agent: PracticeAgent
+  action: 'Failed portal for Nuro Machine Learning intern, Behavior Planning: Gemini
+    failed to generate interview Q&A for Nuro - Machine Learning intern, Behavior
+    Planning'
+  status: error
+  timestamp: '2026-03-07T11:49:23'
