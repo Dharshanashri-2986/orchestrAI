@@ -1,10 +1,5 @@
 logs:
 - agent: PracticeAgent
-  action: 'Failed portal for Veolia Business Analyst Intern: Gemini failed to generate
-    interview Q&A for Veolia - Business Analyst Intern'
-  status: error
-  timestamp: '2026-03-06T07:17:08'
-- agent: PracticeAgent
   action: 'Failed portal for Bankers Financial Corporation Business Analyst Intern:
     Gemini failed to generate interview Q&A for Bankers Financial Corporation - Business
     Analyst Intern'
@@ -2613,3 +2608,8 @@ logs:
     failed to generate interview Q&A for Transcarent - Machine Learning Engineer Intern'
   status: error
   timestamp: '2026-03-07T20:49:40'
+- agent: PracticeAgent
+  action: 'Failed portal for Moloco Machine Learning Engineer Intern: Gemini failed
+    to generate interview Q&A for Moloco - Machine Learning Engineer Intern'
+  status: error
+  timestamp: '2026-03-07T20:49:43'
