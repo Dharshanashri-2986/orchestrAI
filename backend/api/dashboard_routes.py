@@ -58,8 +58,8 @@ async def get_dashboard_data():
             return {k: normalize_urls(v) for k, v in data.items()}
         elif isinstance(data, list):
             return [normalize_urls(item) for item in data]
-        elif isinstance(data, str) and data.startswith("https://orchestrai-agent.onrender.com"):
-            return data.replace("https://orchestrai-agent.onrender.com", "")
+        elif isinstance(data, str) and data.startswith("https://orchestrai.onrender.com"):
+            return data.replace("https://orchestrai.onrender.com", "")
         return data
 
     result = {

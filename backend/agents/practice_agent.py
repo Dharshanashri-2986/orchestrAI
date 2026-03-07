@@ -1088,7 +1088,7 @@ def _render_practice_html(
         // Live Chat Logic
         const COMPANY_SLUG = "{_slugify(company)}";
         const ROLE_SLUG = "{_slugify(role)}";
-        const API_BASE = "https://orchestrai-agent.onrender.com";
+        const API_BASE = "https://orchestrai.onrender.com";
 
         async function sendMessage() {{
             const val = aiInput.value.trim();

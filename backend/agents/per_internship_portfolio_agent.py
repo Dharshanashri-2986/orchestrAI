@@ -275,7 +275,7 @@ def run_per_internship_portfolio_agent() -> list[dict]:
     internships_dir = os.path.join(DATA_DIR, "frontend", "portfolio", "internships")
     os.makedirs(internships_dir, exist_ok=True)
 
-    base_url = os.getenv("RENDER_EXTERNAL_URL", "https://orchestrai-agent.onrender.com")
+    base_url = os.getenv("RENDER_EXTERNAL_URL", "https://orchestrai.onrender.com")
     index = []
     generated = 0
 

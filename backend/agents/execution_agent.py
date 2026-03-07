@@ -117,7 +117,7 @@ def __log_activity(action: str):
 def run_orchestrai_pipeline():
     logging.info("Starting OrchestrAI pipeline")
 
-    base_url      = os.getenv("RENDER_EXTERNAL_URL", "https://orchestrai-agent.onrender.com")
+    base_url      = os.getenv("RENDER_EXTERNAL_URL", "https://orchestrai.onrender.com")
     analytics_url = f"{base_url}/analytics"
 
     # STEP 1: Fetch internships
@@ -189,7 +189,7 @@ def run_orchestrai_pipeline():
     jobs = jobs_data.get("jobs", []) if isinstance(jobs_data, dict) else []
     skill_analysis = skill_gap_data.get("job_skill_analysis", []) if isinstance(skill_gap_data, dict) else []
 
-    base_url = os.getenv("RENDER_EXTERNAL_URL", "https://orchestrai-agent.onrender.com").rstrip("/")
+    base_url = os.getenv("RENDER_EXTERNAL_URL", "https://orchestrai.onrender.com").rstrip("/")
     
     # STEP 4: Convert skill & cover letter analysis to lookup dictionaries
     skill_lookup = {
@@ -469,7 +469,7 @@ def run_orchestrai_pipeline():
               {readiness_html}
             </div>
             <div style="margin-bottom:16px;">
-              <a href="https://orchestrai-agent.onrender.com/dashboard" style="background:linear-gradient(135deg, #1e3a8a, #3b82f6);color:white;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:700;font-size:14px;display:inline-block;box-shadow:0 4px 6px rgba(59,130,246,0.25);border:1px solid #60a5fa">🌐 Launch Web Dashboard</a>
+          <a href="https://orchestrai.onrender.com/dashboard" style="background:linear-gradient(135deg, #1e3a8a, #3b82f6);color:white;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:700;font-size:14px;display:inline-block;box-shadow:0 4px 6px rgba(59,130,246,0.25);border:1px solid #60a5fa">🌐 Launch Web Dashboard</a>
             </div>
           </div>
           <div style="flex:1;min-width:200px">

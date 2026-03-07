@@ -8,4 +8,8 @@ services:
       - key: PYTHON_VERSION
         value: 3.11.0
       - key: RENDER_EXTERNAL_URL
-        value: "https://orchestrai-agent.onrender.com"
+        value: "https://orchestrai.onrender.com"
+      - key: GITHUB_REPO
+        value: "orchestrAI"
+      - key: GITHUB_USERNAME
+        value: "Dharshanashri-2986"

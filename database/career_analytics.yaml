@@ -1,5 +1,5 @@
 analytics:
-  dashboard_url: https://orchestrai-agent.onrender.com/analytics
+  dashboard_url: https://orchestrai.onrender.com/analytics
   readiness_score: 79.2
   readiness_label: ✅ Strong Candidate
   feedback_sessions: 0

@@ -743,7 +743,7 @@ def run_interview_coach_agent() -> list[dict]:
     interview_dir = os.path.join(DATA_DIR, "frontend", "interview")
     os.makedirs(interview_dir, exist_ok=True)
 
-    base_url = os.getenv("RENDER_EXTERNAL_URL", "https://orchestrai-agent.onrender.com")
+    base_url = os.getenv("RENDER_EXTERNAL_URL", "https://orchestrai.onrender.com")
     index    = []
     generated = 0
 
