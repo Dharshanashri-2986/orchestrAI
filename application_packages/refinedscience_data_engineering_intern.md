@@ -4,10 +4,10 @@ Company: RefinedScience
 Role: Data Engineering Intern
 
 Resume:
-https://orchestrai.onrender.com/application_packages/resume.pdf
+Resume extraction failed
 
 Cover Letter:
-https://orchestrai.onrender.com/cover_letters/refinedscience_data_engineering_intern.md
+/cover_letters/refinedscience_data_engineering_intern.md
 
 Apply Here:
 https://remoteOK.com/remote-jobs/remote-data-engineering-intern-refinedscience-1129807
