@@ -58,7 +58,7 @@ security_reports:
   - '[HIGH] SQL String Concat in `final.py` line 53 | Fix: Use parameterized queries
     to prevent SQL injection'
   scanned_files: 1
-  auto_fix_pr: https://github.com/Dharshanashri-2986/Tamil-Movie-Database/pull/1
+  auto_fix_pr: ''
 - repo: Persona-Echo
   repo_url: https://github.com/Dharshanashri-2986/Persona-Echo
   risk_level: Safe
@@ -99,3 +99,19 @@ security_reports:
   - No critical issues detected.
   scanned_files: 0
   auto_fix_pr: ''
+priority_security_fix:
+  repo: orchestrAI
+  repo_url: https://github.com/Dharshanashri-2986/orchestrAI
+  risk: HIGH
+  issue: SQL String Concat
+  file: backend/agents/career_strategy_agent.py
+  line: 134
+  snippet: ''
+  fix: Apply secure coding practices.
+summary:
+  total_repos: 6
+  high_risk: 1
+  medium_risk: 1
+  low_risk: 0
+  safe: 4
+  scanned_at: '2026-03-07T11:42:50'
