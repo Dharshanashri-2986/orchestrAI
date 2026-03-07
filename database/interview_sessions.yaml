@@ -276,3 +276,8 @@ interview_sessions:
   interview_link: /interview/primetrade_ai_artificial_intelligence_ai.html
   current_difficulty: medium
   generated_at: '2026-03-07T23:04:56'
+- company: Primetrade.ai
+  role: Data Science
+  interview_link: /interview/primetrade_ai_data_science.html
+  current_difficulty: medium
+  generated_at: '2026-03-07T23:05:05'
