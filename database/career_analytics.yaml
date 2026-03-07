@@ -1,8 +1,8 @@
 analytics:
-  dashboard_url: https://orchestrai.onrender.com/analytics
-  readiness_score: 79.2
+  dashboard_url: https://orchestrai-u3wt.onrender.com/analytics
+  readiness_score: 82.9
   readiness_label: ✅ Strong Candidate
   feedback_sessions: 0
-  opportunities: 133
+  opportunities: 136
   skill_gaps: 8
-  generated_at: '2026-03-07T07:12:29'
+  generated_at: '2026-03-07T11:11:01'
