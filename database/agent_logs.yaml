@@ -1,10 +1,5 @@
 logs:
 - agent: PracticeAgent
-  action: 'Failed portal for Cylinder Health Junior Data Engineer: Gemini failed to
-    generate interview Q&A for Cylinder Health - Junior Data Engineer'
-  status: error
-  timestamp: '2026-03-03T07:35:10'
-- agent: PracticeAgent
   action: 'Failed portal for Tinder Machine Learning Engineer Intern: Gemini failed
     to generate interview Q&A for Tinder - Machine Learning Engineer Intern'
   status: error
@@ -2624,3 +2619,8 @@ logs:
     Private Limited - Computer Vision'
   status: error
   timestamp: '2026-03-07T11:01:06'
+- agent: PracticeAgent
+  action: 'Failed portal for Mindenious Edutech Data Science: Gemini failed to generate
+    interview Q&A for Mindenious Edutech - Data Science'
+  status: error
+  timestamp: '2026-03-07T11:01:09'
