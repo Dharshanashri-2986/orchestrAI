@@ -199,13 +199,19 @@ def run_orchestrai_pipeline():
     
     cover_letters = cover_letter_data.get("cover_letters", []) if isinstance(cover_letter_data, dict) else []
     cl_lookup = {
-        (item.get("company", ""), item.get("role", "")): (f"{base_url}{item.get('link')}" if item.get('link', '').startswith('/') else f"{base_url}/{item.get('link')}") if item.get('link') else "#"
+        (item.get("company", ""), item.get("role", "")): (
+            item.get('link') if item.get('link', '').startswith('http') else
+            (f"{base_url}{item.get('link')}" if item.get('link', '').startswith('/') else f"{base_url}/{item.get('link')}")
+        ) if item.get('link') else "#"
         for item in cover_letters if isinstance(item, dict)
     }
     
     opt_records = optimization_data if isinstance(optimization_data, list) else []
     opt_lookup = {
-        (item.get("company", ""), item.get("role", "")): (f"{base_url}{item.get('optimized_resume_link')}" if item.get('optimized_resume_link', '').startswith('/') else f"{base_url}/{item.get('optimized_resume_link')}") if item.get('optimized_resume_link') else "#"
+        (item.get("company", ""), item.get("role", "")): (
+            item.get('optimized_resume_link') if item.get('optimized_resume_link', '').startswith('http') else
+            (f"{base_url}{item.get('optimized_resume_link')}" if item.get('optimized_resume_link', '').startswith('/') else f"{base_url}/{item.get('optimized_resume_link')}")
+        ) if item.get('optimized_resume_link') else "#"
         for item in opt_records if isinstance(item, dict)
     }
 
@@ -223,19 +229,28 @@ def run_orchestrai_pipeline():
 
     practice_list = practice_data if isinstance(practice_data, list) else []
     practice_lookup = {
-        (item.get("company", ""), item.get("role", "")): (f"{base_url}{item.get('practice_link')}" if item.get('practice_link', '').startswith('/') else f"{base_url}/{item.get('practice_link')}") if item.get('practice_link') else ""
+        (item.get("company", ""), item.get("role", "")): (
+            item.get('practice_link') if item.get('practice_link', '').startswith('http') else
+            (f"{base_url}{item.get('practice_link')}" if item.get('practice_link', '').startswith('/') else f"{base_url}/{item.get('practice_link')}")
+        ) if item.get('practice_link') else ""
         for item in practice_list if isinstance(item, dict)
     }
 
     per_internship_list = per_internship_portfolio_data.get("per_internship_portfolios", []) if isinstance(per_internship_portfolio_data, dict) else []
     per_internship_lookup = {
-        (item.get("company", ""), item.get("role", "")): (f"{base_url}{item.get('portfolio_url')}" if item.get('portfolio_url', '').startswith('/') else f"{base_url}/{item.get('portfolio_url')}") if item.get('portfolio_url') else ""
+        (item.get("company", ""), item.get("role", "")): (
+            item.get('portfolio_url') if item.get('portfolio_url', '').startswith('http') else
+            (f"{base_url}{item.get('portfolio_url')}" if item.get('portfolio_url', '').startswith('/') else f"{base_url}/{item.get('portfolio_url')}")
+        ) if item.get('portfolio_url') else ""
         for item in per_internship_list if isinstance(item, dict)
     }
 
     interview_list = interview_data.get("interview_sessions", []) if isinstance(interview_data, dict) else []
     interview_lookup = {
-        (item.get("company", ""), item.get("role", "")): (f"{base_url}{item.get('interview_link')}" if item.get('interview_link', '').startswith('/') else f"{base_url}/{item.get('interview_link')}") if item.get('interview_link') else ""
+        (item.get("company", ""), item.get("role", "")): (
+            item.get('interview_link') if item.get('interview_link', '').startswith('http') else
+            (f"{base_url}{item.get('interview_link')}" if item.get('interview_link', '').startswith('/') else f"{base_url}/{item.get('interview_link')}")
+        ) if item.get('interview_link') else ""
         for item in interview_list if isinstance(item, dict)
     }
 
