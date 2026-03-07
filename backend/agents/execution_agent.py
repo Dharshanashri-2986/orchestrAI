@@ -36,12 +36,13 @@ from backend.github_yaml_db import read_yaml_from_github, append_log_entry
 logger = logging.getLogger("OrchestrAI.ExecutionAgent")
 
 # Email Configuration
-EMAIL_USER     = os.getenv("EMAIL_USER", "")
+EMAIL_SENDER   = os.getenv("EMAIL_SENDER", "")
+EMAIL_USER     = os.getenv("EMAIL_USER", EMAIL_SENDER)
 EMAIL_PASS     = os.getenv("EMAIL_PASS", "")
 EMAIL_RECEIVER = os.getenv("EMAIL_RECEIVER", EMAIL_USER)
 SMTP_HOST      = os.getenv("SMTP_HOST", "smtp.gmail.com")
 SMTP_PORT      = int(os.getenv("SMTP_PORT", 587))
-RESEND_API_KEY = os.getenv("RESEND_API_KEY", "")
+RESEND_API_KEY = os.getenv("EMAIL_API_KEY", os.getenv("RESEND_API_KEY", ""))
 
 def _send_via_resend(subject: str, html_content: str) -> bool:
     """Send email via Resend HTTP API (works on Render free tier)."""

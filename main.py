@@ -247,15 +247,24 @@ def start_scheduler():
         logger.error("Initial sync failure: %s", e)
 
     try:
-        from backend.scheduler import schedule_daily_internship_email, run_once_now
+        from backend.scheduler import schedule_daily_internship_email, schedule_daily_dashboard_email, run_once_now
+        from backend.daily_email import send_daily_dashboard_email
 
         if os.getenv("RUN_ON_STARTUP", "false").lower() == "true":
             logger.info("Startup trigger: running full pipeline immediately in background...")
             t = threading.Thread(target=run_full_pipeline, daemon=True)
             t.start()
+            
+            # Also run the daily dashboard email immediately if run_on_startup is true
+            logger.info("Startup trigger: running dashboard email immediately in background...")
+            t_email = threading.Thread(target=send_daily_dashboard_email, daemon=True)
+            t_email.start()
 
         logger.info("Starting scheduler: full pipeline will run daily at 9:30 AM IST.")
         schedule_daily_internship_email(run_full_pipeline, hour=9, minute=30)
+        
+        logger.info("Starting scheduler: dashboard email will run daily at 9:00 AM IST.")
+        schedule_daily_dashboard_email(send_daily_dashboard_email, hour=9, minute=0)
     except Exception as exc:
         logger.error("Scheduler startup failed: %s", exc)
 
@@ -355,12 +364,13 @@ def test_email_endpoint():
     import smtplib, json, requests as req
     from email.message import EmailMessage
 
-    eu = os.getenv("EMAIL_USER", "")
+    email_sender = os.getenv("EMAIL_SENDER", "")
+    eu = os.getenv("EMAIL_USER", email_sender)
     ep = os.getenv("EMAIL_PASS", "")
     er = os.getenv("EMAIL_RECEIVER", eu)
     sh = os.getenv("SMTP_HOST", "smtp.gmail.com")
     sp = int(os.getenv("SMTP_PORT", 587))
-    resend_key = os.getenv("RESEND_API_KEY", "")
+    resend_key = os.getenv("EMAIL_API_KEY", os.getenv("RESEND_API_KEY", ""))
 
     # ── Try Resend first ──────────────────────────────────────────────────────
     if resend_key:

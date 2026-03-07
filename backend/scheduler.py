@@ -27,10 +27,14 @@ IST = ZoneInfo("Asia/Kolkata")
 # Scheduler factory
 # ──────────────────────────────────────────────
 
-def _build_scheduler() -> BackgroundScheduler:
-    """Create a BackgroundScheduler configured for IST timezone."""
-    scheduler = BackgroundScheduler(timezone=IST)
-    return scheduler
+_global_scheduler = None
+
+def _get_scheduler() -> BackgroundScheduler:
+    global _global_scheduler
+    if _global_scheduler is None:
+        _global_scheduler = BackgroundScheduler(timezone=IST)
+        _global_scheduler.add_listener(_job_listener, EVENT_JOB_EXECUTED | EVENT_JOB_ERROR)
+    return _global_scheduler
 
 
 def _job_listener(event: JobExecutionEvent) -> None:
@@ -64,8 +68,7 @@ def schedule_daily_internship_email(job_func, hour: int = 10, minute: int = 45) 
     minute : int
         Minute in IST. Default 45.
     """
-    scheduler = _build_scheduler()
-    scheduler.add_listener(_job_listener, EVENT_JOB_EXECUTED | EVENT_JOB_ERROR)
+    scheduler = _get_scheduler()
 
     trigger = CronTrigger(hour=hour, minute=minute, timezone=IST)
     scheduler.add_job(
@@ -92,8 +95,35 @@ def schedule_daily_internship_email(job_func, hour: int = 10, minute: int = 45) 
     # signal.signal(signal.SIGINT, _shutdown)
     # signal.signal(signal.SIGTERM, _shutdown)
 
-    logger.info("Scheduler: Starting. Press Ctrl+C to stop.")
-    scheduler.start()
+    logger.info("Scheduler: Starting (if not already running). Press Ctrl+C to stop.")
+    if not scheduler.running:
+        scheduler.start()
+
+def schedule_daily_dashboard_email(job_func, hour: int = 9, minute: int = 0) -> None:
+    """
+    Schedule the dashboard email to run every day at `hour`:`minute` IST.
+    """
+    scheduler = _get_scheduler()
+
+    trigger = CronTrigger(hour=hour, minute=minute, timezone=IST)
+    scheduler.add_job(
+        job_func,
+        trigger=trigger,
+        id="dashboard_email_daily",
+        name="Daily Dashboard Email",
+        replace_existing=True,
+        misfire_grace_time=300,
+    )
+
+    logger.info(
+        "Scheduler: Registered 'dashboard_email_daily' — runs every day at %02d:%02d IST.",
+        hour,
+        minute,
+    )
+
+    if not scheduler.running:
+        scheduler.start()
+
 
 
 def run_once_now(job_func) -> None:
