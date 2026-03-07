@@ -4,10 +4,10 @@ Company: Bipolar Factory
 Role: Artificial Intelligence (AI)
 
 Resume:
-https://orchestrai.onrender.com/application_packages/resume.pdf
+Resume extraction failed
 
 Cover Letter:
-https://orchestrai.onrender.com/cover_letters/bipolar_factory_artificial_intelligence_ai.md
+/cover_letters/bipolar_factory_artificial_intelligence_ai.md
 
 Apply Here:
 https://internshala.com/internship/detail/work-from-home-artificial-intelligence-ai-internship-at-bipolar-factory1772529095
