@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OrchestrAI — Career Intelligence Dashboard</title>
+  <meta name="description"
+    content="AI-powered autonomous career intelligence dashboard. Explore internship recommendations, skill analysis, and career strategy." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="/dashboard/static/style.css" />
+</head>
+
+<body>
+
+  <!-- ═══════════ LOADING SCREEN ═══════════ -->
+  <div id="loader" class="loader">
+    <div class="loader-inner">
+      <div class="loader-ring"></div>
+      <div class="loader-ring"></div>
+      <div class="loader-ring"></div>
+      <p class="loader-text">Initializing OrchestrAI<span class="dots">...</span></p>
+    </div>
+  </div>
+
+  <!-- ═══════════ NAVIGATION ═══════════ -->
+  <nav id="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <span class="brand-icon">🤖</span>
+        <span class="brand-text">Orchestr<span class="brand-highlight">AI</span></span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#dashboard" class="nav-link active" data-section="dashboard">Dashboard</a></li>
+        <li><a href="#internships" class="nav-link" data-section="internships">Internships</a></li>
+        <li><a href="#strategy" class="nav-link" data-section="strategy">Career Strategy</a></li>
+        <li><a href="#security" class="nav-link" data-section="security">GitHub Insights</a></li>
+        <li><a href="#interviews" class="nav-link" data-section="interviews">Mock Interview</a></li>
+        <li>
+          <a href="/analytics" target="_blank" class="nav-btn-analytics">
+            <span class="btn-glow"></span>
+            <span class="btn-text">📊 View Career Analytics</span>
+          </a>
+        </li>
+      </ul>
+      <div class="nav-actions">
+        <button id="refreshBtn" class="btn-icon" title="Refresh Data">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M23 4v6h-6" />
+            <path d="M1 20v-6h6" />
+            <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15" />
+          </svg>
+        </button>
+      </div>
+      <button id="mobileMenuBtn" class="mobile-menu-btn">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══════════ MAIN CONTENT ═══════════ -->
+  <main id="mainContent">
+
+    <!-- ──── SECTION 1: CAREER READINESS DASHBOARD ──── -->
+    <section id="dashboard" class="section active">
+      <div class="section-container">
+
+        <!-- Hero -->
+        <div class="hero">
+          <div class="hero-badge">Career Intelligence Dashboard</div>
+          <h1 class="hero-title">Your AI Career<br /><span class="gradient-text">Readiness Report</span></h1>
+          <p class="hero-subtitle">Powered by OrchestrAI Autonomous Agent — Updated daily at 9:30 AM IST</p>
+        </div>
+
+        <!-- Readiness Score Card -->
+        <div class="readiness-card glass-card">
+          <div class="readiness-score-wrap">
+            <div class="score-ring-container">
+              <svg class="score-ring" viewBox="0 0 200 200">
+                <circle class="score-ring-bg" cx="100" cy="100" r="85" />
+                <circle id="scoreRingFill" class="score-ring-fill" cx="100" cy="100" r="85" />
+              </svg>
+              <div class="score-value">
+                <span id="scoreNumber" class="score-number">0</span>
+                <span class="score-max">/100</span>
+              </div>
+            </div>
+            <div class="score-info">
+              <span id="scoreLabel" class="score-label">Computing...</span>
+              <p class="score-desc">Overall career readiness based on skills, portfolio, practice, and security health.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sub-score Cards -->
+        <div class="sub-scores-grid">
+          <div class="sub-score-card glass-card" data-score="skill">
+            <div class="sub-score-icon">🎯</div>
+            <div class="sub-score-ring-wrap">
+              <svg class="sub-ring" viewBox="0 0 120 120">
+                <circle class="sub-ring-bg" cx="60" cy="60" r="50" />
+                <circle class="sub-ring-fill" cx="60" cy="60" r="50" data-target="0" />
+              </svg>
+              <span class="sub-ring-val" id="skillScore">0</span>
+            </div>
+            <h3>Skill Coverage</h3>
+            <p class="sub-score-note">Technical skill match</p>
+          </div>
+          <div class="sub-score-card glass-card" data-score="portfolio">
+            <div class="sub-score-icon">💼</div>
+            <div class="sub-score-ring-wrap">
+              <svg class="sub-ring" viewBox="0 0 120 120">
+                <circle class="sub-ring-bg" cx="60" cy="60" r="50" />
+                <circle class="sub-ring-fill" cx="60" cy="60" r="50" data-target="0" />
+              </svg>
+              <span class="sub-ring-val" id="portfolioScore">0</span>
+            </div>
+            <h3>Portfolio Strength</h3>
+            <p class="sub-score-note">Project showcase quality</p>
+          </div>
+          <div class="sub-score-card glass-card" data-score="practice">
+            <div class="sub-score-icon">🎤</div>
+            <div class="sub-score-ring-wrap">
+              <svg class="sub-ring" viewBox="0 0 120 120">
+                <circle class="sub-ring-bg" cx="60" cy="60" r="50" />
+                <circle class="sub-ring-fill" cx="60" cy="60" r="50" data-target="0" />
+              </svg>
+              <span class="sub-ring-val" id="practiceScore">0</span>
+            </div>
+            <h3>Practice Score</h3>
+            <p class="sub-score-note">Interview preparation</p>
+          </div>
+          <div class="sub-score-card glass-card" data-score="security">
+            <div class="sub-score-icon">🔒</div>
+            <div class="sub-score-ring-wrap">
+              <svg class="sub-ring" viewBox="0 0 120 120">
+                <circle class="sub-ring-bg" cx="60" cy="60" r="50" />
+                <circle class="sub-ring-fill" cx="60" cy="60" r="50" data-target="0" />
+              </svg>
+              <span class="sub-ring-val" id="securityScore">0</span>
+            </div>
+            <h3>Security Health</h3>
+            <p class="sub-score-note">Repository safety</p>
+          </div>
+        </div>
+
+        <!-- Quick Stats Row -->
+        <div class="quick-stats glass-card">
+          <div class="stat-item">
+            <span class="stat-value" id="totalJobs">0</span>
+            <span class="stat-label">Opportunities Found</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-value" id="totalRepos">0</span>
+            <span class="stat-label">Repos Scanned</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-value" id="highMatchCount">0</span>
+            <span class="stat-label">High Match Jobs</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-value" id="safeRepos">0</span>
+            <span class="stat-label">Safe Repos</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ──── SECTION 2: INTERNSHIP EXPLORER ──── -->
+    <section id="internships" class="section">
+      <div class="section-container">
+
+        <div class="section-header">
+          <h2 class="section-title">Internship <span class="gradient-text">Explorer</span></h2>
+          <p class="section-subtitle">AI-curated opportunities matched to your profile</p>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar glass-card">
+          <div class="filter-group">
+            <label>Platform</label>
+            <select id="filterPlatform">
+              <option value="all">All Platforms</option>
+              <option value="Internshala">Internshala</option>
+              <option value="LinkedIn">LinkedIn</option>
+              <option value="RemoteOK">RemoteOK</option>
+              <option value="Greenhouse">Greenhouse</option>
+              <option value="Unstop">Unstop</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Role Type</label>
+            <select id="filterRole">
+              <option value="all">All Roles</option>
+              <option value="Data Science">Data Science</option>
+              <option value="Machine Learning">Machine Learning</option>
+              <option value="Data Engineer">Data Engineering</option>
+              <option value="AI">AI / Deep Learning</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Min Match Score: <span id="scoreSliderVal">0</span></label>
+            <input type="range" id="filterScore" min="0" max="100" value="0" />
+          </div>
+          <div class="filter-group">
+            <label>Location</label>
+            <select id="filterLocation">
+              <option value="all">All Locations</option>
+              <option value="Remote">Remote</option>
+              <option value="On-site">On-site</option>
+            </select>
+          </div>
+          <button id="clearFilters" class="btn-clear">Clear Filters</button>
+        </div>
+
+        <!-- Results Count -->
+        <div class="results-info">
+          <span id="resultsCount">0 opportunities</span>
+        </div>
+
+        <!-- Internship Cards Grid -->
+        <div id="internshipGrid" class="internship-grid">
+          <!-- Cards rendered by JS -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ──── SECTION 3: CAREER STRATEGY ──── -->
+    <section id="strategy" class="section">
+      <div class="section-container">
+
+        <div class="section-header">
+          <h2 class="section-title">Career <span class="gradient-text">Strategy</span></h2>
+          <p class="section-subtitle">AI-generated personalized career guidance</p>
+        </div>
+
+        <!-- Goal Card -->
+        <div id="goalCard" class="goal-card glass-card">
+          <div class="goal-icon">🎯</div>
+          <div class="goal-content">
+            <span class="goal-label">Target Career Goal</span>
+            <h3 id="goalText" class="goal-text">Loading...</h3>
+          </div>
+        </div>
+
+        <!-- Strategy Grid -->
+        <div class="strategy-grid">
+
+          <!-- Skill Gap -->
+          <div class="strategy-panel glass-card">
+            <h3 class="panel-title"><span class="panel-icon">⚠️</span> Top Skill Gaps to Close</h3>
+            <div id="skillGapBadges" class="skill-badges">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+
+          <!-- Portfolio & Practice -->
+          <div class="strategy-panel glass-card">
+            <h3 class="panel-title"><span class="panel-icon">💼</span> Portfolio & Practice</h3>
+            <div class="info-row">
+              <span class="info-label">Portfolio:</span>
+              <span id="portfolioStatus" class="info-value">Loading...</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Practice:</span>
+              <span id="practiceStatus" class="info-value">Loading...</span>
+            </div>
+          </div>
+
+          <!-- Top Opportunities -->
+          <div class="strategy-panel glass-card full-width">
+            <h3 class="panel-title"><span class="panel-icon">🌟</span> Top Matching Opportunities</h3>
+            <ul id="topOpportunities" class="opp-list">
+              <!-- Rendered by JS -->
+            </ul>
+          </div>
+
+          <!-- Weekly Action Plan -->
+          <div class="strategy-panel glass-card full-width">
+            <h3 class="panel-title"><span class="panel-icon">📋</span> This Week's Action Plan</h3>
+            <div id="actionPlan" class="action-plan">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ──── SECTION 4: GITHUB SECURITY INSIGHTS ──── -->
+    <section id="security" class="section">
+      <div class="section-container">
+
+        <div class="section-header">
+          <h2 class="section-title">GitHub <span class="gradient-text">Security Insights</span></h2>
+          <p class="section-subtitle">Automated vulnerability scanning across all repositories</p>
+        </div>
+
+        <!-- Security Overview -->
+        <div class="security-overview">
+          <div class="sec-stat glass-card">
+            <span class="sec-stat-val" id="secTotalRepos">0</span>
+            <span class="sec-stat-label">Total Repos</span>
+          </div>
+          <div class="sec-stat glass-card danger">
+            <span class="sec-stat-val" id="secHighCount">0</span>
+            <span class="sec-stat-label">High Risk</span>
+          </div>
+          <div class="sec-stat glass-card warning">
+            <span class="sec-stat-val" id="secMedCount">0</span>
+            <span class="sec-stat-label">Medium Risk</span>
+          </div>
+          <div class="sec-stat glass-card success">
+            <span class="sec-stat-val" id="secSafeCount">0</span>
+            <span class="sec-stat-label">Safe</span>
+          </div>
+        </div>
+
+        <!-- Security Cards -->
+        <div id="securityGrid" class="security-grid">
+          <!-- Rendered by JS -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ──── SECTION 5: MOCK INTERVIEW ──── -->
+    <section id="interviews" class="section">
+      <div class="section-container">
+
+        <div class="section-header">
+          <h2 class="section-title">Mock <span class="gradient-text">Interview Simulator</span></h2>
+          <p class="section-subtitle">AI-generated interview practice tailored to each role</p>
+        </div>
+
+        <div id="interviewGrid" class="interview-grid">
+          <!-- Rendered by JS -->
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <p>OrchestrAI Autonomous Career Intelligence System</p>
+      <p class="footer-sub">Powered by Gemini 2.0 Flash · Updated daily at 9:30 AM IST</p>
+    </div>
+  </footer>
+
+  <script src="/dashboard/static/app.js"></script>
+</body>
+
+</html>

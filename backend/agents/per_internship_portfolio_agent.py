@@ -309,7 +309,7 @@ def run_per_internship_portfolio_agent() -> list[dict]:
             _put_raw_file(file_path, html, sha, f"feat(portfolio): generated for {company} — {ts}")
 
             # URL via Render's static file server
-            pub_url = f"{base_url}/portfolio/internships/{slug}.html"
+            pub_url = f"/portfolio/internships/{slug}.html"
             index.append({"company": company, "role": role, "portfolio_url": pub_url})
             generated += 1
             logger.info("PerInternshipPortfolioAgent: ✓ %s — %s → %s", company, role, pub_url)

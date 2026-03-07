@@ -77,8 +77,7 @@ def _slugify(text: str) -> str:
 
 def _get_public_url(file_path: str) -> str:
     """Helper to cleanly build the final public URL."""
-    base_url = os.getenv("RENDER_EXTERNAL_URL", "https://orchestrai-agent.onrender.com")
-    return f"{base_url}/{file_path}"
+    return f"/{file_path}"
 
 
 import time
@@ -1089,7 +1088,7 @@ def _render_practice_html(
         // Live Chat Logic
         const COMPANY_SLUG = "{_slugify(company)}";
         const ROLE_SLUG = "{_slugify(role)}";
-        const API_BASE = window.location.origin;
+        const API_BASE = "https://orchestrai-agent.onrender.com";
 
         async function sendMessage() {{
             const val = aiInput.value.trim();

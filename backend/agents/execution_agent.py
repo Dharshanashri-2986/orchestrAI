@@ -189,6 +189,8 @@ def run_orchestrai_pipeline():
     jobs = jobs_data.get("jobs", []) if isinstance(jobs_data, dict) else []
     skill_analysis = skill_gap_data.get("job_skill_analysis", []) if isinstance(skill_gap_data, dict) else []
 
+    base_url = os.getenv("RENDER_EXTERNAL_URL", "https://orchestrai-agent.onrender.com").rstrip("/")
+    
     # STEP 4: Convert skill & cover letter analysis to lookup dictionaries
     skill_lookup = {
         (item.get("company", ""), item.get("role", "")): item
@@ -197,13 +199,13 @@ def run_orchestrai_pipeline():
     
     cover_letters = cover_letter_data.get("cover_letters", []) if isinstance(cover_letter_data, dict) else []
     cl_lookup = {
-        (item.get("company", ""), item.get("role", "")): item.get("link", "#")
+        (item.get("company", ""), item.get("role", "")): (f"{base_url}{item.get('link')}" if item.get('link', '').startswith('/') else f"{base_url}/{item.get('link')}") if item.get('link') else "#"
         for item in cover_letters if isinstance(item, dict)
     }
     
     opt_records = optimization_data if isinstance(optimization_data, list) else []
     opt_lookup = {
-        (item.get("company", ""), item.get("role", "")): item.get("optimized_resume_link", "#")
+        (item.get("company", ""), item.get("role", "")): (f"{base_url}{item.get('optimized_resume_link')}" if item.get('optimized_resume_link', '').startswith('/') else f"{base_url}/{item.get('optimized_resume_link')}") if item.get('optimized_resume_link') else "#"
         for item in opt_records if isinstance(item, dict)
     }
 
@@ -221,19 +223,19 @@ def run_orchestrai_pipeline():
 
     practice_list = practice_data if isinstance(practice_data, list) else []
     practice_lookup = {
-        (item.get("company", ""), item.get("role", "")): item.get("practice_link", "")
+        (item.get("company", ""), item.get("role", "")): (f"{base_url}{item.get('practice_link')}" if item.get('practice_link', '').startswith('/') else f"{base_url}/{item.get('practice_link')}") if item.get('practice_link') else ""
         for item in practice_list if isinstance(item, dict)
     }
 
     per_internship_list = per_internship_portfolio_data.get("per_internship_portfolios", []) if isinstance(per_internship_portfolio_data, dict) else []
     per_internship_lookup = {
-        (item.get("company", ""), item.get("role", "")): item.get("portfolio_url", "")
+        (item.get("company", ""), item.get("role", "")): (f"{base_url}{item.get('portfolio_url')}" if item.get('portfolio_url', '').startswith('/') else f"{base_url}/{item.get('portfolio_url')}") if item.get('portfolio_url') else ""
         for item in per_internship_list if isinstance(item, dict)
     }
 
     interview_list = interview_data.get("interview_sessions", []) if isinstance(interview_data, dict) else []
     interview_lookup = {
-        (item.get("company", ""), item.get("role", "")): item.get("interview_link", "")
+        (item.get("company", ""), item.get("role", "")): (f"{base_url}{item.get('interview_link')}" if item.get('interview_link', '').startswith('/') else f"{base_url}/{item.get('interview_link')}") if item.get('interview_link') else ""
         for item in interview_list if isinstance(item, dict)
     }
 
@@ -461,9 +463,14 @@ def run_orchestrai_pipeline():
 
         <!-- Career Readiness Score -->
         <div style="background:white;border-radius:12px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.08);margin-bottom:20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap">
-          <div>
-            <p style="color:#666;font-size:12px;margin:0 0 6px 0;font-weight:600">&#x1F3AF; CAREER READINESS SCORE</p>
-            {readiness_html}
+          <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+            <div>
+              <p style="color:#666;font-size:12px;margin:0 0 6px 0;font-weight:600">&#x1F3AF; CAREER READINESS SCORE</p>
+              {readiness_html}
+            </div>
+            <div style="margin-bottom:16px;">
+              <a href="https://orchestrai-agent.onrender.com/dashboard" style="background:linear-gradient(135deg, #1e3a8a, #3b82f6);color:white;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:700;font-size:14px;display:inline-block;box-shadow:0 4px 6px rgba(59,130,246,0.25);border:1px solid #60a5fa">🌐 Launch Web Dashboard</a>
+            </div>
           </div>
           <div style="flex:1;min-width:200px">
             <p style="font-size:12px;color:#555;margin:0">
@@ -526,6 +533,9 @@ def run_orchestrai_pipeline():
         <!-- Footer -->
         <div style="background:#1a1a2e;border-radius:12px;padding:20px;text-align:center;margin-top:24px">
           <p style="color:#9ca3af;font-size:12px;margin-bottom:12px">OrchestrAI Autonomous Career Intelligence System</p>
+          <a href="{base_url}/dashboard" style="background:linear-gradient(135deg,#06b6d4,#7c3aed);color:white;
+             padding:14px 32px;border-radius:8px;text-decoration:none;font-weight:700;font-size:15px;
+             display:inline-block;margin:4px;box-shadow:0 4px 20px rgba(124,58,237,0.4)">🚀 View Interactive Dashboard</a>
           <a href="{analytics_url}" style="background:linear-gradient(135deg,#7c3aed,#4f46e5);color:white;
              padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;
              display:inline-block;margin:4px">📊 View Career Analytics Dashboard</a>

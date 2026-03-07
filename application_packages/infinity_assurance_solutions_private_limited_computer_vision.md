@@ -10,7 +10,7 @@ Cover Letter:
 https://orchestrai-agent.onrender.com/cover_letters/infinity_assurance_solutions_private_lim_computer_vision.md
 
 Apply Here:
-https://internshala.com/internship/detail/computer-vision-internship-in-delhi-at-infinity-assurance-solutions-private-limited1772519722
+https://internshala.com/internship/detail/computer-vision-internship-in-delhi-at-infinity-assurance-solutions-private-limited1772345241
 
 Status:
 Ready to Apply

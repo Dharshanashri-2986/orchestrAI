@@ -42,6 +42,17 @@ from fastapi.responses import HTMLResponse
 
 app = FastAPI(title="OrchestrAI Dashboard", description="OrchestrAI Autonomous Career Intelligence System.")
 
+# ── Include Dashboard API routes ───────────────────────────────────────────
+from backend.api.dashboard_routes import router as dashboard_api_router
+app.include_router(dashboard_api_router)
+
+# ── Include Practice routes ────────────────────────────────────────────────
+try:
+    from backend.api.practice_routes import router as practice_router
+    app.include_router(practice_router)
+except Exception:
+    pass
+
 STATIC_DIRS = [
     "database",
     "application_packages",
@@ -50,6 +61,7 @@ STATIC_DIRS = [
     "frontend/portfolio/internships",
     "frontend/interview",
     "frontend/analytics",
+    "frontend/dashboard",
     "optimized_resumes",
     "cover_letters",
 ]
@@ -85,6 +97,22 @@ _safe_mount("/portfolio",           os.path.join(DATA_DIR, "frontend/portfolio")
 _safe_mount("/interview",           os.path.join(DATA_DIR, "frontend/interview"),   "interview", html=True)
 _safe_mount("/optimized_resumes",   os.path.join(DATA_DIR, "optimized_resumes"),    "optimized_resumes")
 _safe_mount("/cover_letters",       os.path.join(DATA_DIR, "cover_letters"),        "cover_letters")
+_safe_mount("/dashboard/static",    os.path.join(DATA_DIR, "frontend/dashboard"),   "dashboard_static", html=False)
+
+@app.get("/dashboard")
+@app.get("/dashboard/")
+async def serve_dashboard():
+    """Serve the interactive career intelligence dashboard."""
+    path = os.path.join(DATA_DIR, "frontend/dashboard/index.html")
+    if os.path.exists(path):
+        from fastapi.responses import FileResponse
+        return FileResponse(path, media_type="text/html")
+    return HTMLResponse(
+        "<h1>Dashboard Loading... 🤖</h1>"
+        "<p>The dashboard files are being set up. Please refresh in a few seconds.</p>"
+        "<script>setTimeout(()=>location.reload(), 3000)</script>",
+        status_code=202,
+    )
 
 @app.get("/analytics")
 @app.get("/analytics/")
@@ -111,7 +139,17 @@ def sync_from_github_cloud():
     _REPO_SLUG = GITHUB_REPO if "/" in GITHUB_REPO else f"{GITHUB_USERNAME}/{GITHUB_REPO}"
     logger.info("Cloud Sync: Starting deep sync from %s...", _REPO_SLUG)
 
-    dirs_to_sync = ["database", "frontend/analytics", "frontend/portfolio/internships", "frontend/interview", "frontend/practice"]
+    dirs_to_sync = [
+        "database",
+        "cover_letters",
+        "optimized_resumes",
+        "application_packages",
+        "frontend/analytics",
+        "frontend/portfolio/internships",
+        "frontend/interview",
+        "frontend/practice",
+        "frontend/dashboard",
+    ]
     
     for d in dirs_to_sync:
         url = f"{_BASE_URL}/repos/{_REPO_SLUG}/contents/{d}?ref={GITHUB_BRANCH}"
