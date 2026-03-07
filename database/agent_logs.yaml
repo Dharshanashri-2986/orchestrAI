@@ -1,10 +1,5 @@
 logs:
 - agent: PracticeAgent
-  action: 'Failed portal for AUMOVIO Data Analysis Intern (Yearlong): Gemini failed
-    to generate interview Q&A for AUMOVIO - Data Analysis Intern (Yearlong)'
-  status: error
-  timestamp: '2026-03-05T09:46:42'
-- agent: PracticeAgent
   action: 'Failed portal for ZURU Toys Data Analyst Intern: Gemini failed to generate
     interview Q&A for ZURU Toys - Data Analyst Intern'
   status: error
@@ -2650,3 +2645,8 @@ logs:
     interview Q&A for Tech Phoenix - Data Engineer Intern'
   status: error
   timestamp: '2026-03-07T11:05:43'
+- agent: PracticeAgent
+  action: 'Failed portal for EXL Data Analyst Associate: Gemini failed to generate
+    interview Q&A for EXL - Data Analyst Associate'
+  status: error
+  timestamp: '2026-03-07T11:05:46'
