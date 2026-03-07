@@ -306,9 +306,15 @@ function renderInternshipCards(jobs) {
         </details>`;
     }
 
+    // Strip tracking parameters which often cause ERR_CONNECTION_RESET
+    let cleanApplyLink = job.apply_link;
+    if (cleanApplyLink && cleanApplyLink.includes("linkedin.com/jobs/view/")) {
+      cleanApplyLink = cleanApplyLink.split("?")[0];
+    }
+
     // Always show all action buttons — disabled state for missing links
-    const applyBtn = job.apply_link
-      ? `<a href="${job.apply_link}" target="_blank" class="btn-action btn-apply">Apply →</a>`
+    const applyBtn = cleanApplyLink
+      ? `<a href="${cleanApplyLink}" target="_blank" class="btn-action btn-apply">Apply →</a>`
       : `<span class="btn-action btn-disabled">Apply →</span>`;
 
     const clBtn = job.cover_letter_link
