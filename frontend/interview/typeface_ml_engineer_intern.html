@@ -105,6 +105,24 @@
   }
   .btn-outline:hover { border-color: var(--text-main); color: var(--text-main); }
 
+  /* Evaluation Cards */
+  .eval-card {
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    border-radius: 12px;
+    padding: 16px;
+    align-self: flex-end;
+    max-width: 85%;
+    animation: bubbleIn 0.3s ease;
+  }
+  .eval-score {
+    display: flex; flex-direction: column; align-items: center;
+    background: rgba(0,0,0,0.2); padding: 8px 12px; border-radius: 8px;
+    min-width: 70px;
+  }
+  .eval-score span { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; }
+  .eval-score strong { font-size: 1.1rem; color: #10b981; }
+
   /* Sections */
   .section-container { margin-bottom: 50px; }
   .section-title {
@@ -766,16 +784,17 @@ async function submitFeedback() {
     showToast('Connection Error', 'Could not reach OrchestrAI agent network: ' + e.message, true);
   } finally {
     setTimeout(() => {
-        btn.innerHTML = '📤 Log Interview & Update Analytics';
-        btn.disabled = false;
+      btn.innerHTML = '📤 Log Interview & Update Analytics';
+      btn.disabled = false;
     }, 1000);
   }
 }
 
 // ----- AI Interview Chat -----
 var chatHistory = [];
-var chatCompany = 'Typeface';
-var chatRole = 'ML Engineer Intern';
+var chatCompany = "Typeface";
+var chatRole = "ML Engineer Intern";
+var currentDifficulty = "medium"; // Loaded from DB
 
 function addChatBubble(role, text, qtype) {
   var messages = document.getElementById('chatMessages');
@@ -790,16 +809,15 @@ function addChatBubble(role, text, qtype) {
   label.textContent = role === 'ai' ? '🤖 AI Interviewer' : '👤 You';
   bubble.appendChild(label);
 
-  var content = document.createElement('div');
-  content.textContent = text;
-  bubble.appendChild(content);
-
-  if (qtype && role === 'ai') {
-    var badge = document.createElement('span');
-    badge.className = 'chat-type-badge ' + qtype;
-    badge.textContent = qtype;
-    bubble.appendChild(badge);
+  var contentWrapper = document.createElement('div');
+  var contentHTML = '';
+  if (qtype) {
+    var color = qtype === 'technical' ? '#3b82f6' : (qtype === 'coding' ? '#10b981' : '#8b5cf6');
+    contentHTML += `<span class="qtype-badge" style="background:${color}">${qtype.toUpperCase()}</span>`;
   }
+  contentHTML += text;
+  contentWrapper.innerHTML = contentHTML;
+  bubble.appendChild(contentWrapper);
 
   messages.appendChild(bubble);
   messages.scrollTop = messages.scrollHeight;
@@ -825,7 +843,8 @@ async function callInterviewAPI(userAnswer) {
     company: chatCompany,
     role: chatRole,
     question_history: chatHistory,
-    user_answer: userAnswer || null
+    user_answer: userAnswer || null,
+    difficulty: currentDifficulty
   };
 
   var resp = await fetch(window.location.origin + '/api/interview/ask', {
@@ -834,35 +853,6 @@ async function callInterviewAPI(userAnswer) {
     body: JSON.stringify(payload)
   });
   return await resp.json();
-}
-
-async function startAIInterview() {
-  var startBtn = document.getElementById('chatStartBtn');
-  var input = document.getElementById('chatInput');
-  var sendBtn = document.getElementById('chatSendBtn');
-
-  startBtn.disabled = true;
-  startBtn.innerHTML = '⏳ Connecting to AI Interviewer...';
-
-  showTypingIndicator();
-
-  try {
-    var data = await callInterviewAPI(null);
-    removeTypingIndicator();
-
-    chatHistory.push({ role: 'ai', content: data.next_question });
-    addChatBubble('ai', data.next_question, data.question_type);
-
-    input.disabled = false;
-    sendBtn.disabled = false;
-    input.focus();
-    startBtn.style.display = 'none';
-  } catch (e) {
-    removeTypingIndicator();
-    startBtn.disabled = false;
-    startBtn.innerHTML = '🚀 Start AI Interview';
-    showToast('Connection Error', 'Could not reach AI interviewer: ' + e.message, true);
-  }
 }
 
 async function callInterviewEvaluate(question, userAnswer) {
@@ -886,7 +876,12 @@ function addEvaluationCard(evalData) {
   var card = document.createElement('div');
   card.className = 'eval-card';
   card.innerHTML = `
-    <div style="font-size:0.85rem; font-weight:700; color:#cbd5e1; margin-bottom:8px; text-transform:uppercase; letter-spacing:1px;">📊 Answer Evaluation</div>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+      <div style="font-size:0.85rem; font-weight:700; color:#cbd5e1; text-transform:uppercase; letter-spacing:1px;">📊 Answer Evaluation</div>
+      <div style="font-size:0.75rem; font-weight:600; color:#94a3b8; background:rgba(255,255,255,0.05); padding:2px 8px; border-radius:4px; border:1px solid rgba(255,255,255,0.1);">
+        DIFF: <span id="difficultyBadge" style="color:#3b82f6;">${currentDifficulty.toUpperCase()}</span>
+      </div>
+    </div>
     <div style="display:flex; gap:16px; margin-bottom:12px; flex-wrap:wrap;">
       <div class="eval-score"><span>Tech Depth</span><strong>${evalData.technical_score}/10</strong></div>
       <div class="eval-score"><span>Clarity</span><strong>${evalData.clarity_score}/10</strong></div>
@@ -937,10 +932,31 @@ async function sendChatAnswer() {
 
     if (evalData && evalData.technical_score !== undefined) {
       addEvaluationCard(evalData);
+      
+      // Step 3 Logic: Adjust difficulty
+      var avgScore = (evalData.technical_score + evalData.clarity_score + evalData.communication_score) / 3;
+      var prevDiff = currentDifficulty;
+      
+      if (avgScore >= 8) {
+        if (currentDifficulty === 'easy') currentDifficulty = 'medium';
+        else if (currentDifficulty === 'medium') currentDifficulty = 'hard';
+      } else if (avgScore <= 5) {
+        if (currentDifficulty === 'hard') currentDifficulty = 'medium';
+        else if (currentDifficulty === 'medium') currentDifficulty = 'easy';
+      }
+      
+      if (prevDiff !== currentDifficulty) {
+          console.log('Difficulty changed to: ' + currentDifficulty);
+          syncDifficultyToDB();
+      }
     }
 
     chatHistory.push({ role: 'ai', content: data.next_question });
     addChatBubble('ai', data.next_question, data.question_type);
+
+    if (data.question_type === 'coding') {
+      showCodingEnvironment(data.next_question);
+    }
 
     input.disabled = false;
     sendBtn.disabled = false;
@@ -950,6 +966,154 @@ async function sendChatAnswer() {
     input.disabled = false;
     sendBtn.disabled = false;
     showToast('Error', 'AI response failed: ' + e.message, true);
+  }
+}
+
+async function syncDifficultyToDB() {
+  try {
+    await fetch(window.location.origin + '/api/interview/update_difficulty', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        company: chatCompany,
+        role: chatRole,
+        difficulty: currentDifficulty
+      })
+    });
+  } catch (e) {
+    console.warn('Could not sync difficulty:', e);
+  }
+}
+
+// Coding Challenge System
+var currentProblem = '';
+var editor = null;
+
+function showCodingEnvironment(problemText) {
+    var codingArea = document.getElementById('codingArea');
+    if (!codingArea) {
+        codingArea = document.createElement('div');
+        codingArea.id = 'codingArea';
+        codingArea.style.cssText = 'margin-top:20px; border-top:1px solid rgba(124,58,237,0.3); padding-top:20px;';
+        codingArea.innerHTML = `
+            <div style="font-family:'Outfit'; font-size:1.1rem; margin-bottom:12px; color:#10b981; display:flex; align-items:center; gap:8px;">
+              <span>💻</span> AI Coding Workspace
+            </div>
+            <div id="monacoEditor" style="height:350px; border-radius:12px; border:1px solid rgba(124,58,237,0.2); overflow:hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2);"></div>
+            <div style="margin-top:12px; display:flex; gap:10px;">
+                <button id="runCodeBtn" style="background:#10b981; color:white; border:none; padding:10px 20px; border-radius:8px; font-weight:600; cursor:pointer; flex:1; transition:0.2s;">▶ Run Code</button>
+                <button id="closeCodingBtn" style="background:rgba(239,68,68,0.1); color:#f87171; border:1px solid rgba(239,68,68,0.2); width:44px; border-radius:8px; cursor:pointer;">✕</button>
+            </div>
+            <div id="codingResult" style="margin-top:12px; display:none;"></div>
+        `;
+        document.querySelector('.chat-messages').parentNode.appendChild(codingArea);
+        
+        // Load Monaco via script tag first if not present
+        if (typeof require === 'undefined') {
+            var loader = document.createElement('script');
+            loader.src = 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/loader.min.js';
+            loader.onload = initMonaco;
+            document.head.appendChild(loader);
+        } else {
+            initMonaco();
+        }
+    } else {
+        codingArea.style.display = 'block';
+    }
+    currentProblem = problemText;
+}
+
+function initMonaco() {
+    require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs' } });
+    require(['vs/editor/editor.main'], function() {
+        editor = monaco.editor.create(document.getElementById('monacoEditor'), {
+            value: "# Write your Python code here\n\ndef solution():\n    pass\n",
+            language: 'python',
+            theme: 'vs-dark',
+            automaticLayout: true,
+            minimap: { enabled: false },
+            fontSize: 14,
+            lineNumbers: 'on',
+            roundedSelection: true,
+            scrollBeyondLastLine: false,
+            readOnly: false,
+            cursorStyle: 'line'
+        });
+    });
+    
+    document.getElementById('runCodeBtn').onclick = submitCode;
+    document.getElementById('closeCodingBtn').onclick = () => { document.getElementById('codingArea').style.display = 'none'; };
+}
+
+async function submitCode() {
+    var btn = document.getElementById('runCodeBtn');
+    var resultDiv = document.getElementById('codingResult');
+    var code = editor.getValue();
+    
+    btn.disabled = true;
+    btn.innerHTML = '⏳ Evaluating...';
+    resultDiv.style.display = 'block';
+    resultDiv.innerHTML = '<div style="color:#94a3b8; font-size:0.9rem;">Analysing code...</div>';
+    
+    try {
+        var resp = await fetch(window.location.origin + '/api/interview/run_code', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ problem: currentProblem, code: code })
+        });
+        var data = await resp.json();
+        
+        var color = data.correctness === 'Pass' ? '#10b981' : (data.correctness === 'Fail' ? '#ef4444' : '#f59e0b');
+        resultDiv.innerHTML = `
+            <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(124,58,237,0.2); border-radius:12px; padding:16px;">
+                <div style="font-weight:700; color:${color}; margin-bottom:8px; font-size:1.1rem;">Coding Evaluation: ${data.correctness}</div>
+                <div style="display:flex; gap:12px; margin-bottom:12px;">
+                    <div style="background:rgba(0,0,0,0.2); padding:6px 12px; border-radius:6px; font-size:0.8rem;">Complexity: <strong style="color:#3b82f6;">${data.runtime_complexity}</strong></div>
+                    <div style="background:rgba(0,0,0,0.2); padding:6px 12px; border-radius:6px; font-size:0.8rem;">Quality: <strong style="color:#8b5cf6;">${data.code_quality}/10</strong></div>
+                </div>
+                <div style="font-size:0.9rem; padding:12px; background:rgba(0,0,0,0.2); border-left:3px solid #3b82f6; color:#e2e8f0; border-radius:4px;">
+                    <strong>Suggestion:</strong> ${data.suggestion}
+                </div>
+            </div>
+        `;
+    } catch (e) {
+        resultDiv.innerHTML = '<div style="color:#ef4444;">Evaluation failed. Please check your connection.</div>';
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '▶ Run Code';
+    }
+}
+
+async function startAIInterview() {
+  var startBtn = document.getElementById('chatStartBtn');
+  var input = document.getElementById('chatInput');
+  var sendBtn = document.getElementById('chatSendBtn');
+
+  startBtn.disabled = true;
+  startBtn.innerHTML = '⏳ Connecting to AI Interviewer...';
+
+  showTypingIndicator();
+
+  try {
+    var data = await callInterviewAPI(null);
+    removeTypingIndicator();
+
+    chatHistory.push({ role: 'ai', content: data.next_question });
+    addChatBubble('ai', data.next_question, data.question_type);
+
+    input.disabled = false;
+    sendBtn.disabled = false;
+    input.focus();
+    startBtn.style.display = 'none';
+
+    if (data.question_type === 'coding') {
+      showCodingEnvironment(data.next_question);
+    }
+  } catch (e) {
+    removeTypingIndicator();
+    startBtn.disabled = false;
+    startBtn.innerHTML = '🚀 Start AI Interview';
+    showToast('Connection Error', 'Could not reach AI interviewer: ' + e.message, true);
   }
 }
 
