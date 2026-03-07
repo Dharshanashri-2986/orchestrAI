@@ -522,7 +522,7 @@ function renderSecurity(reports) {
         <div class="sec-issue">${escapeHtml(topIssue)}</div>
         <div class="sec-card-actions">
           <a href="${repoUrl}" target="_blank" class="btn-action btn-secondary">View Repo</a>
-          ${prUrl ? `<a href="${prUrl}" target="_blank" class="btn-action btn-apply">View Fix PR →</a>` : ""}
+          ${(risk === "high" || risk === "medium") ? `<a href="${prUrl || (repoUrl + '/pulls')}" target="_blank" class="btn-action btn-apply">${prUrl ? 'View Fix PR →' : 'View Fixes →'}</a>` : ""}
         </div>
       </div>`;
   }).join("");
