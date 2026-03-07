@@ -433,3 +433,9 @@ logs:
     Learning Intern - Summer 2026'
   status: error
   timestamp: '2026-03-07T23:54:20'
+- agent: PracticeAgent
+  action: 'Failed portal for Nuro Machine Learning intern, Behavior Planning: Gemini
+    failed to generate interview Q&A for Nuro - Machine Learning intern, Behavior
+    Planning'
+  status: error
+  timestamp: '2026-03-07T23:54:23'
