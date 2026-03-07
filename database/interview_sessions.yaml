@@ -60,3 +60,8 @@ interview_sessions:
   interview_link: /interview/upstart_machine_learning_engineer_intern.html
   current_difficulty: medium
   generated_at: '2026-03-07T22:58:08'
+- company: Typeface
+  role: ML Engineer Intern
+  interview_link: /interview/typeface_ml_engineer_intern.html
+  current_difficulty: medium
+  generated_at: '2026-03-07T22:58:17'
