@@ -1,10 +1,5 @@
 logs:
 - agent: PracticeAgent
-  action: 'Failed portal for Thermo Fisher Data Engineer II: Gemini failed to generate
-    interview Q&A for Thermo Fisher - Data Engineer II'
-  status: error
-  timestamp: '2026-03-05T09:50:14'
-- agent: PracticeAgent
   action: 'Failed portal for Cvent Data Science Intern (Summer 2026): Gemini failed
     to generate interview Q&A for Cvent - Data Science Intern (Summer 2026)'
   status: error
@@ -2622,3 +2617,8 @@ logs:
     interview Q&A for Unnati Enterprises - Data Science'
   status: error
   timestamp: '2026-03-07T11:47:42'
+- agent: PracticeAgent
+  action: 'Failed portal for Innoknowvex Machine Learning: Gemini failed to generate
+    interview Q&A for Innoknowvex - Machine Learning'
+  status: error
+  timestamp: '2026-03-07T11:47:49'
