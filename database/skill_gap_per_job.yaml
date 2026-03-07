@@ -21,9 +21,13 @@ job_skill_analysis:
   - Learn Git via official documentation and project practice
 - company: Tinder
   role: Machine Learning Engineer Intern
-  missing_skills: []
+  missing_skills:
+  - Sdrtyui Knowledge
   roadmap:
   - No skill gaps detected. You are well-equipped for this role!
+  - Study sdrtyui
+  feedback_updated_at: '2026-03-07T23:35:09'
+  feedback_note: 'Confidence 6/10 on: sdrtyui'
 - company: Lensa
   role: Machine Learning Engineer Intern
   missing_skills: []
