@@ -9,3 +9,8 @@ interview_sessions:
   interview_link: /interview/cylinder_health_junior_data_engineer.html
   current_difficulty: medium
   generated_at: '2026-03-07T22:56:33'
+- company: Tinder
+  role: Machine Learning Engineer Intern
+  interview_link: /interview/tinder_machine_learning_engineer_intern.html
+  current_difficulty: medium
+  generated_at: '2026-03-07T22:56:42'
