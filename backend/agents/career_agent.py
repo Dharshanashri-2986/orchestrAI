@@ -454,6 +454,8 @@ async def fetch_linkedin_jobs() -> list[dict]:
                     company  = company_el.get_text(strip=True) if company_el else "Unknown"
                     location = location_el.get_text(strip=True) if location_el else "Unknown"
                     link     = link_el["href"] if link_el and link_el.has_attr("href") else ""
+                    if link and "linkedin.com/jobs/view/" in link:
+                        link = link.split("?")[0]
 
                     if not title or not _keyword_prefilter(title):
                         continue
