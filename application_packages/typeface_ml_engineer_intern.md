@@ -4,13 +4,13 @@ Company: Typeface
 Role: ML Engineer Intern
 
 Resume:
-https://orchestrai.onrender.com/application_packages/resume.pdf
+Resume extraction failed
 
 Cover Letter:
-https://orchestrai.onrender.com/cover_letters/typeface_ml_engineer_intern.md
+/cover_letters/typeface_ml_engineer_intern.md
 
 Apply Here:
-https://www.linkedin.com/jobs/view/ml-engineer-intern-at-typeface-4332255089?position=8&pageNum=0&refId=c6YLiKJJMdgd3V7m73HE2A%3D%3D&trackingId=n8pYaOHTENMgE9vmIB1Cng%3D%3D
+https://www.linkedin.com/jobs/view/ml-engineer-intern-at-typeface-4332255089?position=10&pageNum=0&refId=oW5WTR7jmzCOodIra%2B4vrA%3D%3D&trackingId=v6GgcTXLAeUKUJjx9ch4sA%3D%3D
 
 Status:
 Ready to Apply
