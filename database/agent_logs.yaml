@@ -1,11 +1,5 @@
 logs:
 - agent: PracticeAgent
-  action: 'Failed portal for Anne Klein Official Data Analyst Internship Spring 2026:
-    Gemini failed to generate interview Q&A for Anne Klein Official - Data Analyst
-    Internship Spring 2026'
-  status: error
-  timestamp: '2026-03-06T07:17:00'
-- agent: PracticeAgent
   action: 'Failed portal for FinZebra AI Engineering & Learning Design: Gemini failed
     to generate interview Q&A for FinZebra - AI Engineering & Learning Design'
   status: error
@@ -2617,3 +2611,8 @@ logs:
   action: PracticeAgent run initiated
   status: success
   timestamp: '2026-03-07T20:49:02'
+- agent: PracticeAgent
+  action: 'Failed portal for RefinedScience Data Engineering Intern: Gemini failed
+    to generate interview Q&A for RefinedScience - Data Engineering Intern'
+  status: error
+  timestamp: '2026-03-07T20:49:09'
