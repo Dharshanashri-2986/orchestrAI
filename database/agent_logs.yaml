@@ -1,11 +1,5 @@
 logs:
 - agent: PracticeAgent
-  action: 'Failed portal for TikTok Business Analyst Project Intern (GBS SMB) - 2026
-    Start (BS/MS): Gemini failed to generate interview Q&A for TikTok - Business Analyst
-    Project Intern (GBS SMB) - 2026 Start (BS/MS)'
-  status: error
-  timestamp: '2026-03-06T07:16:11'
-- agent: PracticeAgent
   action: 'Failed portal for TikTok Business Analyst Project Intern - Monetization
     Strategy & Operations - 2026 Start (BS/MS): Gemini failed to generate interview
     Q&A for TikTok - Business Analyst Project Intern - Monetization Strategy & Operations
@@ -2638,3 +2632,9 @@ logs:
     / Machine Learning Intern'
   status: error
   timestamp: '2026-03-07T11:51:19'
+- agent: PracticeAgent
+  action: 'Failed portal for Lensa Business Analyst (Intern) - United States: Gemini
+    failed to generate interview Q&A for Lensa - Business Analyst (Intern) - United
+    States'
+  status: error
+  timestamp: '2026-03-07T11:51:22'
