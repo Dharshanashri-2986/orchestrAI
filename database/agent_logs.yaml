@@ -1,9 +1,5 @@
 logs:
 - agent: CareerAgent
-  action: Fetch started
-  level: INFO
-  timestamp: '2026-03-03T05:46:20'
-- agent: CareerAgent
   action: 103 jobs fetched
   level: INFO
   timestamp: '2026-03-03T05:46:33'
@@ -2599,3 +2595,8 @@ logs:
     America Electronic Components, Inc. - 5039 Data Analyst Engineering Intern'
   status: error
   timestamp: '2026-03-07T10:59:49'
+- agent: PracticeAgent
+  action: 'Failed portal for Aday Data Analysis Intern: Gemini failed to generate
+    interview Q&A for Aday - Data Analysis Intern'
+  status: error
+  timestamp: '2026-03-07T10:59:53'
