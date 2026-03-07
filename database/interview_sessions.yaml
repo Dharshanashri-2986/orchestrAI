@@ -261,3 +261,8 @@ interview_sessions:
   interview_link: /interview/lensa_data_science_intern.html
   current_difficulty: medium
   generated_at: '2026-03-07T23:04:26'
+- company: METRO Regional Transit Authority
+  role: Data Analyst Intern
+  interview_link: /interview/metro_regional_transit_authority_data_analyst_intern.html
+  current_difficulty: medium
+  generated_at: '2026-03-07T23:04:36'
