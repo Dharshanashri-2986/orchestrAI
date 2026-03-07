@@ -1,10 +1,5 @@
 logs:
 - agent: PracticeAgent
-  action: 'Failed portal for Moloco Machine Learning Engineer Intern: Gemini failed
-    to generate interview Q&A for Moloco - Machine Learning Engineer Intern'
-  status: error
-  timestamp: '2026-03-03T07:54:36'
-- agent: PracticeAgent
   action: 'Failed portal for TikTok (General Hire) Machine Learning Engineer Intern
     (TikTok-Recommendation) - 2026 Summer (BS/MS): Gemini failed to generate interview
     Q&A for TikTok - (General Hire) Machine Learning Engineer Intern (TikTok-Recommendation)
@@ -2624,3 +2619,9 @@ logs:
     Data Analyst Intern'
   status: error
   timestamp: '2026-03-07T11:01:36'
+- agent: PracticeAgent
+  action: 'Failed portal for Primetrade.ai Machine Learning (Modeling + Evaluation):
+    Gemini failed to generate interview Q&A for Primetrade.ai - Machine Learning (Modeling
+    + Evaluation)'
+  status: error
+  timestamp: '2026-03-07T11:01:41'
