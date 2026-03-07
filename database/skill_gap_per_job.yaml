@@ -704,3 +704,13 @@ job_skill_analysis:
   missing_skills: []
   roadmap:
   - No skill gaps detected. You are well-equipped for this role!
+- company: Lensa
+  role: AI Data Science Intern
+  missing_skills: []
+  roadmap:
+  - No skill gaps detected. You are well-equipped for this role!
+- company: Genpact
+  role: Business Analyst
+  missing_skills: []
+  roadmap:
+  - No skill gaps detected. You are well-equipped for this role!
