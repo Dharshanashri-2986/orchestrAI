@@ -191,3 +191,8 @@ interview_sessions:
   interview_link: /interview/zuneko_labs_artificial_intelligence_ai.html
   current_difficulty: medium
   generated_at: '2026-03-07T23:02:11'
+- company: Unnati Enterprises
+  role: Data Science
+  interview_link: /interview/unnati_enterprises_data_science.html
+  current_difficulty: medium
+  generated_at: '2026-03-07T23:02:20'
