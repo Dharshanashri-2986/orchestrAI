@@ -8,6 +8,7 @@ Provides JSON API for the interactive career dashboard.
 from __future__ import annotations
 
 import logging
+import os
 from fastapi import APIRouter
 from backend.github_yaml_db import read_yaml_from_github
 
