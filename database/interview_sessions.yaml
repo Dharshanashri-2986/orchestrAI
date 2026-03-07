@@ -246,3 +246,8 @@ interview_sessions:
   interview_link: /interview/unknown_artificial_intelligence_intern.html
   current_difficulty: medium
   generated_at: '2026-03-07T23:03:57'
+- company: Symonis
+  role: Machine Learning
+  interview_link: /interview/symonis_machine_learning.html
+  current_difficulty: medium
+  generated_at: '2026-03-07T23:04:07'
