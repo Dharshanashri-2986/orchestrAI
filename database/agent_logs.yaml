@@ -1,9 +1,5 @@
 logs:
 - agent: CareerAgent
-  action: Fetch started
-  level: INFO
-  timestamp: '2026-03-03T07:25:58'
-- agent: CareerAgent
   action: 104 jobs fetched
   level: INFO
   timestamp: '2026-03-03T07:26:11'
@@ -2613,3 +2609,8 @@ logs:
     generate interview Q&A for ACCA Careers - Business Analyst Intern'
   status: error
   timestamp: '2026-03-07T11:00:31'
+- agent: PracticeAgent
+  action: 'Failed portal for MTX Group Business Analyst Intern: Gemini failed to generate
+    interview Q&A for MTX Group - Business Analyst Intern'
+  status: error
+  timestamp: '2026-03-07T11:00:35'
