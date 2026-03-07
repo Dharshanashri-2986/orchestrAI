@@ -53,6 +53,13 @@ try:
 except Exception:
     pass
 
+# ── Include Interview API routes ───────────────────────────────────────────
+try:
+    from backend.api.interview_routes import router as interview_api_router
+    app.include_router(interview_api_router)
+except Exception:
+    pass
+
 STATIC_DIRS = [
     "database",
     "application_packages",
