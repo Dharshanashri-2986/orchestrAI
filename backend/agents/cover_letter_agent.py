@@ -10,6 +10,7 @@ Falls back to a template if LLM is unavailable.
 import logging
 import os
 import re
+import time
 from datetime import datetime, timezone
 
 from dotenv import load_dotenv
@@ -175,6 +176,9 @@ def run_cover_letter_agent() -> list[dict]:
                 index_data.append({"company": company, "role": role, "link": link})
                 processed += 1
                 logger.info("CoverLetterAgent: ✓ %s — %s", company, role)
+                
+            # Rate limit protection (Gemini 15 RPM free tier / GitHub secondary limits)
+            time.sleep(4.5)
         except Exception as exc:
             logger.error("CoverLetterAgent: Failed for %s %s - %s", company, role, exc)
 

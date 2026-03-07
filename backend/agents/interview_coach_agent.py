@@ -21,6 +21,7 @@ from __future__ import annotations
 import logging
 import os
 import re
+import time
 from datetime import datetime, timezone
 
 from dotenv import load_dotenv
@@ -1181,6 +1182,9 @@ def run_interview_coach_agent() -> list[dict]:
             })
             generated += 1
             logger.info("InterviewCoachAgent: ✓ %s — %s → %s", company, role, interview_url)
+            
+            # Rate limit protection (Gemini 15 RPM free tier / GitHub secondary limits)
+            time.sleep(4.5)
 
         except Exception as exc:
             logger.error("InterviewCoachAgent: Failed for %s %s — %s", company, role, exc)

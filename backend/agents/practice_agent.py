@@ -1315,6 +1315,10 @@ def run_practice_agent() -> list[dict]:
                 "practice_link": practice_link,
             })
             logger.info("PracticeAgent: ✅ Portal done for %s — %s", company, role)
+            
+            # Rate limit protection (Gemini 15 RPM free tier / GitHub secondary limits)
+            import time
+            time.sleep(4.5)
 
         except Exception as exc:
             logger.error("PracticeAgent: ❌ Failed for %s — %s: %s", company, role, exc)
