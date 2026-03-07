@@ -380,46 +380,11 @@
     <p class="section-desc">Projects from my GitHub account.</p>
     <div class="projects-grid">
       
-        <div class="pdf-only-message" style="display:none;">
+        <div>
             <p style="color:var(--text-muted); font-style:italic; padding: 20px; text-align:center; border: 1px dashed var(--border); border-radius: 12px;">No relevant GitHub repositories found on your profile for this specific role yet.</p>
         </div>
     </div>
   </div>
-
-  <!-- ═══ 5. SUGGESTED PROJECTS (HIDDEN IN PDF) ═══ -->
-  
-        <div class="animate-on-scroll print-hide" style="margin-top: 40px;">
-            <div class="section-title" style="margin-bottom: 8px; color:var(--text-primary);">
-                <span class="icon" style="background:rgba(59, 130, 246, 0.15);">💡</span> Suggested Projects to Build
-            </div>
-            <p class="section-desc" style="color:var(--accent-text);">No relevant repositories were found in your GitHub for this role. Here are some example projects you can build for inspiration.</p>
-            <div class="projects-grid">
-        
-            <div class="project-card suggestion" style="animation-delay:0.0s; border-color: rgba(59, 130, 246, 0.3);">
-                <div class="project-header">
-                    <h4 class="project-name">apache/airflow</h4>
-                    <span class="project-badge" style="background:rgba(59, 130, 246, 0.2); color:#60a5fa; border-color:rgba(59,130,246,0.4);">Suggestion</span>
-                </div>
-                <p style="color:var(--text-secondary); margin-bottom:20px; font-size: 0.95rem;">Platform to programmatically author, schedule, and monitor workflows.</p>
-                <a href="https://github.com/apache/airflow" target="_blank" class="project-link" style="border-color:rgba(59, 130, 246, 0.3);">
-                    View on GitHub
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
-                </a>
-            </div>
-            <div class="project-card suggestion" style="animation-delay:0.1s; border-color: rgba(59, 130, 246, 0.3);">
-                <div class="project-header">
-                    <h4 class="project-name">pandas-dev/pandas</h4>
-                    <span class="project-badge" style="background:rgba(59, 130, 246, 0.2); color:#60a5fa; border-color:rgba(59,130,246,0.4);">Suggestion</span>
-                </div>
-                <p style="color:var(--text-secondary); margin-bottom:20px; font-size: 0.95rem;">Flexible and powerful data analysis / manipulation library for Python.</p>
-                <a href="https://github.com/pandas-dev/pandas" target="_blank" class="project-link" style="border-color:rgba(59, 130, 246, 0.3);">
-                    View on GitHub
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
-                </a>
-            </div>
-            </div>
-        </div>
-        
 
 </div>
 
@@ -443,9 +408,6 @@ function downloadPDF() {
   const container = document.getElementById('portfolio-content');
   
   btn.innerHTML = 'Generating PDF...';
-  
-  // Add class to hide suggestions and show PDF-only messages
-  container.classList.add('downloading-pdf');
 
   const opt = {
     margin: 0,
