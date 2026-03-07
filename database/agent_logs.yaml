@@ -176,3 +176,8 @@ logs:
     interview Q&A for Typeface - ML Engineer Intern'
   status: error
   timestamp: '2026-03-07T23:53:19'
+- agent: PracticeAgent
+  action: 'Failed portal for Staffline Solutions Machine Learning Intern: Gemini failed
+    to generate interview Q&A for Staffline Solutions - Machine Learning Intern'
+  status: error
+  timestamp: '2026-03-07T23:53:21'
