@@ -758,3 +758,8 @@ logs:
     Intern (Summer 2026)'
   status: error
   timestamp: '2026-03-07T23:58:47'
+- agent: PracticeAgent
+  action: 'Failed portal for Washington Commanders Data Analyst (Intern): Gemini failed
+    to generate interview Q&A for Washington Commanders - Data Analyst (Intern)'
+  status: error
+  timestamp: '2026-03-07T23:58:50'
