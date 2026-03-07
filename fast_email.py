@@ -15,7 +15,7 @@ def run_fast_email():
     logger.info("Starting FAST email dispatch...")
 
     # Set analytics URL fallback
-    analytics_url = "https://orchestrai-agent.onrender.com/analytics"
+    analytics_url = "https://orchestrai.onrender.com/analytics"
 
     # STEP 3: Read GitHub database
     jobs_data = read_yaml_from_github("database/jobs.yaml")
@@ -242,8 +242,12 @@ def run_fast_email():
     """
 
     logger.info("Sending fast email...")
-    send_email("Daily AI & Data Science Internship Report with Skill Gap Analysis", html)
-    logger.info("Fast email dispatched to your inbox.")
+    success = send_email("Daily AI & Data Science Internship Report with Skill Gap Analysis", html)
+    if success:
+        logger.info("✅ SUCCESS: Fast email dispatched to your inbox.")
+    else:
+        logger.error("❌ FAILURE: Could not send email. Please check your EMAIL_USER and EMAIL_PASS in the .env file.")
+        sys.exit(1)
 
 if __name__ == "__main__":
     run_fast_email()
