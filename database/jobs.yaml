@@ -151,7 +151,7 @@ jobs:
   source: LinkedIn
   timestamp: '2026-03-01T18:27:24.850939+00:00'
 - company: Matson Logistics
-  role: "AI & Machine Learning Intern \u2013 Operations"
+  role: AI & Machine Learning Intern – Operations
   location: Walnut Creek, CA1 day ago
   apply_link: https://www.linkedin.com/jobs/view/ai-machine-learning-intern-%E2%80%93-operations-at-matson-logistics-4379280413
   role_keywords:
@@ -995,7 +995,7 @@ jobs:
   technical_skills: []
   source: Internshala
   timestamp: '2026-03-05T09:33:45.631841+00:00'
-- company: "Unknown Company \u2013 Source Incomplete"
+- company: Unknown Company – Source Incomplete
   role: Data Science Intern
   location: India / Remote
   apply_link: ''
@@ -1022,7 +1022,7 @@ jobs:
   technical_skills: []
   source: Internshala
   timestamp: '2026-03-05T09:33:48.010184+00:00'
-- company: "Unknown Company \u2013 Source Incomplete"
+- company: Unknown Company – Source Incomplete
   role: Machine Learning Intern
   location: India / Remote
   apply_link: ''
@@ -1049,7 +1049,7 @@ jobs:
   technical_skills: []
   source: Internshala
   timestamp: '2026-03-05T09:33:48.268873+00:00'
-- company: "Unknown Company \u2013 Source Incomplete"
+- company: Unknown Company – Source Incomplete
   role: Artificial Intelligence Intern
   location: India / Remote
   apply_link: ''
@@ -1273,4 +1273,21 @@ jobs:
   technical_skills: []
   source: Internshala
   timestamp: '2026-03-07T11:41:46.228338+00:00'
-last_updated: '2026-03-07T11:42:05.936434+00:00'
+- company: Lensa
+  role: AI Data Science Intern
+  location: Orlando, FLBe an early applicant19 hours ago
+  apply_link: https://www.linkedin.com/jobs/view/ai-data-science-intern-at-lensa-4382331246?position=6&pageNum=0&refId=QcL2Agvqdre%2B8P3bjNYhbw%3D%3D&trackingId=e6IsuwAFSmH2XFSZBT%2FgHA%3D%3D
+  role_keywords:
+  - Data Science
+  technical_skills: []
+  source: LinkedIn
+  timestamp: '2026-03-07T20:44:49.470004+00:00'
+- company: Genpact
+  role: Business Analyst
+  location: India
+  apply_link: https://unstop.com/jobs/1654568
+  role_keywords: []
+  technical_skills: []
+  source: Unstop
+  timestamp: '2026-03-07T20:44:54.431521+00:00'
+last_updated: '2026-03-07T20:45:18.569014+00:00'
