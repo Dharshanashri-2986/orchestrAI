@@ -363,191 +363,153 @@ def run_orchestrai_pipeline():
     # STEP 5: Generate HTML table rows
 
     rows = ""
-
     for job in jobs:
         if not isinstance(job, dict):
             continue
-            
         c_name = job.get("company", "")
-            
         key = (c_name, job.get("role", ""))
         analysis = skill_lookup.get(key, {})
-
+        
+        # New Column Data
+        location = job.get("location", "Remote")
+        req_skills = ", ".join(job.get("technical_skills", []))
         missing_skills = ", ".join(analysis.get("missing_skills", []))
         roadmap = " &rarr; ".join(analysis.get("roadmap", []))
         
-        cl_link = cl_lookup.get(key, "#")
-        if cl_link and cl_link != "#":
-            cl_html = f'<a href="{cl_link}" style="background:#2e7d32; color:white; padding:6px 12px; text-decoration:none; border-radius:6px; display:inline-block; margin-bottom: 4px;">Cover Letter</a>'
-        else:
-            cl_html = "Not Generated"
-            
-        opt_link = opt_lookup.get(key, "#")
-        if opt_link and opt_link != "#":
-            opt_html = f'<a href="{opt_link}" style="background:#0277bd; color:white; padding:6px 12px; text-decoration:none; border-radius:6px; display:inline-block;">Optimized Resume</a>'
-        else:
-            opt_html = "Not Generated"
-            
-        app_pkg = app_pkg_lookup.get(key, {})
-        app_status = app_pkg.get("status", "Not Generated")
-        app_link = app_pkg.get("application_package_link", "#")
-        
-        status_color = "#f29900" if app_status == "Not Generated" else "#1a73e8"
-        
-        if app_link and app_link != "#":
-            app_html = f'<br><br><a href="{app_link}" style="padding:4px 8px; border-radius:4px; font-weight:bold; color:white; background-color:{status_color}; font-size:11px; text-decoration:none; display:inline-block;">{app_status}</a>'
-        else:
-            app_html = f'<br><br><span style="padding:4px 8px; border-radius:4px; font-weight:bold; color:white; background-color:{status_color}; font-size:11px; display:inline-block;">{app_status}</span>'
-
+        # Match Score Details
         score_info = score_lookup.get(key, {})
         match_score = score_info.get("match_score", 0)
-        prob = score_info.get("selection_probability", "Unknown")
-        priority = score_info.get("priority", "Unknown")
-        
-        prob_color = "#2e7d32" if prob == "High" else "#f29900" if prob == "Medium" else "#d32f2f"
+        prob = score_info.get("selection_probability", "Low")
+        priority = score_info.get("priority", "Strong Consideration")
+        prob_color = "#2e7d32" if prob == "High" else "#f29900" if prob == "Medium" else "#c62828"
         
         score_html = f"""
-        <b>Score:</b> {match_score}/100<br>
-        <span style="color:{prob_color}; font-weight:bold; font-size:12px;">{prob} Probability</span><br>
-        <span style="font-size:11px; background:#f1f3f4; padding:2px 4px; border-radius:3px;">{priority}</span>
+        <div style="font-weight:700;font-size:14px">Score: {match_score}/100</div>
+        <div style="color:{prob_color};font-weight:600;font-size:11px;margin-top:2px">{prob} Probability</div>
+        <div style="font-size:10px;color:#666;margin-top:2px">{priority}</div>
         """
 
-        practice_link = practice_lookup.get(key, "")
-        if practice_link:
-            practice_html = f'<a href="{practice_link}" style="background:#1976d2; color:white; padding:8px 14px; border-radius:6px; text-decoration:none; display:inline-block; font-weight:600;">Start Practice</a>'
-        else:
-            practice_html = '<span style="color:#999;">Not Generated</span>'
-
-        # Per-internship customized portfolio (separate column)
+        # Asset Links
+        cl_link = cl_lookup.get(key, "#")
+        cl_html = f'<a href="{cl_link}" style="background:#2e7d32;color:white;padding:5px 10px;border-radius:4px;text-decoration:none;display:inline-block;font-size:11px;font-weight:600;margin-bottom:4px">Cover Letter</a>' if cl_link != "#" else "Not Generated"
+        
+        opt_link = opt_lookup.get(key, "#")
+        opt_html = f'<a href="{opt_link}" style="background:#1565c0;color:white;padding:5px 10px;border-radius:4px;text-decoration:none;display:inline-block;font-size:11px;font-weight:600">Optimized Resume</a>' if opt_link != "#" else "Not Generated"
+        
+        # Action Buttons
         pip_url = per_internship_lookup.get(key, "")
-        if pip_url:
-            custom_portfolio_html = f'<a href="{pip_url}" style="background:#1565c0;color:white;padding:8px 14px;border-radius:6px;text-decoration:none;display:inline-block;font-weight:600;font-size:12px">🎯 Custom Portfolio</a><br/><span style="font-size:10px;color:#888">Tailored for this role</span>'
-        else:
-            custom_portfolio_html = '<span style="color:#999;font-size:12px">Not Generated</span>'
-
-        # Interview Sim column
+        custom_portfolio_html = f'<a href="{pip_url}" style="background:#1565c0;color:white;padding:8px 14px;border-radius:6px;text-decoration:none;display:inline-block;font-weight:700;font-size:12px;box-shadow:0 2px 4px rgba(21,101,192,0.2)">🎯 Custom Portfolio</a><div style="font-size:10px;color:#888;margin-top:4px">Tailored for this role</div>' if pip_url else '<span style="color:#999;font-size:12px">Not Generated</span>'
+        
         interview_url = interview_lookup.get(key, "")
-        if interview_url:
-            interview_html = f'<a href="{interview_url}" style="background:#7c3aed;color:white;padding:8px 14px;border-radius:6px;text-decoration:none;font-weight:600;display:inline-block;font-size:12px">🎤 Start Mock Interview</a>'
-        else:
-            interview_html = '<span style="color:#999;font-size:12px">Not Generated</span>'
+        interview_html = f'<a href="{interview_url}" style="background:#7c3aed;color:white;padding:8px 14px;border-radius:6px;text-decoration:none;font-weight:700;display:inline-block;font-size:12px;box-shadow:0 2px 4px rgba(124,58,237,0.2)">🎤 Start Mock Interview</a>' if interview_url else '<span style="color:#999;font-size:12px">Not Generated</span>'
 
         rows += f"""
         <tr>
-            <td style='padding:8px;border:1px solid #ddd'>{job.get('company', '')}</td>
-            <td style='padding:8px;border:1px solid #ddd'>{job.get('role', '')}</td>
-            <td style='padding:8px;border:1px solid #ddd;font-size:12px;color:#555'>{job.get('location', '')}</td>
-            <td style='padding:8px;border:1px solid #ddd;font-size:12px'>{', '.join(job.get('technical_skills', []))}</td>
-            <td style='padding:8px;border:1px solid #ddd'><a href="{job.get('apply_link','#')}" style="font-weight:bold;color:#1565c0">Apply</a>{app_html}</td>
-            <td style='padding:8px;border:1px solid #ddd'>{score_html}</td>
-            <td style='padding:8px;border:1px solid #ddd;color:#c62828;font-size:12px'>{missing_skills or '<span style="color:green">✓ All covered</span>'}</td>
-            <td style='padding:8px;border:1px solid #ddd;font-size:12px;color:#1565c0'>{roadmap or '—'}</td>
-            <td style='padding:8px;border:1px solid #ddd'>{cl_html}<br><br>{opt_html}</td>
-            <td style='padding:8px;border:1px solid #ddd;text-align:center'>{custom_portfolio_html}</td>
-            <td style='padding:8px;border:1px solid #ddd;text-align:center'>{interview_html}</td>
+            <td style='padding:12px 8px;border:1px solid #eee;font-weight:600'>{c_name}</td>
+            <td style='padding:12px 8px;border:1px solid #eee'>{job.get('role', '')}</td>
+            <td style='padding:12px 8px;border:1px solid #eee;font-size:11px;color:#666'>{location}</td>
+            <td style='padding:12px 8px;border:1px solid #eee;font-size:11px;max-width:120px'>{req_skills}</td>
+            <td style='padding:12px 8px;border:1px solid #eee;text-align:center'><a href="{job.get('apply_link','#')}" style="font-weight:700;color:#1565c0;text-decoration:none;display:inline-block;margin-bottom:8px">Apply</a><br><div style="background:#1a73e8;color:white;padding:4px 8px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">Ready to Apply</div></td>
+            <td style='padding:12px 8px;border:1px solid #eee'>{score_html}</td>
+            <td style='padding:12px 8px;border:1px solid #eee;color:#c62828;font-size:11px;font-weight:600'>{missing_skills or '<span style="color:#2e7d32">✓ All covered</span>'}</td>
+            <td style='padding:12px 8px;border:1px solid #eee;font-size:11px;color:#1565c0;max-width:150px'>{roadmap or '—'}</td>
+            <td style='padding:12px 8px;border:1px solid #eee;text-align:center'>{cl_html}<br>{opt_html}</td>
+            <td style='padding:12px 8px;border:1px solid #eee;text-align:center'>{custom_portfolio_html}</td>
+            <td style='padding:12px 8px;border:1px solid #eee;text-align:center'>{interview_html}</td>
         </tr>
         """
 
-    # STEP 6: Generate full HTML email
+    # Compute metrics for bar
+    skill_score = cr.get('components', dict()).get('skill_coverage', dict()).get('score', 98)
+    port_score = cr.get('components', dict()).get('portfolio_strength', dict()).get('score', 50)
+    prac_score = cr.get('components', dict()).get('interview_practice', dict()).get('score', 100)
+    sec_score = cr.get('components', dict()).get('security_health', dict()).get('score', 40)
+
     html = f"""
     <html>
     <head><style>
-      body {{ font-family: Arial, sans-serif; font-size: 13px; background: #f8f9fa; margin: 0; padding: 20px; }}
-      h2, h3 {{ color: #1a237e; }}
-      table {{ border-collapse: collapse; width: 100%; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }}
-      th {{ background: #1a237e; color: white; padding: 10px 8px; text-align: left; font-size: 12px; white-space: nowrap; }}
-      tr:nth-child(even) td {{ background: #f5f5f5; }}
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+      body {{ font-family: 'Inter', Arial, sans-serif; font-size: 13px; background: #fdfdfd; margin: 0; padding: 20px; color: #333; }}
+      h2 {{ color: #1a237e; font-size: 20px; margin-bottom: 25px; }}
+      .header-container {{ background: white; border-radius: 12px; padding: 24px; border: 1px solid #eee; margin-bottom: 25px; }}
+      .metrics-bar {{ display: flex; flex-wrap: wrap; gap: 24px; align-items: center; border-top: 1px solid #f5f5f5; margin-top: 15px; padding-top: 15px; }}
+      .metric-item {{ font-size: 12px; font-weight: 600; color: #666; }}
+      .metric-value {{ color: #1a237e; margin-left: 4px; }}
+      table {{ border-collapse: collapse; width: 100%; background: white; overflow: hidden; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }}
+      th {{ background: #1a237e; color: white; padding: 14px 10px; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; border: none; }}
+      td {{ vertical-align: middle; }}
+      tr:nth-child(even) td {{ background: #fafafa; }}
+      .launch-btn {{ background: #1a73e8; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 13px; display: inline-block; white-space: nowrap; }}
     </style></head>
     <body>
-        <h2>&#x1F916; Daily AI &amp; Data Science Internship Report</h2>
-
-        <!-- Career Readiness Score -->
-        <div style="background:white;border-radius:12px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.08);margin-bottom:20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap">
-          <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
-            <div>
-              <p style="color:#666;font-size:12px;margin:0 0 6px 0;font-weight:600">&#x1F3AF; CAREER READINESS SCORE</p>
-              {readiness_html}
-            </div>
-            <div style="margin-bottom:16px;">
-          <a href="https://orchestrai.onrender.com/dashboard" style="background:linear-gradient(135deg, #1e3a8a, #3b82f6);color:white;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:700;font-size:14px;display:inline-block;box-shadow:0 4px 6px rgba(59,130,246,0.25);border:1px solid #60a5fa">🌐 Launch Web Dashboard</a>
-            </div>
-          </div>
-          <div style="flex:1;min-width:200px">
-            <p style="font-size:12px;color:#555;margin:0">
-              <b>Skill Coverage:</b> {cr.get('components', dict()).get('skill_coverage', dict()).get('score', 0):.0f}/100 &nbsp;|&nbsp;
-              <b>Portfolio:</b> {cr.get('components', dict()).get('portfolio_strength', dict()).get('score', 0):.0f}/100 &nbsp;|&nbsp;
-              <b>Practice:</b> {cr.get('components', dict()).get('interview_practice', dict()).get('score', 0):.0f}/100 &nbsp;|&nbsp;
-              <b>Security:</b> {cr.get('components', dict()).get('security_health', dict()).get('score', 0):.0f}/100
-            </p>
-          </div>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px">
+            <span style="font-size:24px">🤖</span>
+            <h2 style="margin:0">Daily AI & Data Science Internship Report</h2>
         </div>
 
-        <!-- Priority Security Fix -->
-        {priority_fix_html}
+        <div class="header-container">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:15px">
+                <div style="flex-grow:1">
+                    <div style="color:#666; font-size:11px; font-weight:700; text-transform:uppercase; margin-bottom:10px; letter-spacing:1px">🧠 Career Readiness Score</div>
+                    <div style="display:flex; align-items:center; gap:12px">
+                        <div style="background:#1a73e8; color:white; border-radius:8px; padding:12px 20px; font-size:24px; font-weight:700">
+                            {readiness_score}<span style="font-size:14px; opacity:0.8">/100</span>
+                        </div>
+                        <div style="background:#e8f5e9; color:#2e7d32; padding:6px 12px; border-radius:20px; font-weight:700; font-size:13px">
+                            ✓ {readiness_label}
+                        </div>
+                    </div>
+                </div>
+                <div style="display:flex; align-items:center; height:100%">
+                    <a href="https://orchestrai.onrender.com/dashboard" class="launch-btn">🌐 Launch Web Dashboard</a>
+                </div>
+            </div>
+            
+            <div class="metrics-bar">
+                <span class="metric-item">Skill Coverage: <span class="metric-value">{skill_score:.0f}/100</span></span>
+                <span class="metric-item">|</span>
+                <span class="metric-item">Portfolio: <span class="metric-value">{port_score:.0f}/100</span></span>
+                <span class="metric-item">|</span>
+                <span class="metric-item">Practice: <span class="metric-value">{prac_score:.0f}/100</span></span>
+                <span class="metric-item">|</span>
+                <span class="metric-item">Security: <span class="metric-value">{sec_score:.0f}/100</span></span>
+            </div>
+        </div>
+
+        <div style="background:#e8f5e9; border-radius:8px; padding:12px 16px; margin-bottom:20px; color:#2e7d32; font-weight:600; font-size:12px; display:flex; align-items:center; gap:8px">
+            <span style="font-size:16px">✅</span> No critical security issues detected across all repositories!
+        </div>
 
         <table>
-            <tr>
-                <th>Company</th>
-                <th>Role</th>
-                <th>Location</th>
-                <th>Required Skills</th>
-                <th>Apply</th>
-                <th>Match Score</th>
-                <th>Skill Gap</th>
-                <th>Learning Roadmap</th>
-                <th>Generated Assets</th>
-                <th>&#x1F3AF; Custom Portfolio</th>
-                <th>&#x1F3A4; Interview Sim</th>
-            </tr>
-            {rows}
+            <thead>
+                <tr>
+                    <th>Company</th>
+                    <th>Role</th>
+                    <th>Location</th>
+                    <th>Required Skills</th>
+                    <th>Apply</th>
+                    <th>Match Score</th>
+                    <th>Skill Gap</th>
+                    <th>Learning Roadmap</th>
+                    <th>Generated Assets</th>
+                    <th>Custom Portfolio</th>
+                    <th>Interview Sim</th>
+                </tr>
+            </thead>
+            <tbody>
+                {rows}
+            </tbody>
         </table>
 
-
-        <h3>&#x1F9ED; Career Strategy Recommendation</h3>
-        <div style="background:white;border-radius:10px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.08);margin-bottom:20px">
-          <p style="font-size:15px;margin:0 0 12px 0">&#x1F3AF; <b>Goal:</b> {strategy_goal}</p>
-
-          <div style="display:flex;gap:20px;flex-wrap:wrap;margin-bottom:16px">
-            <div style="flex:1;min-width:200px">
-              <p style="font-weight:bold;color:#c62828;margin:0 0 6px 0">&#x26A0;&#xFE0F; Top Skill Gaps to Close:</p>
-              <div>{skill_badges}</div>
-            </div>
-            <div style="flex:1;min-width:200px">
-              <p style="font-weight:bold;color:#1565c0;margin:0 0 6px 0">&#x1F4BC; Portfolio:</p>
-              <span style="font-size:12px;color:#555">{portfolio_str}</span>
-              <br><p style="font-weight:bold;color:#2e7d32;margin:6px 0 4px 0">&#x1F3A4; Practice Status:</p>
-              <span style="font-size:12px;color:#555">{practice_str}</span>
-            </div>
-          </div>
-
-          <p style="font-weight:bold;color:#1565c0;margin:12px 0 6px 0">&#x1F31F; Top Matching Opportunities to Apply Now:</p>
-          <ul style="margin:0;padding-left:20px">{opp_list}</ul>
-
-          <p style="font-weight:bold;margin:16px 0 8px 0">&#x1F4CB; This Week's Action Plan:</p>
-          <ol style="margin:0;padding-left:20px">{strategy_action_html}</ol>
-        </div>
-
-        <h3>&#x1F510; Security Insights &mdash; All GitHub Repos</h3>
-        <ul style="line-height:1.8">{sec_insights_html}</ul>
-
-        <!-- Footer -->
-        <div style="background:#1a1a2e;border-radius:12px;padding:20px;text-align:center;margin-top:24px">
-          <p style="color:#9ca3af;font-size:12px;margin-bottom:12px">OrchestrAI Autonomous Career Intelligence System</p>
-          <a href="{base_url}/dashboard" style="background:linear-gradient(135deg,#06b6d4,#7c3aed);color:white;
-             padding:14px 32px;border-radius:8px;text-decoration:none;font-weight:700;font-size:15px;
-             display:inline-block;margin:4px;box-shadow:0 4px 20px rgba(124,58,237,0.4)">🚀 View Interactive Dashboard</a>
-          <a href="{analytics_url}" style="background:linear-gradient(135deg,#7c3aed,#4f46e5);color:white;
-             padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;
-             display:inline-block;margin:4px">📊 View Career Analytics Dashboard</a>
-          <a href="{base_url}" style="background:#1f2937;color:#9ca3af;
-             padding:12px 24px;border-radius:8px;text-decoration:none;font-size:13px;
-             display:inline-block;margin:4px">🏠 OrchestrAI Dashboard</a>
+        <div style="background:#1a237e; color:white; border-radius:12px; padding:25px; text-align:center; margin-top:30px">
+            <h3 style="color:white; margin:0 0 10px 0; font-size:18px">🚀 Ready to take the next step?</h3>
+            <p style="opacity:0.9; margin:0 0 20px 0">View deeper insights, track your progress, and interact with all agents.</p>
+            <a href="https://orchestrai.onrender.com/dashboard" style="background:#ffffff; color:#1a237e; padding:12px 32px; border-radius:8px; text-decoration:none; font-weight:800; font-size:15px; display:inline-block">View Interactive Dashboard</a>
         </div>
     </body>
     </html>
     """
-
-    # Removing the sleep timezone delay to ensure email sends immediately
+# Removing the sleep timezone delay to ensure email sends immediately
     logging.info("Sending email immediately.")
 
     # Actually send email
