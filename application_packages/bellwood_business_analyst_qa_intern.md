@@ -4,10 +4,10 @@ Company: Bellwood
 Role: Business Analyst / QA Intern
 
 Resume:
-https://orchestrai.onrender.com/application_packages/resume.pdf
+https://orchestrai-u3wt.onrender.com/application_packages/resume.pdf
 
 Cover Letter:
-https://orchestrai.onrender.com/cover_letters/bellwood_business_analyst_qa_intern.md
+https://orchestrai-u3wt.onrender.com/cover_letters/bellwood_business_analyst_qa_intern.md
 
 Apply Here:
 https://www.linkedin.com/jobs/view/business-analyst-qa-intern-at-bellwood-4380510222?position=5&pageNum=0&refId=yiaQVsHnIW%2BMI2khPzOMWQ%3D%3D&trackingId=gF11e8lIId3KahoXHpwztQ%3D%3D

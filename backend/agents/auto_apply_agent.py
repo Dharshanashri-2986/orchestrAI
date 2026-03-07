@@ -44,7 +44,7 @@ APP_PACKAGES_DB_FILE = "database/application_packages.yaml"
 
 def get_public_url(file_path: str) -> str:
     """Helper to cleanly build the final public URL."""
-    base_url = os.getenv("RENDER_EXTERNAL_URL", "https://orchestrai.onrender.com")
+    base_url = os.getenv("RENDER_EXTERNAL_URL", "https://orchestrai-u3wt.onrender.com")
     return f"{base_url}/{file_path}"
 
 def read_jobs() -> list[dict]:

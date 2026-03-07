@@ -32,7 +32,7 @@ def run_fast_email():
     jobs = jobs_data.get("jobs", []) if isinstance(jobs_data, dict) else []
     skill_analysis = skill_gap_data.get("job_skill_analysis", []) if isinstance(skill_gap_data, dict) else []
 
-    base_url = os.getenv("RENDER_EXTERNAL_URL", "https://orchestrai.onrender.com").rstrip("/")
+    base_url = os.getenv("RENDER_EXTERNAL_URL", "https://orchestrai-u3wt.onrender.com").rstrip("/")
     
     # STEP 4: Convert skill & cover letter analysis to lookup dictionaries
     skill_lookup = {

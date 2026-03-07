@@ -58,7 +58,7 @@ security_reports:
   - '[HIGH] SQL String Concat in `final.py` line 53 | Fix: Use parameterized queries
     to prevent SQL injection'
   scanned_files: 1
-  auto_fix_pr: https://github.com/Dharshanashri-2986/Tamil-Movie-Database/pull/2
+  auto_fix_pr: https://github.com/Dharshanashri-2986/Tamil-Movie-Database/pull/3
 - repo: Persona-Echo
   repo_url: https://github.com/Dharshanashri-2986/Persona-Echo
   risk_level: Safe

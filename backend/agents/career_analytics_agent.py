@@ -16,7 +16,7 @@ CHARTS:
 
 OUTPUT:
   DATA_DIR/frontend/analytics/dashboard.html
-  → served at https://orchestrai.onrender.com/analytics
+  → served at https://orchestrai-u3wt.onrender.com/analytics
 """
 
 from __future__ import annotations
@@ -456,7 +456,7 @@ def run_career_analytics_agent() -> str:
     ts = datetime.now(timezone.utc).isoformat()
     _put_raw_file(file_path, html, sha, f"feat(analytics): updated dashboard — {ts}")
 
-    base_url      = os.getenv("RENDER_EXTERNAL_URL", "https://orchestrai.onrender.com")
+    base_url      = os.getenv("RENDER_EXTERNAL_URL", "https://orchestrai-u3wt.onrender.com")
     dashboard_url = f"{base_url}/analytics"
 
     # ── Save metadata ─────────────────────────────────────────────────────────

@@ -117,7 +117,7 @@ def __log_activity(action: str):
 def run_orchestrai_pipeline():
     logging.info("Starting OrchestrAI pipeline")
 
-    base_url      = os.getenv("RENDER_EXTERNAL_URL", "https://orchestrai.onrender.com")
+    base_url      = os.getenv("RENDER_EXTERNAL_URL", "https://orchestrai-u3wt.onrender.com")
     analytics_url = f"{base_url}/analytics"
 
     # STEP 1: Fetch internships
@@ -189,7 +189,7 @@ def run_orchestrai_pipeline():
     jobs = jobs_data.get("jobs", []) if isinstance(jobs_data, dict) else []
     skill_analysis = skill_gap_data.get("job_skill_analysis", []) if isinstance(skill_gap_data, dict) else []
 
-    base_url = os.getenv("RENDER_EXTERNAL_URL", "https://orchestrai.onrender.com").rstrip("/")
+    base_url = os.getenv("RENDER_EXTERNAL_URL", "https://orchestrai-u3wt.onrender.com").rstrip("/")
     
     # STEP 4: Convert skill & cover letter analysis to lookup dictionaries
     skill_lookup = {
