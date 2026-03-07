@@ -1,11 +1,5 @@
 logs:
 - agent: PracticeAgent
-  action: 'Failed portal for Cohere Machine Learning Intern/Co-op  (Spring 2026):
-    Gemini failed to generate interview Q&A for Cohere - Machine Learning Intern/Co-op  (Spring
-    2026)'
-  status: error
-  timestamp: '2026-03-06T07:16:02'
-- agent: PracticeAgent
   action: 'Failed portal for Cornerstone Building Brands Data Analyst Intern: Gemini
     failed to generate interview Q&A for Cornerstone Building Brands - Data Analyst
     Intern'
@@ -2635,3 +2629,8 @@ logs:
     interview Q&A for Thermo Fisher - Data Engineer II'
   status: error
   timestamp: '2026-03-07T11:50:39'
+- agent: PracticeAgent
+  action: 'Failed portal for Cvent Data Science Intern (Summer 2026): Gemini failed
+    to generate interview Q&A for Cvent - Data Science Intern (Summer 2026)'
+  status: error
+  timestamp: '2026-03-07T11:50:43'
