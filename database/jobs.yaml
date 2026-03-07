@@ -1237,4 +1237,31 @@ jobs:
   technical_skills: []
   source: LinkedIn
   timestamp: '2026-03-07T07:04:36.062596+00:00'
-last_updated: '2026-03-07T07:04:46.914054+00:00'
+- company: Quarterhill Inc.
+  role: Machine Learning Engineer Intern
+  location: Frisco, TX24 minutes ago
+  apply_link: https://www.linkedin.com/jobs/view/machine-learning-engineer-intern-at-quarterhill-inc-4372938118?position=9&pageNum=0&refId=z1VTaoij9I1bm9dlFn%2B4cg%3D%3D&trackingId=sm4MhYLITvL2UD4Pn9NffQ%3D%3D
+  role_keywords:
+  - Machine Learning
+  technical_skills: []
+  source: LinkedIn
+  timestamp: '2026-03-07T10:54:47.753406+00:00'
+- company: Aurora Financials
+  role: AI / ML Engineering Intern
+  location: India / Remote
+  apply_link: https://internshala.com/internship/detail/work-from-home-ai-ml-engineering-intern-internship-at-aurora-financials1772876827
+  role_keywords:
+  - Machine Learning
+  technical_skills: []
+  source: Internshala
+  timestamp: '2026-03-07T10:54:50.561904+00:00'
+- company: Zetheta Algorithms Private Limited
+  role: Artificial Intelligence Intern
+  location: India / Remote
+  apply_link: https://internshala.com/internship/detail/work-from-home-artificial-intelligence-intern-internship-at-zetheta-algorithms-private-limited1772876167
+  role_keywords:
+  - Machine Learning
+  technical_skills: []
+  source: Internshala
+  timestamp: '2026-03-07T10:54:50.563051+00:00'
+last_updated: '2026-03-07T10:55:10.161423+00:00'
