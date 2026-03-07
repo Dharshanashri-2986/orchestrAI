@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Mock Interview — {role} at {company}</title>
+<title>Mock Interview — Internship, Data Engineer, Energy (Summer 2026) at Tesla</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
   :root {
@@ -233,16 +233,178 @@
     .form-grid { grid-template-columns: 1fr; }
     .timer-wrapper { flex-direction: column; gap: 16px; text-align: center; }
   }
+
+  /* === AI INTERVIEW CHAT === */
+  .ai-chat-section {
+    background: var(--card);
+    border: 1px solid rgba(124,58,237,0.3);
+    border-radius: 16px;
+    padding: 0;
+    margin-bottom: 40px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(124,58,237,0.1);
+  }
+  .ai-chat-header {
+    background: linear-gradient(135deg, rgba(124,58,237,0.2), rgba(59,130,246,0.15));
+    padding: 20px 24px;
+    border-bottom: 1px solid rgba(124,58,237,0.2);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .ai-chat-header h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.2rem;
+    color: #c084fc;
+    margin: 0;
+  }
+  .ai-chat-header .live-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #10b981;
+    animation: livePulse 1.5s infinite;
+    margin-left: auto;
+  }
+  .ai-chat-header .live-label {
+    font-size: 0.75rem;
+    color: #10b981;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  @keyframes livePulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+  .chat-messages {
+    padding: 24px;
+    max-height: 500px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-height: 120px;
+  }
+  .chat-messages::-webkit-scrollbar { width: 6px; }
+  .chat-messages::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.3); border-radius: 3px; }
+  .chat-bubble {
+    max-width: 85%;
+    padding: 14px 18px;
+    border-radius: 16px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    animation: bubbleIn 0.3s ease;
+  }
+  @keyframes bubbleIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .chat-bubble.ai {
+    background: rgba(124,58,237,0.12);
+    border: 1px solid rgba(124,58,237,0.25);
+    color: var(--text-primary);
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+  }
+  .chat-bubble.user {
+    background: rgba(59,130,246,0.12);
+    border: 1px solid rgba(59,130,246,0.25);
+    color: var(--text-primary);
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+  }
+  .chat-bubble .bubble-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .chat-bubble.ai .bubble-label { color: #a78bfa; }
+  .chat-bubble.user .bubble-label { color: #60a5fa; }
+  .chat-type-badge {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-top: 8px;
+  }
+  .chat-type-badge.technical { background: rgba(239,68,68,0.15); color: #f87171; }
+  .chat-type-badge.behavioral { background: rgba(16,185,129,0.15); color: #34d399; }
+  .chat-type-badge.coding { background: rgba(245,158,11,0.15); color: #fbbf24; }
+  .chat-input-area {
+    display: flex;
+    gap: 12px;
+    padding: 20px 24px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    background: rgba(0,0,0,0.15);
+  }
+  .chat-input-area textarea {
+    flex: 1;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 12px 16px;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    resize: none;
+    outline: none;
+    min-height: 48px;
+    max-height: 120px;
+  }
+  .chat-input-area textarea:focus {
+    border-color: rgba(124,58,237,0.5);
+    box-shadow: 0 0 0 3px rgba(124,58,237,0.1);
+  }
+  .chat-send-btn {
+    padding: 12px 24px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(135deg, #7c3aed, #3b82f6);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .chat-send-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(124,58,237,0.4); }
+  .chat-send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  .chat-empty {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 30px;
+    font-size: 0.9rem;
+  }
+  .typing-indicator {
+    display: flex; gap: 4px; padding: 14px 18px; align-self: flex-start;
+  }
+  .typing-indicator span {
+    width: 8px; height: 8px; border-radius: 50%; background: #a78bfa;
+    animation: typingBounce 1.4s infinite;
+  }
+  .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+  .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes typingBounce {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+    30% { transform: translateY(-8px); opacity: 1; }
+  }
 </style>
 </head>
 <body>
 
 <div class="hero">
   <h1>Interactive Mock Interview</h1>
-  <h2>{role} &mdash; <strong>{company}</strong></h2>
+  <h2>Internship, Data Engineer, Energy (Summer 2026) &mdash; <strong>Tesla</strong></h2>
   <div class="hero-badges">
-    <span class="badge">👤 {user_name}</span>
-    <span class="badge">📅 {ts}</span>
+    <span class="badge">👤 Dharshanashri S</span>
+    <span class="badge">📅 March 07, 2026</span>
     <span class="badge">⏱️ AI Guided</span>
   </div>
 </div>
@@ -251,7 +413,7 @@
 
   <div class="skill-info">
     <h3>🎯 Target Competencies</h3>
-    <div class="skill-tags">{skill_tags or '<span class="skill-tag">General Software Engineering</span>'}</div>
+    <div class="skill-tags"><span class="skill-tag">General Software Engineering</span></div>
   </div>
 
   <div class="timer-wrapper">
@@ -268,22 +430,181 @@
   <div class="section-container" id="technical">
     <h3 class="section-title"><span>⚙️</span> Technical Deep Dive</h3>
     <p class="section-desc">Assess your domain knowledge and fundamental concepts. Type your answers or practice out loud.</p>
-    {_q_items(questions.get('technical', []), '⚙️')}
+    
+            <div class="q-card">
+              <div class="q-header">
+                <span class="q-icon">⚙️</span>
+                <span class="q-title">Question 1</span>
+              </div>
+              <p class="q-text">Explain your experience with Python and how you've used it in projects.</p>
+              <textarea class="q-textarea" placeholder="Type your answer here or practice answering out loud..."></textarea>
+              <div class="q-actions">
+                <button class="btn-outline" onclick="toggleHint(this)">💡 Show Hint</button>
+                <div class="hint-box" style="display:none;">Focus on your personal experience and use the STAR method.</div>
+              </div>
+            </div>
+            
+            <div class="q-card">
+              <div class="q-header">
+                <span class="q-icon">⚙️</span>
+                <span class="q-title">Question 2</span>
+              </div>
+              <p class="q-text">How would you approach building a Internship, Data Engineer, Energy (Summer 2026) pipeline from scratch?</p>
+              <textarea class="q-textarea" placeholder="Type your answer here or practice answering out loud..."></textarea>
+              <div class="q-actions">
+                <button class="btn-outline" onclick="toggleHint(this)">💡 Show Hint</button>
+                <div class="hint-box" style="display:none;">Focus on your personal experience and use the STAR method.</div>
+              </div>
+            </div>
+            
+            <div class="q-card">
+              <div class="q-header">
+                <span class="q-icon">⚙️</span>
+                <span class="q-title">Question 3</span>
+              </div>
+              <p class="q-text">Describe a challenging technical problem you solved using Machine Learning.</p>
+              <textarea class="q-textarea" placeholder="Type your answer here or practice answering out loud..."></textarea>
+              <div class="q-actions">
+                <button class="btn-outline" onclick="toggleHint(this)">💡 Show Hint</button>
+                <div class="hint-box" style="display:none;">Focus on your personal experience and use the STAR method.</div>
+              </div>
+            </div>
+            
   </div>
 
   <div class="section-container" id="coding">
     <h3 class="section-title"><span>💻</span> Coding Challenges</h3>
     <p class="section-desc">Write robust, optimal code and explain your time/space complexities.</p>
-    {_code_items(questions.get('coding', []))}
+    
+            <div class="code-card">
+              <div class="code-header">
+                <div class="mac-dots"><span></span><span></span><span></span></div>
+                <span class="code-title">Problem 1</span>
+              </div>
+              <div class="code-body">
+                <p class="code-prompt">Implement a function to clean a dataset and handle missing values</p>
+                <div class="editor-wrapper">
+                  <div class="line-numbers">1<br>2<br>3<br>4<br>5</div>
+                  <textarea class="code-textarea" placeholder="# Write your python solution here..."></textarea>
+                </div>
+              </div>
+              <div class="code-footer">
+                <button class="btn-primary" onclick="runSimulation(this)">▶ Run Code (Simulated)</button>
+              </div>
+            </div>
+            
+            <div class="code-card">
+              <div class="code-header">
+                <div class="mac-dots"><span></span><span></span><span></span></div>
+                <span class="code-title">Problem 2</span>
+              </div>
+              <div class="code-body">
+                <p class="code-prompt">Write an efficient algorithm for binary search and analyze its time complexity</p>
+                <div class="editor-wrapper">
+                  <div class="line-numbers">1<br>2<br>3<br>4<br>5</div>
+                  <textarea class="code-textarea" placeholder="# Write your python solution here..."></textarea>
+                </div>
+              </div>
+              <div class="code-footer">
+                <button class="btn-primary" onclick="runSimulation(this)">▶ Run Code (Simulated)</button>
+              </div>
+            </div>
+            
   </div>
 
   <div class="section-container" id="behavioral">
     <h3 class="section-title"><span>🧠</span> Behavioral & Situational</h3>
     <p class="section-desc">Use the STAR method (Situation, Task, Action, Result) to frame your answers.</p>
-    {_q_items(questions.get('behavioral', []), '🧠')}
+    
+            <div class="q-card">
+              <div class="q-header">
+                <span class="q-icon">🧠</span>
+                <span class="q-title">Question 1</span>
+              </div>
+              <p class="q-text">Tell me about a time you had to learn a new technology quickly.</p>
+              <textarea class="q-textarea" placeholder="Type your answer here or practice answering out loud..."></textarea>
+              <div class="q-actions">
+                <button class="btn-outline" onclick="toggleHint(this)">💡 Show Hint</button>
+                <div class="hint-box" style="display:none;">Focus on your personal experience and use the STAR method.</div>
+              </div>
+            </div>
+            
+            <div class="q-card">
+              <div class="q-header">
+                <span class="q-icon">🧠</span>
+                <span class="q-title">Question 2</span>
+              </div>
+              <p class="q-text">Describe a situation where you had to work under tight deadlines.</p>
+              <textarea class="q-textarea" placeholder="Type your answer here or practice answering out loud..."></textarea>
+              <div class="q-actions">
+                <button class="btn-outline" onclick="toggleHint(this)">💡 Show Hint</button>
+                <div class="hint-box" style="display:none;">Focus on your personal experience and use the STAR method.</div>
+              </div>
+            </div>
+            
+            <div class="q-card">
+              <div class="q-header">
+                <span class="q-icon">🧠</span>
+                <span class="q-title">Question 3</span>
+              </div>
+              <p class="q-text">Give an example of a project where you collaborated with a team.</p>
+              <textarea class="q-textarea" placeholder="Type your answer here or practice answering out loud..."></textarea>
+              <div class="q-actions">
+                <button class="btn-outline" onclick="toggleHint(this)">💡 Show Hint</button>
+                <div class="hint-box" style="display:none;">Focus on your personal experience and use the STAR method.</div>
+              </div>
+            </div>
+            
   </div>
 
-  {case_section}
+  
+        <div class="section-container" id="case-study">
+          <h3 class="section-title"><span>📊</span> Case Study Questions</h3>
+          <p class="section-desc">Analytical and data-driven scenario questions.</p>
+          <div class="case-grid">
+            <div class="case-card">
+              <div class="case-icon">📊</div>
+              <div class="case-content">
+                <h4 style="color:#fcd34d">Case 1</h4>
+                <p>Given a dataset of Tesla's user behavior, how would you identify churn patterns?</p>
+                <textarea class="q-textarea" placeholder="Outline your analytical approach..."></textarea>
+              </div>
+            </div>
+            
+            <div class="case-card">
+              <div class="case-icon">📊</div>
+              <div class="case-content">
+                <h4 style="color:#fcd34d">Case 2</h4>
+                <p>A/B test results show 10% lift in metric X but 5% drop in metric Y — what's your recommendation?</p>
+                <textarea class="q-textarea" placeholder="Outline your analytical approach..."></textarea>
+              </div>
+            </div>
+            </div>
+        </div>
+
+  <!-- ═══ AI INTERVIEW CHAT ═══ -->
+  <div class="ai-chat-section" id="aiChatSection">
+    <div class="ai-chat-header">
+      <span style="font-size:1.4rem">🤖</span>
+      <h3>AI Interview Chat</h3>
+      <span class="live-dot"></span>
+      <span class="live-label">Live</span>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-empty" id="chatEmpty">
+        Click <strong>"Start AI Interview"</strong> below to begin a real-time conversational interview powered by AI.
+      </div>
+    </div>
+    <div class="chat-input-area">
+      <textarea id="chatInput" placeholder="Type your answer here..." rows="2" disabled></textarea>
+      <button class="chat-send-btn" id="chatSendBtn" onclick="sendChatAnswer()" disabled>Submit Answer</button>
+    </div>
+    <div style="padding: 12px 24px; text-align:center;">
+      <button class="btn-primary" id="chatStartBtn" onclick="startAIInterview()" style="padding:12px 32px; border-radius:12px; font-weight:700">
+        🚀 Start AI Interview
+      </button>
+    </div>
+  </div>
 
   <div class="feedback-form">
     <h3 style="color:#c084fc">📝 Interview Debrief</h3>
@@ -292,11 +613,11 @@
     <div class="form-grid">
       <div class="form-group" style="margin:0">
         <label>Company</label>
-        <input class="form-input" id="fb_company" value="{company}" readonly />
+        <input class="form-input" id="fb_company" value="Tesla" readonly />
       </div>
       <div class="form-group" style="margin:0">
         <label>Role</label>
-        <input class="form-input" id="fb_role" value="{role}" readonly />
+        <input class="form-input" id="fb_role" value="Internship, Data Engineer, Energy (Summer 2026)" readonly />
       </div>
     </div>
 
@@ -330,7 +651,7 @@
   </div>
 
   <div style="text-align:center; padding-top: 40px; color: var(--text-muted); font-size: 0.8rem">
-    OrchestrAI Autonomous Carrier Intelligence System &copy; {datetime.now().year}
+    OrchestrAI Autonomous Carrier Intelligence System &copy; 2026
   </div>
 
 </div>
@@ -473,6 +794,149 @@ async function submitFeedback() {
     }, 1000);
   }
 }
+
+// ----- AI Interview Chat -----
+var chatHistory = [];
+var chatCompany = 'Tesla';
+var chatRole = 'Internship, Data Engineer, Energy (Summer 2026)';
+
+function addChatBubble(role, text, qtype) {
+  var messages = document.getElementById('chatMessages');
+  var empty = document.getElementById('chatEmpty');
+  if (empty) empty.style.display = 'none';
+
+  var bubble = document.createElement('div');
+  bubble.className = 'chat-bubble ' + role;
+
+  var label = document.createElement('span');
+  label.className = 'bubble-label';
+  label.textContent = role === 'ai' ? '🤖 AI Interviewer' : '👤 You';
+  bubble.appendChild(label);
+
+  var content = document.createElement('div');
+  content.textContent = text;
+  bubble.appendChild(content);
+
+  if (qtype && role === 'ai') {
+    var badge = document.createElement('span');
+    badge.className = 'chat-type-badge ' + qtype;
+    badge.textContent = qtype;
+    bubble.appendChild(badge);
+  }
+
+  messages.appendChild(bubble);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function showTypingIndicator() {
+  var messages = document.getElementById('chatMessages');
+  var indicator = document.createElement('div');
+  indicator.className = 'typing-indicator';
+  indicator.id = 'typingIndicator';
+  indicator.innerHTML = '<span></span><span></span><span></span>';
+  messages.appendChild(indicator);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function removeTypingIndicator() {
+  var el = document.getElementById('typingIndicator');
+  if (el) el.remove();
+}
+
+async function callInterviewAPI(userAnswer) {
+  var payload = {
+    company: chatCompany,
+    role: chatRole,
+    question_history: chatHistory,
+    user_answer: userAnswer || null
+  };
+
+  var resp = await fetch(window.location.origin + '/api/interview/ask', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+  return await resp.json();
+}
+
+async function startAIInterview() {
+  var startBtn = document.getElementById('chatStartBtn');
+  var input = document.getElementById('chatInput');
+  var sendBtn = document.getElementById('chatSendBtn');
+
+  startBtn.disabled = true;
+  startBtn.innerHTML = '⏳ Connecting to AI Interviewer...';
+
+  showTypingIndicator();
+
+  try {
+    var data = await callInterviewAPI(null);
+    removeTypingIndicator();
+
+    chatHistory.push({ role: 'ai', content: data.next_question });
+    addChatBubble('ai', data.next_question, data.question_type);
+
+    input.disabled = false;
+    sendBtn.disabled = false;
+    input.focus();
+    startBtn.style.display = 'none';
+  } catch (e) {
+    removeTypingIndicator();
+    startBtn.disabled = false;
+    startBtn.innerHTML = '🚀 Start AI Interview';
+    showToast('Connection Error', 'Could not reach AI interviewer: ' + e.message, true);
+  }
+}
+
+async function sendChatAnswer() {
+  var input = document.getElementById('chatInput');
+  var sendBtn = document.getElementById('chatSendBtn');
+  var answer = input.value.trim();
+
+  if (!answer) {
+    input.focus();
+    return;
+  }
+
+  // Show user's answer
+  chatHistory.push({ role: 'user', content: answer });
+  addChatBubble('user', answer, null);
+  input.value = '';
+  input.disabled = true;
+  sendBtn.disabled = true;
+
+  showTypingIndicator();
+
+  try {
+    var data = await callInterviewAPI(answer);
+    removeTypingIndicator();
+
+    chatHistory.push({ role: 'ai', content: data.next_question });
+    addChatBubble('ai', data.next_question, data.question_type);
+
+    input.disabled = false;
+    sendBtn.disabled = false;
+    input.focus();
+  } catch (e) {
+    removeTypingIndicator();
+    input.disabled = false;
+    sendBtn.disabled = false;
+    showToast('Error', 'AI response failed: ' + e.message, true);
+  }
+}
+
+// Allow Enter to submit (Shift+Enter for new line)
+document.addEventListener('DOMContentLoaded', function() {
+  var chatInput = document.getElementById('chatInput');
+  if (chatInput) {
+    chatInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendChatAnswer();
+      }
+    });
+  }
+});
 </script>
 </body>
 </html>
