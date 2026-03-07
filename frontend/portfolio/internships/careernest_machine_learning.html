@@ -3,150 +3,470 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>swathiga - Portfolio for CareerNest</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<title>Dharshanashri S — Portfolio for Machine Learning at CareerNest</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&family=Fira+Code:wght@400&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
-  :root { --bg:#0B0B0B; --surface:#1A1A1A; --primary:#E10600; --text:#F5F5F5; --dim:#9A9A9A; --border:rgba(255,255,255,0.05); }
-  * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter', sans-serif; }
-  body { background:var(--bg); color:var(--text); line-height:1.6; -webkit-font-smoothing:antialiased; }
+  :root {
+    --bg-primary: #020617;
+    --bg-card: #0f172a;
+    --bg-card-hover: #1e293b;
+    --accent-purple: #7c3aed;
+    --accent-blue: #3b82f6;
+    --accent-gradient: linear-gradient(135deg, #7c3aed, #3b82f6);
+    --accent-text: #a78bfa;
+    --text-primary: #e5e7eb;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --border: rgba(148, 163, 184, 0.1);
+    --border-accent: rgba(124, 58, 237, 0.3);
+    --glow-purple: rgba(124, 58, 237, 0.15);
+    --glow-blue: rgba(59, 130, 246, 0.15);
+    --success: #10b981;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
   
-  .hero { padding:100px 20px; text-align:center; background:linear-gradient(180deg, #1A1A1A 0%, #0B0B0B 100%); border-bottom:1px solid rgba(225,6,0,0.2); }
-  .hero h1 { font-size:48px; font-weight:800; letter-spacing:-1.5px; margin-bottom:16px; color:#fff; }
-  .hero h2 { font-size:18px; font-weight:400; color:var(--dim); max-width:600px; margin:0 auto 24px auto; line-height:1.5; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.7;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* === ANIMATED BACKGROUND === */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background:
+      radial-gradient(ellipse at 20% 20%, var(--glow-purple), transparent 50%),
+      radial-gradient(ellipse at 80% 80%, var(--glow-blue), transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(124,58,237,0.03), transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* === HERO === */
+  .hero {
+    position: relative;
+    padding: 100px 24px 80px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    z-index: 1;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60%; left: -30%; width: 160%; height: 220%;
+    background: radial-gradient(circle at 50% 40%, rgba(124,58,237,0.08), transparent 50%);
+    pointer-events: none;
+  }
+  .hero-label {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--accent-text);
+    background: rgba(124,58,237,0.1);
+    border: 1px solid var(--border-accent);
+    padding: 8px 20px;
+    border-radius: 999px;
+    margin-bottom: 28px;
+    animation: fadeInDown 0.8s ease;
+  }
+  .hero h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #ffffff 0%, #c4b5fd 50%, #93c5fd 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: fadeInUp 0.8s ease 0.1s both;
+  }
+  .hero-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    font-weight: 400;
+  }
+  .hero-role {
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+  }
+  .hero-role .company-name {
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+  }
+  .hero-desc {
+    max-width: 600px;
+    margin: 0 auto;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+
+  /* === CONTAINER === */
+  .container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 60px 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* === SECTION TITLES === */
+  .section-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-title .icon {
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 10px;
+    background: rgba(124,58,237,0.15);
+    font-size: 1.1rem;
+  }
+  .section-desc {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 28px;
+  }
+
+  /* === GLASS CARD === */
+  .glass-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 32px;
+    margin-bottom: 32px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .glass-card:hover {
+    border-color: var(--border-accent);
+    box-shadow: 0 15px 50px rgba(0,0,0,0.5), 0 0 30px var(--glow-purple);
+  }
+
+  /* === SKILL PILLS === */
+  .skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .skill-pill {
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--text-secondary);
+  }
+  .skill-pill.match {
+    background: rgba(124,58,237,0.15);
+    border: 1px solid rgba(124,58,237,0.4);
+    color: var(--accent-text);
+    font-weight: 600;
+  }
+
+  /* === FIT SECTION === */
+  .fit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 0.95rem;
+    color: var(--text-primary);
+  }
+  .fit-item:last-child { border-bottom: none; }
+  .fit-check {
+    color: var(--accent-text);
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  /* === PROJECT CARDS === */
+  .projects-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .project-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 28px;
+    margin-bottom: 20px;
+  }
+  .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  .project-name {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #fff;
+  }
+  .project-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: rgba(16,185,129,0.1);
+    border: 1px solid rgba(16,185,129,0.3);
+    color: var(--success);
+  }
+  .project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .tech-pill {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 6px;
+    background: rgba(59,130,246,0.1);
+    border: 1px solid rgba(59,130,246,0.2);
+    color: #60a5fa;
+  }
+  .project-relevance {
+    background: rgba(0,0,0,0.2);
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 20px;
+  }
+  .relevance-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+  .relevance-list {
+    list-style: none;
+    padding: 0;
+  }
+  .relevance-list li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+  .relevance-list li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--accent-text);
+    font-weight: 700;
+  }
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: transparent;
+  }
+
+  /* === DOWNLOAD SECTION === */
+  .download-section {
+    text-align: center;
+    padding: 60px 24px;
+    margin-top: 20px;
+  }
+  .download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 36px;
+    border-radius: 30px;
+    border: none;
+    background: var(--accent-gradient);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  /* === PDF PRINT EXCLUSIONS === */
+  .pdf-only-message { display: none; }
+  .downloading-pdf .print-hide { display: none !important; }
+  .downloading-pdf .pdf-only-message { display: block !important; }
   
-  .container { max-width:900px; margin:0 auto; padding:60px 20px; }
-  
-  .glass-card { background:var(--surface); border:1px solid var(--border); border-radius:16px; box-shadow:0 10px 30px rgba(0,0,0,0.5); transition:all 0.3s; }
-  .glass-card:hover { border-color:rgba(225,6,0,0.4); box-shadow:0 15px 40px rgba(225,6,0,0.15); }
-  
-  h3.section-title { font-size:13px; text-transform:uppercase; letter-spacing:2px; font-weight:700; color:var(--primary); margin-bottom:24px; border-bottom:1px solid var(--border); padding-bottom:16px; }
-  
-  .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:32px; margin-bottom:48px; }
-  @media(max-width:768px) { .grid-2 { grid-template-columns:1fr; gap:24px; } .hero h1 { font-size:36px; } }
-  
-  .btn-primary { background:linear-gradient(90deg, #E10600, #FF3B3B); color:#fff; text-decoration:none; padding:14px 32px; border-radius:30px; font-size:14px; font-weight:600; transition:all 0.2s; box-shadow:0 4px 15px rgba(225,6,0,0.3); }
-  .btn-primary:hover { transform:scale(1.02); box-shadow:0 8px 25px rgba(225,6,0,0.5); }
-  
-  .btn-outline { background:transparent; border:1px solid rgba(225,6,0,0.5); color:#fff; text-decoration:none; padding:10px 24px; border-radius:24px; font-size:13px; font-weight:600; transition:all 0.2s; }
-  .btn-outline:hover { border-color:#E10600; background:rgba(225,6,0,0.05); }
-  
-  .gh-card:hover { border-color:rgba(225,6,0,0.3) !important; transform:translateY(-2px); }
-  
-  .footer { text-align:center; padding:60px 20px; color:var(--dim); font-size:12px; border-top:1px solid var(--border); text-transform:uppercase; letter-spacing:1px; }
 </style>
 </head>
 <body>
 
+<div id="portfolio-content">
+
+<!-- ═══ 1. HERO ═══ -->
 <div class="hero">
-    <div style="font-size:14px;text-transform:uppercase;letter-spacing:2px;color:var(--primary);font-weight:700;margin-bottom:16px">swathiga</div>
-    <h1>Customized Portfolio</h1>
-    <h2>Designed exclusively for the <strong style="color:#fff">Machine Learning</strong> role at <strong style="color:#fff">CareerNest</strong></h2>
-    <a href="https://orchestrai-u3wt.onrender.com/cover_letters/careernest_machine_learning.md" target="_blank" class="btn-primary" style="margin-top:30px;display:inline-block">View Cover Letter</a>
+  <div class="hero-label">Application Portfolio</div>
+  <h1>Dharshanashri S</h1>
+  <p class="hero-subtitle">Application Portfolio</p>
+  <p class="hero-role">Machine Learning — <span class="company-name">CareerNest</span></p>
+  <p class="hero-desc">This portfolio highlights projects and technical capabilities relevant to the Machine Learning role at CareerNest.</p>
 </div>
 
 <div class="container">
 
-    <div style="margin-bottom:60px">
-        <h3 class="section-title">Why I Am A Great Fit</h3>
-        <div style="margin-top:16px"><span style="background:rgba(255,255,255,0.03);color:#9A9A9A;border:1px solid rgba(255,255,255,0.1);padding:8px 16px;border-radius:24px;font-size:13px;font-weight:500;margin:4px;display:inline-block;">Python</span><span style="background:rgba(255,255,255,0.03);color:#9A9A9A;border:1px solid rgba(255,255,255,0.1);padding:8px 16px;border-radius:24px;font-size:13px;font-weight:500;margin:4px;display:inline-block;">SQL</span><span style="background:rgba(255,255,255,0.03);color:#9A9A9A;border:1px solid rgba(255,255,255,0.1);padding:8px 16px;border-radius:24px;font-size:13px;font-weight:500;margin:4px;display:inline-block;">Machine Learning</span><span style="background:rgba(255,255,255,0.03);color:#9A9A9A;border:1px solid rgba(255,255,255,0.1);padding:8px 16px;border-radius:24px;font-size:13px;font-weight:500;margin:4px;display:inline-block;">Pandas</span><span style="background:rgba(255,255,255,0.03);color:#9A9A9A;border:1px solid rgba(255,255,255,0.1);padding:8px 16px;border-radius:24px;font-size:13px;font-weight:500;margin:4px;display:inline-block;">NumPy</span><span style="background:rgba(255,255,255,0.03);color:#9A9A9A;border:1px solid rgba(255,255,255,0.1);padding:8px 16px;border-radius:24px;font-size:13px;font-weight:500;margin:4px;display:inline-block;">Data Analysis</span><span style="background:rgba(255,255,255,0.03);color:#9A9A9A;border:1px solid rgba(255,255,255,0.1);padding:8px 16px;border-radius:24px;font-size:13px;font-weight:500;margin:4px;display:inline-block;">Scikit-learn</span><span style="background:rgba(255,255,255,0.03);color:#9A9A9A;border:1px solid rgba(255,255,255,0.1);padding:8px 16px;border-radius:24px;font-size:13px;font-weight:500;margin:4px;display:inline-block;">Statistics</span><span style="background:rgba(255,255,255,0.03);color:#9A9A9A;border:1px solid rgba(255,255,255,0.1);padding:8px 16px;border-radius:24px;font-size:13px;font-weight:500;margin:4px;display:inline-block;">Data Visualization</span><span style="background:rgba(255,255,255,0.03);color:#9A9A9A;border:1px solid rgba(255,255,255,0.1);padding:8px 16px;border-radius:24px;font-size:13px;font-weight:500;margin:4px;display:inline-block;">Excel</span></div>
+  <!-- ═══ 2. SKILLS ═══ -->
+  <div class="glass-card">
+    <div class="section-title"><span class="icon">🎯</span> Skills Relevant to the Role</div>
+    <div class="skills-grid">
+      <span class="skill-pill">Python</span><span class="skill-pill">SQL</span><span class="skill-pill">Machine Learning</span><span class="skill-pill">Pandas</span><span class="skill-pill">NumPy</span><span class="skill-pill">Data Analysis</span><span class="skill-pill">Scikit-learn</span><span class="skill-pill">Statistics</span><span class="skill-pill">Data Visualization</span><span class="skill-pill">Excel</span>
     </div>
+  </div>
 
-    <div class="grid-2">
-        <div class="glass-card" style="padding:32px">
-            <h3 class="section-title" style="border:none;padding:0;margin-bottom:20px">Skill Gap Analysis</h3>
-            <div style="color:#10B981;font-size:15px;font-weight:600;display:flex;align-items:center;gap:10px"><span style="font-size:20px">✓</span> All required skills covered</div>
-        </div>
-        <div class="glass-card" style="padding:32px">
-            <h3 class="section-title" style="border:none;padding:0;margin-bottom:20px">Learning Roadmap</h3>
-            <div style='color:#F5F5F5;font-size:15px;line-height:1.6;margin-bottom:12px;padding-left:16px;border-left:2px solid #E10600;'>No skill gaps detected. You are well-equipped for this role!</div>
-        </div>
-    </div>
+  <!-- ═══ 3. WHY I AM A GOOD FIT ═══ -->
+  <div class="glass-card">
+    <div class="section-title"><span class="icon">💎</span> Why I Am a Good Fit</div>
+    
+            <div class="fit-item">
+                <span class="fit-check">✦</span>
+                <span>Hands-on experience with modern tech stacks and structured datasets</span>
+            </div>
+            <div class="fit-item">
+                <span class="fit-check">✦</span>
+                <span>Adaptable learner demonstrating software engineering best practices</span>
+            </div>
+            <div class="fit-item">
+                <span class="fit-check">✦</span>
+                <span>Ready to contribute immediately to data-driven and analytical systems</span>
+            </div>
+  </div>
 
-    <div class="grid-2">
-        <div class="glass-card" style="padding:32px">
-            <h3 class="section-title" style="border:none;padding:0;margin-bottom:20px">Professional Experience</h3>
-            <p style="color:#9A9A9A;font-size:14px">Focusing on academic and project-based experience.</p>
-        </div>
-        <div class="glass-card" style="padding:32px">
-            <h3 class="section-title" style="border:none;padding:0;margin-bottom:20px">Key Achievements</h3>
-            <p style="color:#9A9A9A;font-size:14px">Building technical milestones.</p>
+  <!-- ═══ 4. MOST RELEVANT PROJECTS ═══ -->
+  <div class="glass-card" style="padding:0; border:none; background:transparent; box-shadow:none;">
+    <div class="section-title" style="margin-bottom: 8px;"><span class="icon">🏆</span> GitHub Repository Portfolio</div>
+    <p class="section-desc">Projects from my GitHub account.</p>
+    <div class="projects-grid">
+      
+        <div class="pdf-only-message" style="display:none;">
+            <p style="color:var(--text-muted); font-style:italic; padding: 20px; text-align:center; border: 1px dashed var(--border); border-radius: 12px;">No relevant GitHub repositories found on your profile for this specific role yet.</p>
         </div>
     </div>
+  </div>
 
-    <div style="margin-bottom:60px">
-        <h3 class="section-title" style="margin-bottom:32px">Most Relevant Projects</h3>
+  <!-- ═══ 5. SUGGESTED PROJECTS (HIDDEN IN PDF) ═══ -->
+  
+        <div class="animate-on-scroll print-hide" style="margin-top: 40px;">
+            <div class="section-title" style="margin-bottom: 8px; color:var(--text-primary);">
+                <span class="icon" style="background:rgba(59, 130, 246, 0.15);">💡</span> Suggested Projects to Build
+            </div>
+            <p class="section-desc" style="color:var(--accent-text);">No relevant repositories were found in your GitHub for this role. Here are some example projects you can build for inspiration.</p>
+            <div class="projects-grid">
         
-        <div class="glass-card" style="margin-bottom:24px;padding:32px">
-            <h3 style="color:#F5F5F5;font-size:22px;font-weight:700;margin-bottom:12px;border:none;padding:0;letter-spacing:-0.5px">STST</h3>
-            <p style="color:#9A9A9A;font-size:15px;line-height:1.6;margin-bottom:16px"></p>
-            
-            <div style="color:#E10600;font-size:12px;text-transform:uppercase;font-weight:700;letter-spacing:1px;margin-bottom:24px">TECH STACK: <span style="color:#F5F5F5;font-weight:500">Python</span></div>
-            <a href="https://github.com/Swathy1209/STST" target="_blank" class="btn-outline">GitHub Repository &rarr;</a>
+            <div class="project-card suggestion" style="animation-delay:0.0s; border-color: rgba(59, 130, 246, 0.3);">
+                <div class="project-header">
+                    <h4 class="project-name">apache/airflow</h4>
+                    <span class="project-badge" style="background:rgba(59, 130, 246, 0.2); color:#60a5fa; border-color:rgba(59,130,246,0.4);">Suggestion</span>
+                </div>
+                <p style="color:var(--text-secondary); margin-bottom:20px; font-size: 0.95rem;">Platform to programmatically author, schedule, and monitor workflows.</p>
+                <a href="https://github.com/apache/airflow" target="_blank" class="project-link" style="border-color:rgba(59, 130, 246, 0.3);">
+                    View on GitHub
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                </a>
+            </div>
+            <div class="project-card suggestion" style="animation-delay:0.1s; border-color: rgba(59, 130, 246, 0.3);">
+                <div class="project-header">
+                    <h4 class="project-name">pandas-dev/pandas</h4>
+                    <span class="project-badge" style="background:rgba(59, 130, 246, 0.2); color:#60a5fa; border-color:rgba(59,130,246,0.4);">Suggestion</span>
+                </div>
+                <p style="color:var(--text-secondary); margin-bottom:20px; font-size: 0.95rem;">Flexible and powerful data analysis / manipulation library for Python.</p>
+                <a href="https://github.com/pandas-dev/pandas" target="_blank" class="project-link" style="border-color:rgba(59, 130, 246, 0.3);">
+                    View on GitHub
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                </a>
+            </div>
+            </div>
         </div>
         
-        <div class="glass-card" style="margin-bottom:24px;padding:32px">
-            <h3 style="color:#F5F5F5;font-size:22px;font-weight:700;margin-bottom:12px;border:none;padding:0;letter-spacing:-0.5px">Swathy1209</h3>
-            <p style="color:#9A9A9A;font-size:15px;line-height:1.6;margin-bottom:16px">Config files for my GitHub profile.</p>
-            
-            <div style="color:#E10600;font-size:12px;text-transform:uppercase;font-weight:700;letter-spacing:1px;margin-bottom:24px">TECH STACK: <span style="color:#F5F5F5;font-weight:500"></span></div>
-            <a href="https://github.com/Swathy1209/Swathy1209" target="_blank" class="btn-outline">GitHub Repository &rarr;</a>
-        </div>
-        
-        <div class="glass-card" style="margin-bottom:24px;padding:32px">
-            <h3 style="color:#F5F5F5;font-size:22px;font-weight:700;margin-bottom:12px;border:none;padding:0;letter-spacing:-0.5px">orchestrai-db</h3>
-            <p style="color:#9A9A9A;font-size:15px;line-height:1.6;margin-bottom:16px"></p>
-            
-            <div style="color:#E10600;font-size:12px;text-transform:uppercase;font-weight:700;letter-spacing:1px;margin-bottom:24px">TECH STACK: <span style="color:#F5F5F5;font-weight:500">HTML</span></div>
-            <a href="https://github.com/Swathy1209/orchestrai-db" target="_blank" class="btn-outline">GitHub Repository &rarr;</a>
-        </div>
-        
-    </div>
-
-    <div style="margin-bottom:40px">
-        <h3 class="section-title" style="margin-bottom:32px">GitHub Project Showcase</h3>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px">
-            
-        <a href="https://github.com/Swathy1209/orchestrai-agent" target="_blank" class="gh-card" style="text-decoration:none;display:block;padding:24px;border:1px solid rgba(255,255,255,0.05);border-radius:12px;background:#1A1A1A;margin-bottom:16px;transition:all 0.2s">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-                <h4 style="color:#F5F5F5;font-size:16px;font-weight:600;margin:0">orchestrai-agent</h4>
-                <span style="color:#E10600;font-size:12px;font-weight:700">⭐ 0</span>
-            </div>
-            <p style="color:#9A9A9A;font-size:13px;line-height:1.5;margin:0"></p>
-        </a>
-        
-        <a href="https://github.com/Swathy1209/acia-cloud-deployment" target="_blank" class="gh-card" style="text-decoration:none;display:block;padding:24px;border:1px solid rgba(255,255,255,0.05);border-radius:12px;background:#1A1A1A;margin-bottom:16px;transition:all 0.2s">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-                <h4 style="color:#F5F5F5;font-size:16px;font-weight:600;margin:0">acia-cloud-deployment</h4>
-                <span style="color:#E10600;font-size:12px;font-weight:700">⭐ 0</span>
-            </div>
-            <p style="color:#9A9A9A;font-size:13px;line-height:1.5;margin:0"></p>
-        </a>
-        
-        <a href="https://github.com/Swathy1209/acia-playwright" target="_blank" class="gh-card" style="text-decoration:none;display:block;padding:24px;border:1px solid rgba(255,255,255,0.05);border-radius:12px;background:#1A1A1A;margin-bottom:16px;transition:all 0.2s">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-                <h4 style="color:#F5F5F5;font-size:16px;font-weight:600;margin:0">acia-playwright</h4>
-                <span style="color:#E10600;font-size:12px;font-weight:700">⭐ 0</span>
-            </div>
-            <p style="color:#9A9A9A;font-size:13px;line-height:1.5;margin:0"></p>
-        </a>
-        
-        <a href="https://github.com/Swathy1209/Azure_App" target="_blank" class="gh-card" style="text-decoration:none;display:block;padding:24px;border:1px solid rgba(255,255,255,0.05);border-radius:12px;background:#1A1A1A;margin-bottom:16px;transition:all 0.2s">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-                <h4 style="color:#F5F5F5;font-size:16px;font-weight:600;margin:0">Azure_App</h4>
-                <span style="color:#E10600;font-size:12px;font-weight:700">⭐ 0</span>
-            </div>
-            <p style="color:#9A9A9A;font-size:13px;line-height:1.5;margin:0"></p>
-        </a>
-        
-        </div>
-    </div>
 
 </div>
 
-<div class="footer">
-    Generated autonomously by OrchestrAI<br/>
-    Advanced Career Intelligence System
+<div class="portfolio-footer">
+  Built autonomously by OrchestrAI &bull; Advanced Career Intelligence System &bull; March 07, 2026
 </div>
 
+</div>
+
+<!-- ═══ 6. DOWNLOAD BUTTON ═══ -->
+<div class="download-section print-hide">
+  <button class="download-btn" onclick="downloadPDF()" id="downloadBtn">
+    Download Portfolio (PDF)
+  </button>
+</div>
+
+<script>
+// ── PDF Download ──
+function downloadPDF() {
+  const btn = document.getElementById('downloadBtn');
+  const container = document.getElementById('portfolio-content');
+  
+  btn.innerHTML = 'Generating PDF...';
+  
+  // Add class to hide suggestions and show PDF-only messages
+  container.classList.add('downloading-pdf');
+
+  const opt = {
+    margin: 0,
+    filename: 'dharshanashri_s_portfolio_careernest_machine_learning.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true, backgroundColor: '#020617' },
+    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+    pagebreak: { mode: ['avoid-all', 'css'] }
+  };
+  
+  html2pdf().set(opt).from(container).save().then(() => {
+    container.classList.remove('downloading-pdf');
+    btn.innerHTML = 'Downloaded!';
+    setTimeout(() => {
+      btn.innerHTML = 'Download Portfolio (PDF)';
+    }, 3000);
+  }).catch(() => {
+    container.classList.remove('downloading-pdf');
+    btn.innerHTML = 'Download Portfolio (PDF)';
+  });
+}
+</script>
 </body>
 </html>
