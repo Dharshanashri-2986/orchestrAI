@@ -4,10 +4,10 @@ Company: Accredian
 Role: Data Science
 
 Resume:
-https://orchestrai.onrender.com/application_packages/resume.pdf
+Resume extraction failed
 
 Cover Letter:
-https://orchestrai.onrender.com/cover_letters/accredian_data_science.md
+/cover_letters/accredian_data_science.md
 
 Apply Here:
 https://internshala.com/internship/detail/work-from-home-data-science-internship-at-accredian1772426518
