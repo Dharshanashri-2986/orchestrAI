@@ -1,11 +1,5 @@
 logs:
 - agent: PracticeAgent
-  action: 'Failed portal for Stripe Data Analyst, Intern (Master''s degree): Gemini
-    failed to generate interview Q&A for Stripe - Data Analyst, Intern (Master''s
-    degree)'
-  status: error
-  timestamp: '2026-03-07T07:08:05'
-- agent: PracticeAgent
   action: 'Failed portal for Zuneko Labs Artificial Intelligence (AI): Gemini failed
     to generate interview Q&A for Zuneko Labs - Artificial Intelligence (AI)'
   status: error
@@ -2657,3 +2651,8 @@ logs:
     Internship Spring 2026'
   status: error
   timestamp: '2026-03-07T20:54:56'
+- agent: PracticeAgent
+  action: 'Failed portal for FinZebra AI Engineering & Learning Design: Gemini failed
+    to generate interview Q&A for FinZebra - AI Engineering & Learning Design'
+  status: error
+  timestamp: '2026-03-07T20:54:59'
