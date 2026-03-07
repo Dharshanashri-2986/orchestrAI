@@ -1,11 +1,5 @@
 logs:
 - agent: PracticeAgent
-  action: 'Failed portal for Infinity Assurance Solutions Private Limited Computer
-    Vision: Gemini failed to generate interview Q&A for Infinity Assurance Solutions
-    Private Limited - Computer Vision'
-  status: error
-  timestamp: '2026-03-06T07:16:22'
-- agent: PracticeAgent
   action: 'Failed portal for Mindenious Edutech Data Science: Gemini failed to generate
     interview Q&A for Mindenious Edutech - Data Science'
   status: error
@@ -2642,3 +2636,9 @@ logs:
     Science'
   status: error
   timestamp: '2026-03-07T11:51:56'
+- agent: PracticeAgent
+  action: 'Failed portal for Unknown Company – Source Incomplete Artificial Intelligence
+    Intern: Gemini failed to generate interview Q&A for Unknown Company – Source Incomplete
+    - Artificial Intelligence Intern'
+  status: error
+  timestamp: '2026-03-07T11:52:00'
