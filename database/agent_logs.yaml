@@ -1,11 +1,5 @@
 logs:
 - agent: PracticeAgent
-  action: 'Failed portal for Emoolar Technology Private Limited Artificial Intelligence
-    (AI): Gemini failed to generate interview Q&A for Emoolar Technology Private Limited
-    - Artificial Intelligence (AI)'
-  status: error
-  timestamp: '2026-03-06T07:16:21'
-- agent: PracticeAgent
   action: 'Failed portal for Infinity Assurance Solutions Private Limited Computer
     Vision: Gemini failed to generate interview Q&A for Infinity Assurance Solutions
     Private Limited - Computer Vision'
@@ -2642,3 +2636,9 @@ logs:
     interview Q&A for OralKart - Machine Learning'
   status: error
   timestamp: '2026-03-07T11:51:52'
+- agent: PracticeAgent
+  action: 'Failed portal for Bro''s Innovations And Technology. Data Science: Gemini
+    failed to generate interview Q&A for Bro''s Innovations And Technology. - Data
+    Science'
+  status: error
+  timestamp: '2026-03-07T11:51:56'
