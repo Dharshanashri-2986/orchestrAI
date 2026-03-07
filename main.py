@@ -208,11 +208,18 @@ def sync_from_github_cloud():
                             f_url = f_meta["url"]
                             f_resp = requests.get(f_url, headers=_auth_headers(), timeout=10)
                             if f_resp.status_code == 200:
-                                content = base64.b64decode(f_resp.json()["content"]).decode("utf-8")
+                                raw_bytes = base64.b64decode(f_resp.json()["content"])
                                 local_path = os.path.join(DATA_DIR, path)
                                 os.makedirs(os.path.dirname(local_path), exist_ok=True)
-                                with open(local_path, "w", encoding="utf-8") as f:
-                                    f.write(content)
+                                
+                                # If binary file, write as bytes
+                                if any(path.lower().endswith(ext) for ext in [".pdf", ".png", ".jpg", ".jpeg"]):
+                                    with open(local_path, "wb") as f:
+                                        f.write(raw_bytes)
+                                else:
+                                    # Otherwise write as strings
+                                    with open(local_path, "w", encoding="utf-8") as f:
+                                        f.write(raw_bytes.decode("utf-8"))
                                 logger.info("Cloud Sync: ✓ %s", path)
             else:
                 logger.warning("Cloud Sync: Could not list %s (%d)", d, resp.status_code)
