@@ -1,10 +1,5 @@
 logs:
 - agent: PracticeAgent
-  action: 'Failed portal for Innoknowvex Data Science: Gemini failed to generate interview
-    Q&A for Innoknowvex - Data Science'
-  status: error
-  timestamp: '2026-03-06T07:16:20'
-- agent: PracticeAgent
   action: 'Failed portal for Emoolar Technology Private Limited Artificial Intelligence
     (AI): Gemini failed to generate interview Q&A for Emoolar Technology Private Limited
     - Artificial Intelligence (AI)'
@@ -2642,3 +2637,8 @@ logs:
     - Machine Learning Intern'
   status: error
   timestamp: '2026-03-07T11:51:49'
+- agent: PracticeAgent
+  action: 'Failed portal for OralKart Machine Learning: Gemini failed to generate
+    interview Q&A for OralKart - Machine Learning'
+  status: error
+  timestamp: '2026-03-07T11:51:52'
