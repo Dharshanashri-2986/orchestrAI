@@ -4,10 +4,10 @@ Company: PathAI
 Role: Machine Learning Intern/Co-op (Summer/Fall 2026)
 
 Resume:
-https://orchestrai.onrender.com/application_packages/resume.pdf
+Resume extraction failed
 
 Cover Letter:
-https://orchestrai.onrender.com/cover_letters/pathai_machine_learning_intern_co_op_summer_fal.md
+/cover_letters/pathai_machine_learning_intern_co_op_summer_fal.md
 
 Apply Here:
 https://www.linkedin.com/jobs/view/machine-learning-intern-co-op-summer-fall-2026-at-pathai-4309502929?position=6&pageNum=0&refId=sLwq%2FogAMYyHNWz6Csz6PA%3D%3D&trackingId=6BsgkFKiaDABjeTK4LZ9Gw%3D%3D
