@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Mock Interview — Intern - Data Science at Lensa</title>
+<title>Mock Interview — Intern, Data Science at Lensa</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
   :root {
@@ -104,6 +104,24 @@
     padding: 6px 12px; border-radius: 6px; font-size: 0.8rem;
   }
   .btn-outline:hover { border-color: var(--text-main); color: var(--text-main); }
+
+  /* Evaluation Cards */
+  .eval-card {
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    border-radius: 12px;
+    padding: 16px;
+    align-self: flex-end;
+    max-width: 85%;
+    animation: bubbleIn 0.3s ease;
+  }
+  .eval-score {
+    display: flex; flex-direction: column; align-items: center;
+    background: rgba(0,0,0,0.2); padding: 8px 12px; border-radius: 8px;
+    min-width: 70px;
+  }
+  .eval-score span { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; }
+  .eval-score strong { font-size: 1.1rem; color: #10b981; }
 
   /* Sections */
   .section-container { margin-bottom: 50px; }
@@ -401,7 +419,7 @@
 
 <div class="hero">
   <h1>Interactive Mock Interview</h1>
-  <h2>Intern - Data Science &mdash; <strong>Lensa</strong></h2>
+  <h2>Intern, Data Science &mdash; <strong>Lensa</strong></h2>
   <div class="hero-badges">
     <span class="badge">👤 Dharshanashri S</span>
     <span class="badge">📅 March 07, 2026</span>
@@ -449,7 +467,7 @@
                 <span class="q-icon">⚙️</span>
                 <span class="q-title">Question 2</span>
               </div>
-              <p class="q-text">How would you approach building a Intern - Data Science pipeline from scratch?</p>
+              <p class="q-text">How would you approach building a Intern, Data Science pipeline from scratch?</p>
               <textarea class="q-textarea" placeholder="Type your answer here or practice answering out loud..."></textarea>
               <div class="q-actions">
                 <button class="btn-outline" onclick="toggleHint(this)">💡 Show Hint</button>
@@ -617,7 +635,7 @@
       </div>
       <div class="form-group" style="margin:0">
         <label>Role</label>
-        <input class="form-input" id="fb_role" value="Intern - Data Science" readonly />
+        <input class="form-input" id="fb_role" value="Intern, Data Science" readonly />
       </div>
     </div>
 
@@ -798,7 +816,7 @@ async function submitFeedback() {
 // ----- AI Interview Chat -----
 var chatHistory = [];
 var chatCompany = 'Lensa';
-var chatRole = 'Intern - Data Science';
+var chatRole = 'Intern, Data Science';
 
 function addChatBubble(role, text, qtype) {
   var messages = document.getElementById('chatMessages');
