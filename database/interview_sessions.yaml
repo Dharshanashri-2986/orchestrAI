@@ -286,3 +286,8 @@ interview_sessions:
   interview_link: /interview/banner_engineering_careers_business_analyst_intern.html
   current_difficulty: medium
   generated_at: '2026-03-07T23:05:15'
+- company: Tatari
+  role: Data Science, Intern
+  interview_link: /interview/tatari_data_science_intern.html
+  current_difficulty: medium
+  generated_at: '2026-03-07T23:05:25'
