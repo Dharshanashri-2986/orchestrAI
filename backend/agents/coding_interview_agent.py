@@ -460,7 +460,7 @@ def _simulate_test_case(test_num: int, stdin_input: str, expected: str, code: st
     has_logic = len(code.strip()) > 50 and "pass" not in code.lower()
     # Randomly vary pass/fail to simulate realistic results
     import hashlib
-    h = int(hashlib.md5(f"{code}{test_num}".encode()).hexdigest(), 16)
+    h = int(hashlib.sha256(f"{code}{test_num}".encode()).hexdigest(), 16)
     passed = has_logic and (h % 10) > 3  # ~60% pass rate for meaningful code
 
     return {
