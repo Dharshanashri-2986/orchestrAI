@@ -4,10 +4,10 @@ Company: Unknown
 Role: Data Science Intern
 
 Resume:
-https://orchestrai.onrender.com/application_packages/resume.pdf
+Resume extraction failed
 
 Cover Letter:
-https://orchestrai.onrender.com/cover_letters/unknown_data_science_intern.md
+/cover_letters/unknown_data_science_intern.md
 
 Apply Here:
 
