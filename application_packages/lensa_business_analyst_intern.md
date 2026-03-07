@@ -4,10 +4,10 @@ Company: Lensa
 Role: Business Analyst Intern
 
 Resume:
-https://orchestrai.onrender.com/application_packages/resume.pdf
+Resume extraction failed
 
 Cover Letter:
-https://orchestrai.onrender.com/cover_letters/lensa_business_analyst_intern.md
+/cover_letters/lensa_business_analyst_intern.md
 
 Apply Here:
 https://www.linkedin.com/jobs/view/business-analyst-intern-at-lensa-4379753352?position=6&pageNum=0&refId=gWKuYjTS8%2BAyANRSbS94Lg%3D%3D&trackingId=nSvBUuMsNuBCxLgwvoemgg%3D%3D
