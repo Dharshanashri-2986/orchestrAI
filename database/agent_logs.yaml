@@ -1,9 +1,5 @@
 logs:
 - agent: CareerAgent
-  action: 104 jobs fetched
-  level: INFO
-  timestamp: '2026-03-03T07:26:11'
-- agent: CareerAgent
   action: 104 jobs fetched, 59 relevant
   level: INFO
   timestamp: '2026-03-03T07:26:28'
@@ -2614,3 +2610,9 @@ logs:
     interview Q&A for MTX Group - Business Analyst Intern'
   status: error
   timestamp: '2026-03-07T11:00:35'
+- agent: PracticeAgent
+  action: 'Failed portal for Stripe Data Analyst, Intern (Master''s degree): Gemini
+    failed to generate interview Q&A for Stripe - Data Analyst, Intern (Master''s
+    degree)'
+  status: error
+  timestamp: '2026-03-07T11:00:38'
