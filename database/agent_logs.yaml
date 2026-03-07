@@ -1,11 +1,5 @@
 logs:
 - agent: PracticeAgent
-  action: 'Failed portal for Sungrow Power Supply Co., Ltd. Data Analyst Internship:
-    Gemini failed to generate interview Q&A for Sungrow Power Supply Co., Ltd. - Data
-    Analyst Internship'
-  status: error
-  timestamp: '2026-03-06T07:17:17'
-- agent: PracticeAgent
   action: 'Failed portal for Unimonks Artificial Intelligence (AI): Gemini failed
     to generate interview Q&A for Unimonks - Artificial Intelligence (AI)'
   status: error
@@ -2610,3 +2604,8 @@ logs:
     to generate interview Q&A for AUMOVIO - Data Analysis Intern (Yearlong)'
   status: error
   timestamp: '2026-03-07T20:50:22'
+- agent: PracticeAgent
+  action: 'Failed portal for ZURU Toys Data Analyst Intern: Gemini failed to generate
+    interview Q&A for ZURU Toys - Data Analyst Intern'
+  status: error
+  timestamp: '2026-03-07T20:50:25'
