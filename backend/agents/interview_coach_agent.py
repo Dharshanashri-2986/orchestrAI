@@ -350,6 +350,24 @@ def _build_interview_html(
   }}
   .btn-outline:hover {{ border-color: var(--text-main); color: var(--text-main); }}
 
+  /* Evaluation Cards */
+  .eval-card {{
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    border-radius: 12px;
+    padding: 16px;
+    align-self: flex-end;
+    max-width: 85%;
+    animation: bubbleIn 0.3s ease;
+  }}
+  .eval-score {{
+    display: flex; flex-direction: column; align-items: center;
+    background: rgba(0,0,0,0.2); padding: 8px 12px; border-radius: 8px;
+    min-width: 70px;
+  }}
+  .eval-score span {{ font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; }}
+  .eval-score strong {{ font-size: 1.1rem; color: #10b981; }}
+
   /* Sections */
   .section-container {{ margin-bottom: 50px; }}
   .section-title {{
@@ -998,6 +1016,41 @@ async function startAIInterview() {{
   }}
 }}
 
+async function callInterviewEvaluate(question, userAnswer) {{
+  var payload = {{
+    company: chatCompany,
+    role: chatRole,
+    question: question,
+    user_answer: userAnswer
+  }};
+
+  var resp = await fetch(window.location.origin + '/api/interview/evaluate', {{
+    method: 'POST',
+    headers: {{ 'Content-Type': 'application/json' }},
+    body: JSON.stringify(payload)
+  }});
+  return await resp.json();
+}}
+
+function addEvaluationCard(evalData) {{
+  var messages = document.getElementById('chatMessages');
+  var card = document.createElement('div');
+  card.className = 'eval-card';
+  card.innerHTML = `
+    <div style="font-size:0.85rem; font-weight:700; color:#cbd5e1; margin-bottom:8px; text-transform:uppercase; letter-spacing:1px;">📊 Answer Evaluation</div>
+    <div style="display:flex; gap:16px; margin-bottom:12px; flex-wrap:wrap;">
+      <div class="eval-score"><span>Tech Depth</span><strong>${{evalData.technical_score}}/10</strong></div>
+      <div class="eval-score"><span>Clarity</span><strong>${{evalData.clarity_score}}/10</strong></div>
+      <div class="eval-score"><span>Comms</span><strong>${{evalData.communication_score}}/10</strong></div>
+    </div>
+    <div style="font-size:0.9rem; color:#f8fafc; background:rgba(0,0,0,0.2); padding:10px; border-radius:8px; border-left:3px solid #3b82f6;">
+      <strong>Suggestion:</strong> ${{evalData.feedback || 'No specific suggestion.'}}
+    </div>
+  `;
+  messages.appendChild(card);
+  messages.scrollTop = messages.scrollHeight;
+}}
+
 async function sendChatAnswer() {{
   var input = document.getElementById('chatInput');
   var sendBtn = document.getElementById('chatSendBtn');
@@ -1006,6 +1059,14 @@ async function sendChatAnswer() {{
   if (!answer) {{
     input.focus();
     return;
+  }}
+
+  var lastAiQuestion = '';
+  for (var i = chatHistory.length - 1; i >= 0; i--) {{
+    if (chatHistory[i].role === 'ai') {{
+      lastAiQuestion = chatHistory[i].content;
+      break;
+    }}
   }}
 
   // Show user's answer
@@ -1018,8 +1079,16 @@ async function sendChatAnswer() {{
   showTypingIndicator();
 
   try {{
-    var data = await callInterviewAPI(answer);
+    var askPromise = callInterviewAPI(answer);
+    var evalPromise = callInterviewEvaluate(lastAiQuestion, answer);
+
+    var [data, evalData] = await Promise.all([askPromise, evalPromise]);
+
     removeTypingIndicator();
+
+    if (evalData && evalData.technical_score !== undefined) {{
+      addEvaluationCard(evalData);
+    }}
 
     chatHistory.push({{ role: 'ai', content: data.next_question }});
     addChatBubble('ai', data.next_question, data.question_type);

@@ -12,7 +12,7 @@ import logging
 from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse
 
-from backend.agents.interview_agent import generate_next_question
+from backend.agents.interview_agent import generate_next_question, evaluate_answer
 
 logger = logging.getLogger("OrchestrAI.InterviewAPI")
 
@@ -60,3 +60,49 @@ async def ask_interview_question(request: Request):
             {"status": "error", "message": str(exc)},
             status_code=500,
         )
+
+
+@router.post("/evaluate")
+async def evaluate_interview_answer(request: Request):
+    """
+    Evaluate a candidate's answer.
+
+    Body:
+      {
+        "company": "Tinder",
+        "role": "Machine Learning Engineer Intern",
+        "question": "...",
+        "user_answer": "..."
+      }
+
+    Returns:
+      {
+        "technical_score": int,
+        "clarity_score": int,
+        "communication_score": int,
+        "feedback": "string"
+      }
+    """
+    try:
+        body = await request.json()
+        company = body.get("company", "the company")
+        role = body.get("role", "the role")
+        question = body.get("question", "")
+        user_answer = body.get("user_answer", "")
+
+        result = evaluate_answer(
+            company=company,
+            role=role,
+            question=question,
+            user_answer=user_answer,
+        )
+
+        return JSONResponse(result)
+
+    except Exception as exc:
+        logger.error("POST /api/interview/evaluate error: %s", exc)
+        return JSONResponse(
+            {"status": "error", "message": str(exc)},
+            status_code=500,
+        )
+

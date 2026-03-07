@@ -131,3 +131,100 @@ def generate_next_question(
             ),
             "question_type": "technical",
         }
+
+def evaluate_answer(
+    company: str,
+    role: str,
+    question: str,
+    user_answer: str,
+) -> dict:
+    """
+    Evaluate an interview answer.
+
+    Parameters
+    ----------
+    company : str
+    role : str
+    question : str
+    user_answer : str
+
+    Returns
+    -------
+    dict
+        {
+            "technical_score": int,
+            "clarity_score": int,
+            "communication_score": int,
+            "feedback": str
+        }
+    """
+    if not openai_client:
+        return {
+            "technical_score": 7,
+            "clarity_score": 7,
+            "communication_score": 7,
+            "feedback": "Good answer, but could be more specific. (API key missing)"
+        }
+
+    system_prompt = (
+        f"You are a mock interview evaluator for {company} assessing a candidate for the {role} role. "
+        "Evaluate the candidate's answer to the given question. "
+        "Score the answer from 1 to 10 for:\n"
+        "- technical_score: Technical accuracy and depth.\n"
+        "- clarity_score: Clarity and structure of the explanation.\n"
+        "- communication_score: Overall communication skills and conciseness.\n"
+        "Provide a short, constructive piece of 'feedback' (1-2 sentences) on how to improve.\n\n"
+        "Return EXACTLY a JSON object with this shape:\n"
+        "{\n"
+        '  "technical_score": 8,\n'
+        '  "clarity_score": 7,\n'
+        '  "communication_score": 6,\n'
+        '  "feedback": "..."\n'
+        "}\n"
+        "Do not include markdown blocks or any other text outside the JSON."
+    )
+
+    user_prompt = (
+        f"Question: {question}\n\n"
+        f"Candidate's Answer: {user_answer}"
+    )
+
+    try:
+        resp = openai_client.chat.completions.create(
+            model="gemini-2.0-flash",
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}
+            ],
+            max_tokens=300,
+            temperature=0.2,
+        )
+        raw = resp.choices[0].message.content.strip()
+        
+        import re
+        import json
+        
+        # Robustly extract JSON block
+        json_match = re.search(r'\{.*\}', raw, re.DOTALL)
+        if json_match:
+            raw_json = json_match.group(0)
+        else:
+            raw_json = raw
+
+        data = json.loads(raw_json)
+        return {
+            "technical_score": int(data.get("technical_score", 0)),
+            "clarity_score": int(data.get("clarity_score", 0)),
+            "communication_score": int(data.get("communication_score", 0)),
+            "feedback": str(data.get("feedback", "No feedback provided.")),
+        }
+
+    except Exception as exc:
+        logger.error("InterviewAgent: Evaluation failed — %s", exc)
+        return {
+            "technical_score": 5,
+            "clarity_score": 5,
+            "communication_score": 5,
+            "feedback": "Failed to evaluate answer. Please try again."
+        }
+
