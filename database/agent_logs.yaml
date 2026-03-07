@@ -1,11 +1,5 @@
 logs:
 - agent: PracticeAgent
-  action: 'Failed portal for Okta for Developers Data Analyst Intern (Summer 2026):
-    Gemini failed to generate interview Q&A for Okta for Developers - Data Analyst
-    Intern (Summer 2026)'
-  status: error
-  timestamp: '2026-03-03T08:28:37'
-- agent: PracticeAgent
   action: 'Failed portal for Washington Commanders Data Analyst (Intern): Gemini failed
     to generate interview Q&A for Washington Commanders - Data Analyst (Intern)'
   status: error
@@ -2622,3 +2616,9 @@ logs:
     to generate interview Q&A for PANTHERx Rare Pharmacy - Intern, Data Science'
   status: error
   timestamp: '2026-03-07T11:02:26'
+- agent: PracticeAgent
+  action: 'Failed portal for Nuro Machine Learning intern, Behavior Planning: Gemini
+    failed to generate interview Q&A for Nuro - Machine Learning intern, Behavior
+    Planning'
+  status: error
+  timestamp: '2026-03-07T11:02:30'
