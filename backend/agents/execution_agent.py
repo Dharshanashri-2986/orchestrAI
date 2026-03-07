@@ -497,7 +497,7 @@ def run_orchestrai_pipeline():
         <div style="background:{'#ffebee' if overall_level in ['High','Medium'] else '#e8f5e9'}; border-radius:8px; padding:12px 16px; margin-bottom:20px; color:{'#c62828' if overall_level in ['High','Medium'] else '#2e7d32'}; font-weight:600; font-size:12px; border: 1px solid {'#ffcdd2' if overall_level in ['High','Medium'] else '#c8e6c9'}">
             <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px">
                 <span style="font-size:16px">{'⚠️' if overall_level in ['High','Medium'] else '✅'}</span> 
-                {f'Security Alert: {overall_level} risk detected in {total_repos} repositories!' if overall_level in ['High','Medium'] else 'No critical security issues detected across all repositories!'}
+                {f'Security Alert: {overall_level} risk found among {total_repos} scanned repositories!' if overall_level in ['High','Medium'] else 'No critical security issues detected across all repositories!'}
             </div>
             <ul style="margin:0; padding-left:20px; font-size:11px; font-weight:400; color:#444">
                 {sec_insights_html}
