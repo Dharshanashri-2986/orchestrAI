@@ -129,6 +129,30 @@ async def serve_analytics():
          return FileResponse(path)
     return HTMLResponse("<h1>Hold on... 🤖</h1><p>The analytics dashboard is being synced from the cloud. Please refresh in 5 seconds.</p><script>setTimeout(()=>location.reload(), 5000)</script>", status_code=202)
 
+@app.get("/cover_letters/{filename}")
+async def serve_cover_letter_file(filename: str):
+    path = os.path.join(DATA_DIR, "cover_letters", filename)
+    if os.path.exists(path):
+        from fastapi.responses import FileResponse
+        return FileResponse(path)
+    return HTMLResponse(f"Not Found: {filename}", status_code=404)
+
+@app.get("/optimized_resumes/{filename}")
+async def serve_optimized_resume_file(filename: str):
+    path = os.path.join(DATA_DIR, "optimized_resumes", filename)
+    if os.path.exists(path):
+        from fastapi.responses import FileResponse
+        return FileResponse(path)
+    return HTMLResponse(f"Not Found: {filename}", status_code=404)
+
+@app.get("/debug-sync")
+def debug_sync():
+    import glob
+    files = glob.glob(os.path.join(DATA_DIR, "**/*"), recursive=True)
+    # Filter for interesting dirs
+    interesting = [f for f in files if "cover_letters" in f or "optimized_resumes" in f or "database" in f]
+    return {"data_dir": os.path.abspath(DATA_DIR), "files_found": len(files), "interesting_files": interesting[:100]}
+
 def sync_from_github_cloud():
     """Download all YAML and HTML files from GitHub to local DATA_DIR."""
     from backend.github_yaml_db import GITHUB_TOKEN, GITHUB_USERNAME, GITHUB_REPO, GITHUB_BRANCH, _BASE_URL, _auth_headers
