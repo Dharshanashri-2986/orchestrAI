@@ -1,11 +1,5 @@
 logs:
 - agent: PracticeAgent
-  action: 'Failed portal for Stripe Data Analyst, Intern (Master''s degree): Gemini
-    failed to generate interview Q&A for Stripe - Data Analyst, Intern (Master''s
-    degree)'
-  status: error
-  timestamp: '2026-03-06T07:16:15'
-- agent: PracticeAgent
   action: 'Failed portal for Stripe PhD Machine Learning Engineer, Intern: Gemini
     failed to generate interview Q&A for Stripe - PhD Machine Learning Engineer, Intern'
   status: error
@@ -2638,3 +2632,9 @@ logs:
     (AI)'
   status: error
   timestamp: '2026-03-07T11:51:32'
+- agent: PracticeAgent
+  action: 'Failed portal for Talent Corner HR Services Machine Learning Engineer:
+    Gemini failed to generate interview Q&A for Talent Corner HR Services - Machine
+    Learning Engineer'
+  status: error
+  timestamp: '2026-03-07T11:51:35'
