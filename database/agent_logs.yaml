@@ -1,10 +1,5 @@
 logs:
 - agent: PracticeAgent
-  action: 'Failed portal for Aviate Manpower Data Science: Gemini failed to generate
-    interview Q&A for Aviate Manpower - Data Science'
-  status: error
-  timestamp: '2026-03-06T07:16:36'
-- agent: PracticeAgent
   action: 'Failed portal for Zulitech Solution Artificial Intelligence (AI): Gemini
     failed to generate interview Q&A for Zulitech Solution - Artificial Intelligence
     (AI)'
@@ -2642,3 +2637,9 @@ logs:
     interview Q&A for Namaah Pvt Ltd - AI/ML Engineer'
   status: error
   timestamp: '2026-03-07T11:52:55'
+- agent: PracticeAgent
+  action: 'Failed portal for Bipolar Factory Artificial Intelligence (AI): Gemini
+    failed to generate interview Q&A for Bipolar Factory - Artificial Intelligence
+    (AI)'
+  status: error
+  timestamp: '2026-03-07T11:52:58'
