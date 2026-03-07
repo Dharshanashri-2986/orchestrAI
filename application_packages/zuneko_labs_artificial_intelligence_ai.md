@@ -4,10 +4,10 @@ Company: Zuneko Labs
 Role: Artificial Intelligence (AI)
 
 Resume:
-https://orchestrai.onrender.com/application_packages/resume.pdf
+Resume extraction failed
 
 Cover Letter:
-https://orchestrai.onrender.com/cover_letters/zuneko_labs_artificial_intelligence_ai.md
+/cover_letters/zuneko_labs_artificial_intelligence_ai.md
 
 Apply Here:
 https://internshala.com/internship/detail/artificial-intelligence-ai-internship-in-pune-at-zuneko-labs1772080512
