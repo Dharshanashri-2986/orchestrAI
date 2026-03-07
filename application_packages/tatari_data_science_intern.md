@@ -4,13 +4,13 @@ Company: Tatari
 Role: Data Science, Intern
 
 Resume:
-https://orchestrai.onrender.com/application_packages/resume.pdf
+Resume extraction failed
 
 Cover Letter:
-https://orchestrai.onrender.com/cover_letters/tatari_data_science_intern.md
+/cover_letters/tatari_data_science_intern.md
 
 Apply Here:
-https://www.linkedin.com/jobs/view/data-science-intern-at-tatari-4374676980?position=8&pageNum=0&refId=tR%2B%2FNs7cAuvYnXXOrpS%2FQg%3D%3D&trackingId=EnVTwNMXWdWeX3wb25VVtQ%3D%3D
+https://www.linkedin.com/jobs/view/data-science-intern-at-tatari-4374676980?position=9&pageNum=0&refId=nwoRlEF22HYMJgIvuDUA3g%3D%3D&trackingId=ZT4ej2kl7TbMrFq51pSRRg%3D%3D
 
 Status:
 Ready to Apply
