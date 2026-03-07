@@ -1,10 +1,5 @@
 logs:
 - agent: PracticeAgent
-  action: 'Failed portal for Cloud Back Machine Learning: Gemini failed to generate
-    interview Q&A for Cloud Back - Machine Learning'
-  status: error
-  timestamp: '2026-03-06T07:16:27'
-- agent: PracticeAgent
   action: 'Failed portal for METRO Regional Transit Authority Data Analyst Intern:
     Gemini failed to generate interview Q&A for METRO Regional Transit Authority -
     Data Analyst Intern'
@@ -2643,3 +2638,8 @@ logs:
     Limited - Artificial Intelligence (AI)'
   status: error
   timestamp: '2026-03-07T11:52:25'
+- agent: PracticeAgent
+  action: 'Failed portal for Mulberry Leaf Artificial Intelligence (AI): Gemini failed
+    to generate interview Q&A for Mulberry Leaf - Artificial Intelligence (AI)'
+  status: error
+  timestamp: '2026-03-07T11:52:28'
