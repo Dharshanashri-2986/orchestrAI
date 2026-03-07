@@ -1,10 +1,5 @@
 logs:
 - agent: PracticeAgent
-  action: 'Failed portal for Transcarent Machine Learning Engineer Intern: Gemini
-    failed to generate interview Q&A for Transcarent - Machine Learning Engineer Intern'
-  status: error
-  timestamp: '2026-03-07T07:07:40'
-- agent: PracticeAgent
   action: 'Failed portal for Moloco Machine Learning Engineer Intern: Gemini failed
     to generate interview Q&A for Moloco - Machine Learning Engineer Intern'
   status: error
@@ -2657,3 +2652,9 @@ logs:
     Accelerator - AI Engineer Intern - AI/ML/GenAI Design & Development'
   status: error
   timestamp: '2026-03-07T20:53:30'
+- agent: PracticeAgent
+  action: 'Failed portal for Viant Technology Machine Learning Engineering Internship
+    - Summer 2026: Gemini failed to generate interview Q&A for Viant Technology -
+    Machine Learning Engineering Internship - Summer 2026'
+  status: error
+  timestamp: '2026-03-07T20:53:35'
