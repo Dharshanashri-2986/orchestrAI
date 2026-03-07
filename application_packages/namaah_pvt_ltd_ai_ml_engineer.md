@@ -4,10 +4,10 @@ Company: Namaah Pvt Ltd
 Role: AI/ML Engineer
 
 Resume:
-https://orchestrai.onrender.com/application_packages/resume.pdf
+Resume extraction failed
 
 Cover Letter:
-https://orchestrai.onrender.com/cover_letters/namaah_pvt_ltd_ai_ml_engineer.md
+/cover_letters/namaah_pvt_ltd_ai_ml_engineer.md
 
 Apply Here:
 https://internshala.com/internship/detail/work-from-home-ai-ml-engineer-internship-at-namaah-pvt-ltd1772709486
