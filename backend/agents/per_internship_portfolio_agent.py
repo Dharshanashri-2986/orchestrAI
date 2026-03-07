@@ -37,7 +37,7 @@ PORTFOLIO_FILE = "database/portfolio.yaml"
 USERS_FILE = "database/users.yaml"
 PER_INTERNSHIP_INDEX_FILE = "database/per_internship_portfolios.yaml"
 
-DEFAULT_USER_NAME = "Swathy G"
+DEFAULT_USER_NAME = os.getenv("USER_NAME", "Applicant")
 DEFAULT_SKILLS = ["Python", "Machine Learning", "Data Analysis", "SQL", "TensorFlow", "scikit-learn", "FastAPI", "NLP"]
 
 def _slugify(text: str) -> str:

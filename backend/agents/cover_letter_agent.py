@@ -36,7 +36,7 @@ COVER_LETTER_INDEX_FILE = "database/cover_letter_index.yaml"
 
 # Default user profile for when users.yaml has no data
 DEFAULT_USER = {
-    "name": "Swathy G",
+    "name": os.getenv("USER_NAME", "Applicant"),
     "email": os.getenv("EMAIL_USER", ""),
     "resume_skills": [
         "Python", "Machine Learning", "Data Analysis", "SQL",
@@ -44,7 +44,7 @@ DEFAULT_USER = {
         "Data Visualization", "Deep Learning", "NLP", "FastAPI"
     ],
     "career_goals": ["Data Engineering Internship", "ML Engineering Internship"],
-    "education": "B.Tech in Computer Science"
+    "education": os.getenv("USER_EDUCATION", "Computer Science")
 }
 
 def read_jobs() -> list[dict]:
@@ -69,12 +69,12 @@ def read_user_profile() -> dict:
         return DEFAULT_USER
 
 def generate_cover_letter(job: dict, user: dict) -> str:
-    user_name = user.get("name", "Swathy G")
+    user_name = user.get("name", os.getenv("USER_NAME", "Applicant"))
     resume_skills = ", ".join(user.get("resume_skills", DEFAULT_USER["resume_skills"])[:8])
     role = job.get("role", "Intern")
     company = job.get("company", "Company")
     technical_skills = ", ".join(job.get("technical_skills", [])[:6])
-    education = user.get("education", "B.Tech in Computer Science")
+    education = user.get("education", os.getenv("USER_EDUCATION", "Computer Science"))
 
     prompt = f"""Write a professional, enthusiastic, and fully personalized internship cover letter.
 

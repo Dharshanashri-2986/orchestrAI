@@ -81,6 +81,43 @@ for _d in STATIC_DIRS:
         except Exception:
             pass
 
+# ── Specialized Asset Serving with GitHub Fallback ────────────────────────────
+from backend.github_yaml_db import read_raw_file_from_github
+from fastapi.responses import FileResponse, Response
+
+async def _serve_with_github_fallback(category: str, filename: str):
+    """Try local disk first, then GitHub cloud."""
+    local_path = os.path.join(DATA_DIR, category, filename)
+    if os.path.exists(local_path):
+        return FileResponse(local_path)
+    
+    # Fallback to GitHub
+    github_path = f"{category}/{filename}"
+    logger.info("Asset not found locally: %s. Fetching from GitHub...", github_path)
+    content = read_raw_file_from_github(github_path)
+    if content:
+        # Save locally for next time
+        try:
+            os.makedirs(os.path.dirname(local_path), exist_ok=True)
+            with open(local_path, "w", encoding="utf-8") as f:
+                f.write(content)
+        except Exception:
+            pass
+        
+        # Serve as markdown or plain depending on ext
+        media_type = "text/markdown" if filename.endswith(".md") else "text/plain"
+        return Response(content=content, media_type=media_type)
+        
+    return HTMLResponse(f"Not Found: {filename} (Tried Local & GitHub)", status_code=404)
+
+@app.get("/cover_letters/{filename}")
+async def serve_cover_letter_file(filename: str):
+    return await _serve_with_github_fallback("cover_letters", filename)
+
+@app.get("/optimized_resumes/{filename}")
+async def serve_optimized_resume_file(filename: str):
+    return await _serve_with_github_fallback("optimized_resumes", filename)
+
 # ── Mount static directories (safe — all dirs guaranteed to exist) ──────────
 def _safe_mount(route, directory, name, html=False):
     try:
@@ -95,8 +132,6 @@ _safe_mount("/application_packages", os.path.join(DATA_DIR, "application_package
 _safe_mount("/frontend/practice",   os.path.join(DATA_DIR, "frontend/practice"),    "practice")
 _safe_mount("/portfolio",           os.path.join(DATA_DIR, "frontend/portfolio"),   "portfolio", html=True)
 _safe_mount("/interview",           os.path.join(DATA_DIR, "frontend/interview"),   "interview", html=True)
-_safe_mount("/optimized_resumes",   os.path.join(DATA_DIR, "optimized_resumes"),    "optimized_resumes")
-_safe_mount("/cover_letters",       os.path.join(DATA_DIR, "cover_letters"),        "cover_letters")
 _safe_mount("/dashboard/static",    os.path.join(DATA_DIR, "frontend/dashboard"),   "dashboard_static", html=False)
 
 @app.get("/dashboard")
@@ -128,22 +163,6 @@ async def serve_analytics():
          from fastapi.responses import FileResponse
          return FileResponse(path)
     return HTMLResponse("<h1>Hold on... 🤖</h1><p>The analytics dashboard is being synced from the cloud. Please refresh in 5 seconds.</p><script>setTimeout(()=>location.reload(), 5000)</script>", status_code=202)
-
-@app.get("/cover_letters/{filename}")
-async def serve_cover_letter_file(filename: str):
-    path = os.path.join(DATA_DIR, "cover_letters", filename)
-    if os.path.exists(path):
-        from fastapi.responses import FileResponse
-        return FileResponse(path)
-    return HTMLResponse(f"Not Found: {filename}", status_code=404)
-
-@app.get("/optimized_resumes/{filename}")
-async def serve_optimized_resume_file(filename: str):
-    path = os.path.join(DATA_DIR, "optimized_resumes", filename)
-    if os.path.exists(path):
-        from fastapi.responses import FileResponse
-        return FileResponse(path)
-    return HTMLResponse(f"Not Found: {filename}", status_code=404)
 
 @app.get("/debug-sync")
 def debug_sync():

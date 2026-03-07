@@ -181,6 +181,19 @@ def read_yaml_from_github(file_path: str) -> dict:
         return {}
 
 
+def read_raw_file_from_github(file_path: str) -> str:
+    """
+    Read the raw text content of a file from the GitHub repo.
+    Returns an empty string if the file doesn't exist or fetch fails.
+    """
+    try:
+        raw, _ = _get_raw_file(file_path)
+        return raw
+    except Exception as exc:
+        logger.error("GitHubYAMLDB: read_raw_file_from_github('%s') failed — %s", file_path, exc)
+        return ""
+
+
 def write_yaml_to_github(file_path: str, yaml_data: Any) -> bool:
     """
     Fully overwrite a YAML file in the GitHub repo.

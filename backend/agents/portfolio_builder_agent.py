@@ -520,12 +520,12 @@ def run_portfolio_builder_agent():
         # Fallback to defaults
         user = {
             "name": "Applicant",
-            "github_username": "Swathy1209",
+            "github_username": os.getenv("GITHUB_USERNAME", ""),
             "skills": ["Python", "Machine Learning"],
             "career_goals": ["AI Engineer"]
         }
         
-    github_username = user.get("github_username", "Swathy1209")
+    github_username = user.get("github_username", os.getenv("GITHUB_USERNAME", ""))
     if not github_username:
         logger.warning("PortfolioBuilderAgent: No GitHub username found.")
         return None

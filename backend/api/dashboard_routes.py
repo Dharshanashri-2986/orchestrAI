@@ -53,13 +53,15 @@ async def get_dashboard_data():
 
     logger.info("DashboardAPI: Returning %d jobs, %d security reports.", len(jobs), len(security_reports))
 
+    _render_url = os.getenv("RENDER_EXTERNAL_URL", "").rstrip("/")
+
     def normalize_urls(data):
         if isinstance(data, dict):
             return {k: normalize_urls(v) for k, v in data.items()}
         elif isinstance(data, list):
             return [normalize_urls(item) for item in data]
-        elif isinstance(data, str) and data.startswith("https://orchestrai.onrender.com"):
-            return data.replace("https://orchestrai.onrender.com", "")
+        elif isinstance(data, str) and _render_url and data.startswith(_render_url):
+            return data.replace(_render_url, "")
         return data
 
     result = {

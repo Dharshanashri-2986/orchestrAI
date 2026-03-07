@@ -45,7 +45,7 @@ JOBS_FILE             = "database/jobs.yaml"
 USERS_FILE            = "database/users.yaml"
 INTERVIEW_INDEX_FILE  = "database/interview_sessions.yaml"
 
-DEFAULT_USER_NAME   = "Swathy G"
+DEFAULT_USER_NAME   = os.getenv("USER_NAME", "Applicant")
 DEFAULT_SKILLS      = ["Python", "Machine Learning", "SQL", "Data Analysis"]
 
 

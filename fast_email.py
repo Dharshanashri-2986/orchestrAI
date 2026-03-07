@@ -1,9 +1,6 @@
 import os
 import sys
 
-# Set receiver
-os.environ["EMAIL_RECEIVER"] = "dharshpsgps@gmail.com"
-
 # Import execution agent functions and logger
 from backend.agents.execution_agent import (
     read_yaml_from_github,
@@ -15,7 +12,7 @@ def run_fast_email():
     logger.info("Starting FAST email dispatch...")
 
     # Set analytics URL fallback
-    analytics_url = "https://orchestrai.onrender.com/analytics"
+    analytics_url = f"{os.getenv('RENDER_EXTERNAL_URL', 'http://localhost:10000').rstrip('/')}/analytics"
 
     # STEP 3: Read GitHub database
     jobs_data = read_yaml_from_github("database/jobs.yaml")
@@ -111,7 +108,7 @@ def run_fast_email():
     if security_reports:
         for report in security_reports:
             repo_name = report.get("repo", "Unknown")
-            repo_url = report.get("repo_url", f"https://github.com/Swathy1209/{repo_name}")
+            repo_url = report.get("repo_url", f"https://github.com/{os.getenv('GITHUB_USERNAME', '')}/{repo_name}")
             risk_level = report.get("risk_level", "")
             if not risk_level:
                 rs = report.get("risk_score", 0)
@@ -180,7 +177,7 @@ def run_fast_email():
     pf = security_data.get("priority_security_fix", {}) if isinstance(security_data, dict) else {}
     if pf and pf.get("issue") and pf.get("risk") in ("HIGH", "MEDIUM", "HIGH"):
         pf_risk_color = "red" if pf.get("risk") == "HIGH" else "orange"
-        pf_repo_url = pf.get("repo_url", f"https://github.com/Swathy1209/{pf.get('repo','')}")
+        pf_repo_url = pf.get("repo_url", f"https://github.com/{os.getenv('GITHUB_USERNAME', '')}/{pf.get('repo','')}")
         priority_fix_html = (
             f'<div style="background:#fff3e0;border:2px solid #e65100;border-radius:10px;padding:16px;margin-bottom:20px">'
             f'<h3 style="color:#e65100;margin:0 0 10px 0">🚨 Priority Security Fix Required</h3>'
@@ -292,7 +289,7 @@ def run_fast_email():
                     </div>
                 </div>
                 <div style="display:flex; align-items:center; height:100%">
-                    <a href="https://orchestrai.onrender.com/dashboard" class="launch-btn">🌐 Launch Web Dashboard</a>
+                    <a href="{base_url}/dashboard" class="launch-btn">🌐 Launch Web Dashboard</a>
                 </div>
             </div>
             
@@ -335,7 +332,7 @@ def run_fast_email():
         <div style="background:#1a237e; color:white; border-radius:12px; padding:25px; text-align:center; margin-top:30px">
             <h3 style="color:white; margin:0 0 10px 0; font-size:18px">🚀 Ready to take the next step?</h3>
             <p style="opacity:0.9; margin:0 0 20px 0">View deeper insights, track your progress, and interact with all agents.</p>
-            <a href="https://orchestrai.onrender.com/dashboard" style="background:#ffffff; color:#1a237e; padding:12px 32px; border-radius:8px; text-decoration:none; font-weight:800; font-size:15px; display:inline-block">View Interactive Dashboard</a>
+            <a href="{base_url}/dashboard" style="background:#ffffff; color:#1a237e; padding:12px 32px; border-radius:8px; text-decoration:none; font-weight:800; font-size:15px; display:inline-block">View Interactive Dashboard</a>
         </div>
     </body>
     </html>

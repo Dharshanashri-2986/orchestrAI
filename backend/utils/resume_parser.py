@@ -46,19 +46,22 @@ def _auth_headers() -> dict:
 
 
 def download_resume_from_github(
-    resume_path: str = "resumes/swathiga_resume.pdf",
+    resume_path: str = None,
     local_path:  str = "temp_resume.pdf",
 ) -> str | None:
     """
     Download the resume PDF from GitHub repo via REST API.
 
     Args:
-        resume_path: Path inside the GitHub repo  (e.g. "resumes/swathiga_resume.pdf")
+        resume_path: Path inside the GitHub repo  (e.g. "resumes/resume.pdf")
         local_path:  Where to save it locally     (e.g. "temp_resume.pdf")
 
     Returns:
         Absolute path to the downloaded file, or None on failure.
     """
+    if resume_path is None:
+        resume_path = os.getenv("RESUME_PATH", "resumes/resume.pdf")
+
     url = f"{_BASE_URL}/repos/{_REPO_SLUG}/contents/{resume_path}"
     logger.info("ResumeParser: Downloading '%s' from GitHub...", resume_path)
 
@@ -147,7 +150,7 @@ def extract_resume_text(pdf_path: str) -> str:
 
 
 def download_and_extract(
-    resume_path: str = "resumes/swathiga_resume.pdf",
+    resume_path: str = None,
     local_path:  str = "temp_resume.pdf",
     cleanup:     bool = True,
 ) -> str:

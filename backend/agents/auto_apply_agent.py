@@ -72,8 +72,10 @@ def read_cover_letters() -> dict:
         logger.error("AutoApplyAgent: read_cover_letters failed - %s", exc)
         return {}
 
-def copy_resume_to_app_packages(repo_path: str = "resumes/swathiga_resume.pdf") -> str:
+def copy_resume_to_app_packages(repo_path: str = None) -> str:
     """Copies the master resume to application_packages directory."""
+    if repo_path is None:
+        repo_path = os.getenv("RESUME_PATH", "resumes/resume.pdf")
     new_path = "application_packages/resume.pdf"
     
     try:

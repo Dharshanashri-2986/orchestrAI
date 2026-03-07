@@ -4,7 +4,9 @@ from dotenv import load_dotenv
 load_dotenv()
 token = os.getenv('GITHUB_TOKEN')
 headers = {'Authorization': f'token {token}', 'Accept': 'application/vnd.github.v3+json'}
-url = 'https://api.github.com/repos/Swathy1209/orchestrai-agent/actions/runs?per_page=5'
+username = os.getenv('GITHUB_USERNAME', 'Dharshanashri-2986')
+repo = os.getenv('GITHUB_REPO', 'orchestrAI')
+url = f'https://api.github.com/repos/{username}/{repo}/actions/runs?per_page=5'
 resp = requests.get(url, headers=headers)
 if resp.status_code == 200:
     for run in resp.json().get('workflow_runs', []):

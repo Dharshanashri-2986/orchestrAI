@@ -265,7 +265,7 @@ def run_orchestrai_pipeline():
     if security_reports:
         for report in security_reports:
             repo_name = report.get("repo", "Unknown")
-            repo_url = report.get("repo_url", f"https://github.com/Swathy1209/{repo_name}")
+            repo_url = report.get("repo_url", f"https://github.com/{os.getenv('GITHUB_USERNAME', '')}/{repo_name}")
             # Use risk_level field from new scanner, fallback to score-based
             risk_level = report.get("risk_level", "")
             if not risk_level:
@@ -357,7 +357,7 @@ def run_orchestrai_pipeline():
     pf = security_data.get("priority_security_fix", {}) if isinstance(security_data, dict) else {}
     if pf and pf.get("issue") and pf.get("risk") in ("HIGH", "MEDIUM", "HIGH"):
         pf_risk_color = "red" if pf.get("risk") == "HIGH" else "orange"
-        pf_repo_url = pf.get("repo_url", f"https://github.com/Swathy1209/{pf.get('repo','')}")
+        pf_repo_url = pf.get("repo_url", f"https://github.com/{os.getenv('GITHUB_USERNAME', '')}/{pf.get('repo','')}")
         priority_fix_html = (
             f'<div style="background:#fff3e0;border:2px solid #e65100;border-radius:10px;padding:16px;margin-bottom:20px">'
             f'<h3 style="color:#e65100;margin:0 0 10px 0">🚨 Priority Security Fix Required</h3>'
@@ -476,7 +476,7 @@ def run_orchestrai_pipeline():
                     </div>
                 </div>
                 <div style="display:flex; align-items:center; height:100%">
-                    <a href="https://orchestrai.onrender.com/dashboard" class="launch-btn">🌐 Launch Web Dashboard</a>
+                    <a href="{base_url}/dashboard" class="launch-btn">🌐 Launch Web Dashboard</a>
                 </div>
             </div>
             
@@ -519,7 +519,7 @@ def run_orchestrai_pipeline():
         <div style="background:#1a237e; color:white; border-radius:12px; padding:25px; text-align:center; margin-top:30px">
             <h3 style="color:white; margin:0 0 10px 0; font-size:18px">🚀 Ready to take the next step?</h3>
             <p style="opacity:0.9; margin:0 0 20px 0">View deeper insights, track your progress, and interact with all agents.</p>
-            <a href="https://orchestrai.onrender.com/dashboard" style="background:#ffffff; color:#1a237e; padding:12px 32px; border-radius:8px; text-decoration:none; font-weight:800; font-size:15px; display:inline-block">View Interactive Dashboard</a>
+            <a href="{base_url}/dashboard" style="background:#ffffff; color:#1a237e; padding:12px 32px; border-radius:8px; text-decoration:none; font-weight:800; font-size:15px; display:inline-block">View Interactive Dashboard</a>
         </div>
     </body>
     </html>

@@ -289,9 +289,9 @@ def run_auto_fix_pr_agent() -> list[dict]:
     # Determine owner
     try:
         users_data = read_yaml_from_github("database/users.yaml") or {}
-        owner = users_data.get("user", {}).get("github_username", "Swathy1209")
+        owner = users_data.get("user", {}).get("github_username", os.getenv("GITHUB_USERNAME", ""))
     except Exception:
-        owner = "Swathy1209"
+        owner = os.getenv("GITHUB_USERNAME", "")
     
     results = []
     

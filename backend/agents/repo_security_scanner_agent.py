@@ -240,7 +240,7 @@ def run_repo_security_scanner_agent() -> dict:
         pass
 
     user = data.get("user", {})
-    username = user.get("github_username", "Swathy1209")
+    username = user.get("github_username", os.getenv("GITHUB_USERNAME", ""))
 
     repos = get_all_repos(username)
     if not repos:

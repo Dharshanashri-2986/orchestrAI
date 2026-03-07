@@ -55,7 +55,9 @@ JOBS_FILE = "database/jobs.yaml"
 USERS_FILE = "database/users.yaml"
 OPTIMIZATIONS_FILE = "database/resume_optimizations.yaml"
 
-def download_resume_pdf(repo_path: str = "resumes/swathiga_resume.pdf", local_path: str = "temp_resume.pdf") -> bool:
+def download_resume_pdf(repo_path: str = None, local_path: str = "temp_resume.pdf") -> bool:
+    if repo_path is None:
+        repo_path = os.getenv("RESUME_PATH", "resumes/resume.pdf")
     try:
         import shutil
         if os.path.exists(repo_path):
