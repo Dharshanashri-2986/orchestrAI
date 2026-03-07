@@ -105,6 +105,24 @@
   }
   .btn-outline:hover { border-color: var(--text-main); color: var(--text-main); }
 
+  /* Evaluation Cards */
+  .eval-card {
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    border-radius: 12px;
+    padding: 16px;
+    align-self: flex-end;
+    max-width: 85%;
+    animation: bubbleIn 0.3s ease;
+  }
+  .eval-score {
+    display: flex; flex-direction: column; align-items: center;
+    background: rgba(0,0,0,0.2); padding: 8px 12px; border-radius: 8px;
+    min-width: 70px;
+  }
+  .eval-score span { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; }
+  .eval-score strong { font-size: 1.1rem; color: #10b981; }
+
   /* Sections */
   .section-container { margin-bottom: 50px; }
   .section-title {
