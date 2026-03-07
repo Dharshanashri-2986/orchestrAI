@@ -32,6 +32,7 @@ def generate_next_question(
     role: str,
     question_history: list[dict],
     user_answer: str | None = None,
+    difficulty: str = "medium",
 ) -> dict:
     """
     Generate the next interview question.
@@ -42,6 +43,7 @@ def generate_next_question(
     role : str             – Target role (e.g. "Machine Learning Engineer Intern")
     question_history : list – Previous Q&A pairs: [{"role":"ai","content":"..."}, ...]
     user_answer : str|None – The candidate's latest answer (if any)
+    difficulty : str       – Difficulty level: "easy", "medium", or "hard"
 
     Returns
     -------
@@ -58,9 +60,11 @@ def generate_next_question(
     system_prompt = (
         f"You are a senior technical interviewer at {company}. "
         f"You are conducting a real-time interview for the role: {role}. "
+        f"The current interview difficulty level is: {difficulty.upper()}. "
         f"Your interview style is professional but encouraging. "
         f"Ask one question at a time. Alternate between technical, behavioral, "
         f"and coding questions naturally. "
+        f"Generate a {difficulty} difficulty interview question. "
         f"After the candidate answers, acknowledge their response briefly "
         f"(1 sentence) and then ask a deeper follow-up or move to the next topic. "
         f"Keep questions concise and specific to the role. "
@@ -83,7 +87,7 @@ def generate_next_question(
         messages.append({
             "role": "user",
             "content": (
-                "Please begin the interview. Greet me briefly and ask your first question."
+                f"Please begin the interview at {difficulty} difficulty. Greet me briefly and ask your first question."
             ),
         })
     elif user_answer:
