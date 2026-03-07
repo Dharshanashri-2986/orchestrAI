@@ -4,10 +4,10 @@ Company: Aday
 Role: Data Analysis Intern
 
 Resume:
-https://orchestrai.onrender.com/application_packages/resume.pdf
+Resume extraction failed
 
 Cover Letter:
-https://orchestrai.onrender.com/cover_letters/aday_data_analysis_intern.md
+/cover_letters/aday_data_analysis_intern.md
 
 Apply Here:
 https://www.linkedin.com/jobs/view/data-analysis-intern-at-aday-4377569437?position=6&pageNum=0&refId=lXR%2F9UY8D2Fcc55nTcE6KQ%3D%3D&trackingId=btqx3cHMyrpe6560K8KMig%3D%3D
