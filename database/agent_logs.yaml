@@ -1,11 +1,5 @@
 logs:
 - agent: PracticeAgent
-  action: 'Failed portal for Cohere Machine Learning Intern/Co-op  (Spring 2026):
-    Gemini failed to generate interview Q&A for Cohere - Machine Learning Intern/Co-op  (Spring
-    2026)'
-  status: error
-  timestamp: '2026-03-05T09:46:35'
-- agent: PracticeAgent
   action: 'Failed portal for Cornerstone Building Brands Data Analyst Intern: Gemini
     failed to generate interview Q&A for Cornerstone Building Brands - Data Analyst
     Intern'
@@ -2651,3 +2645,9 @@ logs:
     to generate interview Q&A for 1stop.ai - Artificial Intelligence (AI)'
   status: error
   timestamp: '2026-03-07T11:05:32'
+- agent: PracticeAgent
+  action: 'Failed portal for Heptaverse Technologies Private Limited Artificial Intelligence
+    (AI): Gemini failed to generate interview Q&A for Heptaverse Technologies Private
+    Limited - Artificial Intelligence (AI)'
+  status: error
+  timestamp: '2026-03-07T11:05:35'
