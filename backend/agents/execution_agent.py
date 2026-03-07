@@ -280,7 +280,7 @@ def run_orchestrai_pipeline():
 
             sec_report_lookup[repo_name] = {"level": risk_level, "color": risk_color}
 
-            pr_html = f' <a href="{pr_url}" style="background:#1565c0;color:white;padding:2px 8px;border-radius:3px;text-decoration:none;font-size:11px">View PR →</a>' if pr_url else ""
+            pr_html = f' <a href="{pr_url or (repo_url + "/pulls")}" style="background:#1565c0;color:white;padding:2px 8px;border-radius:3px;text-decoration:none;font-size:11px">{ "View PR →" if pr_url else "View Fixes →"}</a>' if (risk_level in ["High", "Medium"]) else ""
             sec_insights_html += (
                 f'<li style="margin-bottom:10px">'
                 f'<a href="{repo_url}" style="font-weight:bold;color:#1a237e">{repo_name}</a> — '
@@ -291,6 +291,9 @@ def run_orchestrai_pipeline():
             )
     else:
         sec_insights_html = "<li>No security scans performed yet. Scanner runs automatically each day.</li>"
+        overall_level = "Safe"
+        overall_color = "green"
+        total_repos = 0
 
     # Overall security summary for email table column
     if sec_report_lookup:
@@ -491,8 +494,14 @@ def run_orchestrai_pipeline():
             </div>
         </div>
 
-        <div style="background:#e8f5e9; border-radius:8px; padding:12px 16px; margin-bottom:20px; color:#2e7d32; font-weight:600; font-size:12px; display:flex; align-items:center; gap:8px">
-            <span style="font-size:16px">✅</span> No critical security issues detected across all repositories!
+        <div style="background:{'#ffebee' if overall_level in ['High','Medium'] else '#e8f5e9'}; border-radius:8px; padding:12px 16px; margin-bottom:20px; color:{'#c62828' if overall_level in ['High','Medium'] else '#2e7d32'}; font-weight:600; font-size:12px; border: 1px solid {'#ffcdd2' if overall_level in ['High','Medium'] else '#c8e6c9'}">
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px">
+                <span style="font-size:16px">{'⚠️' if overall_level in ['High','Medium'] else '✅'}</span> 
+                {f'Security Alert: {overall_level} risk detected in {total_repos} repositories!' if overall_level in ['High','Medium'] else 'No critical security issues detected across all repositories!'}
+            </div>
+            <ul style="margin:0; padding-left:20px; font-size:11px; font-weight:400; color:#444">
+                {sec_insights_html}
+            </ul>
         </div>
 
         <table>
