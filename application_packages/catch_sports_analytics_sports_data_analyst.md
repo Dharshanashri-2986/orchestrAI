@@ -4,10 +4,10 @@ Company: Catch Sports Analytics
 Role: Sports Data Analyst
 
 Resume:
-https://orchestrai.onrender.com/application_packages/resume.pdf
+Resume extraction failed
 
 Cover Letter:
-https://orchestrai.onrender.com/cover_letters/catch_sports_analytics_sports_data_analyst.md
+/cover_letters/catch_sports_analytics_sports_data_analyst.md
 
 Apply Here:
 https://internshala.com/internship/detail/work-from-home-sports-data-analyst-internship-at-catch-sports-analytics1772515512
