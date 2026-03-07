@@ -4,10 +4,10 @@ Company: Stripe
 Role: Data Analyst, Intern (Master's degree)
 
 Resume:
-https://orchestrai.onrender.com/application_packages/resume.pdf
+Resume extraction failed
 
 Cover Letter:
-https://orchestrai.onrender.com/cover_letters/stripe_data_analyst_intern_master_s_degree.md
+/cover_letters/stripe_data_analyst_intern_master_s_degree.md
 
 Apply Here:
 https://stripe.com/jobs/search?gh_jid=7285986
