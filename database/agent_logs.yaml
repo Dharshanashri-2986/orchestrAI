@@ -1,12 +1,5 @@
 logs:
 - agent: PracticeAgent
-  action: 'Failed portal for ForFutures Financial, Planning, a financial advisory
-    practice of Ameriprise Financial Services LLC Data Science Intern: Gemini failed
-    to generate interview Q&A for ForFutures Financial, Planning, a financial advisory
-    practice of Ameriprise Financial Services LLC - Data Science Intern'
-  status: error
-  timestamp: '2026-03-06T07:16:41'
-- agent: PracticeAgent
   action: 'Failed portal for Product Manager Accelerator AI Engineer Intern - AI/ML/GenAI
     Design & Development: Gemini failed to generate interview Q&A for Product Manager
     Accelerator - AI Engineer Intern - AI/ML/GenAI Design & Development'
@@ -2642,3 +2635,8 @@ logs:
     failed to generate interview Q&A for Lightmatter - Machine Learning Research Intern'
   status: error
   timestamp: '2026-03-07T11:53:09'
+- agent: PracticeAgent
+  action: 'Failed portal for Aurora Financials AI / ML Engineering Intern: Gemini
+    failed to generate interview Q&A for Aurora Financials - AI / ML Engineering Intern'
+  status: error
+  timestamp: '2026-03-07T11:53:16'
