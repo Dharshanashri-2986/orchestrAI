@@ -1,10 +1,5 @@
 logs:
 - agent: PracticeAgent
-  action: 'Failed portal for Unknown Artificial Intelligence Intern: Gemini failed
-    to generate interview Q&A for Unknown - Artificial Intelligence Intern'
-  status: error
-  timestamp: '2026-03-06T07:16:26'
-- agent: PracticeAgent
   action: 'Failed portal for Symonis Machine Learning: Gemini failed to generate interview
     Q&A for Symonis - Machine Learning'
   status: error
@@ -2642,3 +2637,8 @@ logs:
     to generate interview Q&A for Random Groups Of Companies - Data Science'
   status: error
   timestamp: '2026-03-07T11:52:18'
+- agent: PracticeAgent
+  action: 'Failed portal for 1stop.ai Artificial Intelligence (AI): Gemini failed
+    to generate interview Q&A for 1stop.ai - Artificial Intelligence (AI)'
+  status: error
+  timestamp: '2026-03-07T11:52:22'
