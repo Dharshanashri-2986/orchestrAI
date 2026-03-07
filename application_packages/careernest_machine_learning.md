@@ -4,10 +4,10 @@ Company: CareerNest
 Role: Machine Learning
 
 Resume:
-https://orchestrai.onrender.com/application_packages/resume.pdf
+Resume extraction failed
 
 Cover Letter:
-https://orchestrai.onrender.com/cover_letters/careernest_machine_learning.md
+/cover_letters/careernest_machine_learning.md
 
 Apply Here:
 https://internshala.com/internship/detail/work-from-home-machine-learning-internship-at-careernest1772776878
