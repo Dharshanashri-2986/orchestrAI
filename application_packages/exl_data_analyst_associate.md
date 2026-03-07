@@ -4,10 +4,10 @@ Company: EXL
 Role: Data Analyst Associate
 
 Resume:
-https://orchestrai.onrender.com/application_packages/resume.pdf
+Resume extraction failed
 
 Cover Letter:
-https://orchestrai.onrender.com/cover_letters/exl_data_analyst_associate.md
+/cover_letters/exl_data_analyst_associate.md
 
 Apply Here:
 https://unstop.com/jobs/1652002
