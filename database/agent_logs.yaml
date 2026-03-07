@@ -310,3 +310,9 @@ logs:
     - Artificial Intelligence (AI)'
   status: error
   timestamp: '2026-03-07T23:53:52'
+- agent: PracticeAgent
+  action: 'Failed portal for Infinity Assurance Solutions Private Limited Computer
+    Vision: Gemini failed to generate interview Q&A for Infinity Assurance Solutions
+    Private Limited - Computer Vision'
+  status: error
+  timestamp: '2026-03-07T23:53:53'
