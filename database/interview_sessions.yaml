@@ -316,3 +316,8 @@ interview_sessions:
   interview_link: /interview/aviate_manpower_data_science.html
   current_difficulty: medium
   generated_at: '2026-03-07T23:06:15'
+- company: Zulitech Solution
+  role: Machine Learning
+  interview_link: /interview/zulitech_solution_machine_learning.html
+  current_difficulty: medium
+  generated_at: '2026-03-07T23:06:25'
