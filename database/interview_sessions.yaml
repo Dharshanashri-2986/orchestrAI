@@ -241,3 +241,8 @@ interview_sessions:
   interview_link: /interview/career_solutions_data_science.html
   current_difficulty: medium
   generated_at: '2026-03-07T23:03:48'
+- company: Unknown
+  role: Artificial Intelligence Intern
+  interview_link: /interview/unknown_artificial_intelligence_intern.html
+  current_difficulty: medium
+  generated_at: '2026-03-07T23:03:57'
