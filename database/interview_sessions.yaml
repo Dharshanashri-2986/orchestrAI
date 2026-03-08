@@ -379,3 +379,8 @@ interview_sessions:
   interview_link: /interview/tiktok_machine_learning_engineer_intern_data_se.html
   current_difficulty: medium
   generated_at: '2026-03-08T01:11:09'
+- company: Qorvo, Inc.
+  role: Data Science Engineer Intern
+  interview_link: /interview/qorvo_inc_data_science_engineer_intern.html
+  current_difficulty: medium
+  generated_at: '2026-03-08T01:11:18'
