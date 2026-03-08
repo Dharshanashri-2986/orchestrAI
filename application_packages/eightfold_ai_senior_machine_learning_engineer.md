@@ -4,7 +4,7 @@ Company: Eightfold AI
 Role: Senior Machine Learning Engineer
 
 Resume:
-Resume extraction failed
+https://orchestrai-u3wt.onrender.com/application_packages/resume.pdf
 
 Cover Letter:
 /cover_letters/eightfold_ai_senior_machine_learning_engineer.md
