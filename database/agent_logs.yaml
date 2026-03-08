@@ -1357,3 +1357,8 @@ logs:
     Intern'
   status: error
   timestamp: '2026-03-08T00:03:49'
+- agent: PracticeAgent
+  action: 'Failed portal for Aurora Financials AI / ML Engineering Intern: Gemini
+    failed to generate interview Q&A for Aurora Financials - AI / ML Engineering Intern'
+  status: error
+  timestamp: '2026-03-08T00:03:52'
