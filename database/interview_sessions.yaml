@@ -685,3 +685,8 @@ interview_sessions:
   interview_link: /interview/zetheta_algorithms_private_limited_artificial_intelligence_intern.html
   current_difficulty: medium
   generated_at: '2026-03-08T01:20:58'
+- company: Zetheta Algorithms Private Limited
+  role: Data Science Intern
+  interview_link: /interview/zetheta_algorithms_private_limited_data_science_intern.html
+  current_difficulty: medium
+  generated_at: '2026-03-08T01:21:08'
