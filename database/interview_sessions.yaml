@@ -231,3 +231,8 @@ interview_sessions:
   interview_link: /interview/unknown_machine_learning_intern.html
   current_difficulty: medium
   generated_at: '2026-03-08T04:30:32'
+- company: Arvyax Technologies Private Limited
+  role: Machine Learning
+  interview_link: /interview/arvyax_technologies_private_limited_machine_learning.html
+  current_difficulty: medium
+  generated_at: '2026-03-08T04:30:40'
