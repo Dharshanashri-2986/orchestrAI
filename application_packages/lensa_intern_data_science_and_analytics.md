@@ -4,13 +4,13 @@ Company: Lensa
 Role: Intern, Data Science and Analytics
 
 Resume:
-Resume extraction failed
+https://orchestrai-u3wt.onrender.com/application_packages/resume.pdf
 
 Cover Letter:
 /cover_letters/lensa_intern_data_science_and_analytics.md
 
 Apply Here:
-https://www.linkedin.com/jobs/view/intern-data-science-and-analytics-at-lensa-4379297552?position=7&pageNum=0&refId=0vFkUVGmz6%2BbzRAfh3XG2A%3D%3D&trackingId=qYAqTfq5pBieD6kGw%2BHNPA%3D%3D
+https://www.linkedin.com/jobs/view/intern-data-science-and-analytics-at-lensa-4379297552
 
 Status:
 Ready to Apply
