@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Dharshanashri S — Portfolio for Data Science BI, Intern at Tatari</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&family=Fira+Code:wght@400&display=swap" rel="stylesheet"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
   :root {
     --bg-primary: #020617;
@@ -304,33 +303,15 @@
     border: 1px solid var(--border);
     background: transparent;
   }
-
-  /* === DOWNLOAD SECTION === */
-  .download-section {
+  /* === PORTFOLIO FOOTER === */
+  .portfolio-footer {
     text-align: center;
-    padding: 60px 24px;
-    margin-top: 20px;
-  }
-  .download-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 16px 36px;
-    border-radius: 30px;
-    border: none;
-    background: var(--accent-gradient);
-    color: #fff;
-    font-family: 'Inter', sans-serif;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
+    padding: 40px 24px;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.8rem;
   }
 
-  /* === PDF PRINT EXCLUSIONS === */
-  .pdf-only-message { display: none; }
-  .downloading-pdf .print-hide { display: none !important; }
-  .downloading-pdf .pdf-only-message { display: block !important; }
-  
 </style>
 </head>
 <body>
@@ -342,7 +323,7 @@
   <div class="hero-label">Application Portfolio</div>
   <h1>Dharshanashri S</h1>
   <p class="hero-subtitle">Application Portfolio</p>
-  <p class="hero-role">Data Science BI, Intern — <span class="company-name">Tatari</span></p>
+  <p class="hero-role">Data Science BI, Intern &mdash; <span class="company-name">Tatari</span></p>
   <p class="hero-desc">This portfolio highlights projects and technical capabilities relevant to the Data Science BI, Intern role at Tatari.</p>
 </div>
 
@@ -405,55 +386,13 @@
     </div>
   </div>
 
-  <!-- ═══ 5. SUGGESTED PROJECTS (HIDDEN IN PDF) ═══ -->
-  
-
 </div>
 
 <div class="portfolio-footer">
-  Built autonomously by OrchestrAI &bull; Advanced Career Intelligence System &bull; March 07, 2026
+  Built autonomously by OrchestrAI &bull; Advanced Career Intelligence System &bull; March 08, 2026
 </div>
 
 </div>
 
-<!-- ═══ 6. DOWNLOAD BUTTON ═══ -->
-<div class="download-section print-hide">
-  <button class="download-btn" onclick="downloadPDF()" id="downloadBtn">
-    Download Portfolio (PDF)
-  </button>
-</div>
-
-<script>
-// ── PDF Download ──
-function downloadPDF() {
-  const btn = document.getElementById('downloadBtn');
-  const container = document.getElementById('portfolio-content');
-  
-  btn.innerHTML = 'Generating PDF...';
-  
-  // Add class to hide suggestions and show PDF-only messages
-  container.classList.add('downloading-pdf');
-
-  const opt = {
-    margin: 0,
-    filename: 'dharshanashri_s_portfolio_tatari_data_science_bi_intern.pdf',
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 2, useCORS: true, backgroundColor: '#020617' },
-    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
-    pagebreak: { mode: ['avoid-all', 'css'] }
-  };
-  
-  html2pdf().set(opt).from(container).save().then(() => {
-    container.classList.remove('downloading-pdf');
-    btn.innerHTML = 'Downloaded!';
-    setTimeout(() => {
-      btn.innerHTML = 'Download Portfolio (PDF)';
-    }, 3000);
-  }).catch(() => {
-    container.classList.remove('downloading-pdf');
-    btn.innerHTML = 'Download Portfolio (PDF)';
-  });
-}
-</script>
 </body>
 </html>
