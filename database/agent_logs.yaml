@@ -2115,3 +2115,8 @@ logs:
     Analyst Intern (Business Integrity) - 2026 Summer (BS/MS)'
   status: error
   timestamp: '2026-03-08T04:20:26'
+- agent: PracticeAgent
+  action: 'Failed portal for Namaah Pvt Ltd AI/ML Engineer: Gemini failed to generate
+    interview Q&A for Namaah Pvt Ltd - AI/ML Engineer'
+  status: error
+  timestamp: '2026-03-08T04:20:29'
