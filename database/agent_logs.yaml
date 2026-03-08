@@ -2120,3 +2120,9 @@ logs:
     interview Q&A for Namaah Pvt Ltd - AI/ML Engineer'
   status: error
   timestamp: '2026-03-08T04:20:29'
+- agent: PracticeAgent
+  action: 'Failed portal for Bipolar Factory Artificial Intelligence (AI): Gemini
+    failed to generate interview Q&A for Bipolar Factory - Artificial Intelligence
+    (AI)'
+  status: error
+  timestamp: '2026-03-08T04:20:32'
