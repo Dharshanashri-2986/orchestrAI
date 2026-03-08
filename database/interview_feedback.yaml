@@ -13,3 +13,10 @@ interview_feedback:
   confidence: 7
   difficulty: 7
   logged_at: '2026-03-08T02:24:41'
+- company: RefinedScience
+  role: Data Engineering Intern
+  questions_faced:
+  - vmmn
+  confidence: 6
+  difficulty: 7
+  logged_at: '2026-03-08T03:06:45'
