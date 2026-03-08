@@ -1562,3 +1562,8 @@ logs:
     Intern'
   status: error
   timestamp: '2026-03-08T04:15:21'
+- agent: PracticeAgent
+  action: 'Failed portal for Go Offer Data Analyst: Gemini failed to generate interview
+    Q&A for Go Offer - Data Analyst'
+  status: error
+  timestamp: '2026-03-08T04:15:23'
