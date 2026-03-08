@@ -2000,3 +2000,9 @@ logs:
     - Data Science Intern'
   status: error
   timestamp: '2026-03-08T04:19:22'
+- agent: PracticeAgent
+  action: 'Failed portal for Wobot Intelligence Private Limited Computer Vision: Gemini
+    failed to generate interview Q&A for Wobot Intelligence Private Limited - Computer
+    Vision'
+  status: error
+  timestamp: '2026-03-08T04:19:25'
