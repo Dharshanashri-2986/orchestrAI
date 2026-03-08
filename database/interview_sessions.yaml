@@ -256,3 +256,8 @@ interview_sessions:
   interview_link: /interview/cloud_back_machine_learning.html
   current_difficulty: medium
   generated_at: '2026-03-08T01:07:22'
+- company: Lensa
+  role: Data Science Intern
+  interview_link: /interview/lensa_data_science_intern.html
+  current_difficulty: medium
+  generated_at: '2026-03-08T01:07:31'
