@@ -196,3 +196,8 @@ interview_sessions:
   interview_link: /interview/unnati_enterprises_data_science.html
   current_difficulty: medium
   generated_at: '2026-03-08T01:05:33'
+- company: Unknown
+  role: Data Science Intern
+  interview_link: /interview/unknown_data_science_intern.html
+  current_difficulty: medium
+  generated_at: '2026-03-08T01:05:43'
