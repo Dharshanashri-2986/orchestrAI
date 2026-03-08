@@ -389,3 +389,8 @@ interview_sessions:
   interview_link: /interview/lensa_data_analyst_internship_summer_2026.html
   current_difficulty: medium
   generated_at: '2026-03-08T01:11:28'
+- company: Tesla
+  role: Internship, Data Engineer, Energy (Summer 2026)
+  interview_link: /interview/tesla_internship_data_engineer_energy_summer_2.html
+  current_difficulty: medium
+  generated_at: '2026-03-08T01:11:37'
