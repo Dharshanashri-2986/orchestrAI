@@ -595,3 +595,8 @@ interview_sessions:
   interview_link: /interview/random_groups_of_companies_data_science.html
   current_difficulty: medium
   generated_at: '2026-03-08T04:39:12'
+- company: 1stop.ai
+  role: Artificial Intelligence (AI)
+  interview_link: /interview/1stop_ai_artificial_intelligence_ai.html
+  current_difficulty: medium
+  generated_at: '2026-03-08T04:39:20'
