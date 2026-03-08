@@ -4,7 +4,7 @@ Company: Unknown
 Role: Artificial Intelligence Intern
 
 Resume:
-Resume extraction failed
+https://orchestrai-u3wt.onrender.com/application_packages/resume.pdf
 
 Cover Letter:
 /cover_letters/unknown_artificial_intelligence_intern.md
