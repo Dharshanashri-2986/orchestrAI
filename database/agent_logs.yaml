@@ -1898,3 +1898,8 @@ logs:
     - Artificial Intelligence (AI)'
   status: error
   timestamp: '2026-03-08T04:18:25'
+- agent: PracticeAgent
+  action: 'Failed portal for EVgo Intern, Data Analyst (Winter / Spring): Gemini failed
+    to generate interview Q&A for EVgo - Intern, Data Analyst (Winter / Spring)'
+  status: error
+  timestamp: '2026-03-08T04:18:28'
