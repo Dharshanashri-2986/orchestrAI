@@ -1761,3 +1761,8 @@ logs:
     Q&A for Accredian - Data Science'
   status: error
   timestamp: '2026-03-08T04:17:10'
+- agent: PracticeAgent
+  action: 'Failed portal for targetjobs UK Business Analyst Internship: Gemini failed
+    to generate interview Q&A for targetjobs UK - Business Analyst Internship'
+  status: error
+  timestamp: '2026-03-08T04:17:13'
