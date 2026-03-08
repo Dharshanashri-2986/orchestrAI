@@ -1203,3 +1203,9 @@ logs:
     Learning Engineer'
   status: error
   timestamp: '2026-03-08T00:02:30'
+- agent: PracticeAgent
+  action: 'Failed portal for Unknown Company – Source Incomplete Data Science Intern:
+    Gemini failed to generate interview Q&A for Unknown Company – Source Incomplete
+    - Data Science Intern'
+  status: error
+  timestamp: '2026-03-08T00:02:33'
