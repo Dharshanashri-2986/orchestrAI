@@ -1708,3 +1708,8 @@ logs:
     to generate interview Q&A for Unknown - Artificial Intelligence Intern'
   status: error
   timestamp: '2026-03-08T04:16:41'
+- agent: PracticeAgent
+  action: 'Failed portal for Symonis Machine Learning: Gemini failed to generate interview
+    Q&A for Symonis - Machine Learning'
+  status: error
+  timestamp: '2026-03-08T04:16:43'
