@@ -655,3 +655,8 @@ interview_sessions:
   interview_link: /interview/bipolar_factory_artificial_intelligence_ai.html
   current_difficulty: medium
   generated_at: '2026-03-08T04:40:41'
+- company: Above Alpha Solutions LLP
+  role: Machine Learning
+  interview_link: /interview/above_alpha_solutions_llp_machine_learning.html
+  current_difficulty: medium
+  generated_at: '2026-03-08T04:40:48'
