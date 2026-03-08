@@ -1,44 +1,44 @@
 
-name: OrchestrAI Career Agent Daily Run
+#name: OrchestrAI Career Agent Daily Run
 
-on:
-  schedule:
-    - cron: "30 6 * * *"  # 6:30 AM UTC -> 12:00 PM IST (Runs early, waits until 12:30 to send email)
-  workflow_dispatch:
+#on:
+ # schedule:
+  #  - cron: "30 6 * * *"  # 6:30 AM UTC -> 12:00 PM IST (Runs early, waits until 12:30 to send email)
+  #workflow_dispatch:
 
-jobs:
-  run-career-agent:
-    name: Fetch Internships and Send Email
-    runs-on: ubuntu-latest
-    timeout-minutes: 120
+#jobs:
+ # run-career-agent:
+  #  name: Fetch Internships and Send Email
+   # runs-on: ubuntu-latest
+    #timeout-minutes: 120
 
-    env:
-      GITHUB_TOKEN:    ${{ secrets.GH_PAT }}
-      GITHUB_USERNAME: ${{ secrets.GH_USERNAME }}
-      GITHUB_REPO:     ${{ secrets.GH_REPO }}
-      GITHUB_BRANCH:   main
-      GEMINI_API_KEY:  ${{ secrets.GEMINI_API_KEY }}
-      OPENAI_API_KEY:  ${{ secrets.OPENAI_API_KEY }}
-      EMAIL_USER:      ${{ secrets.EMAIL_USER }}
-      EMAIL_PASS:      ${{ secrets.EMAIL_PASS }}
-      EMAIL_RECEIVER:  ${{ secrets.EMAIL_RECEIVER }}
-      SMTP_HOST:       smtp.gmail.com
-      SMTP_PORT:       "587"
+    #env:
+     # GITHUB_TOKEN:    ${{ secrets.GH_PAT }}
+      #GITHUB_USERNAME: ${{ secrets.GH_USERNAME }}
+      #GITHUB_REPO:     ${{ secrets.GH_REPO }}
+      #GITHUB_BRANCH:   main
+     # GEMINI_API_KEY:  ${{ secrets.GEMINI_API_KEY }}
+      #OPENAI_API_KEY:  ${{ secrets.OPENAI_API_KEY }}
+      #EMAIL_USER:      ${{ secrets.EMAIL_USER }}
+      #EMAIL_PASS:      ${{ secrets.EMAIL_PASS }}
+      #EMAIL_RECEIVER:  ${{ secrets.EMAIL_RECEIVER }}
+      #SMTP_HOST:       smtp.gmail.com
+      #SMTP_PORT:       "587"
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+    #steps:
+     # - name: Checkout code
+      #  uses: actions/checkout@v4
 
-      - name: Set up Python 3.11
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-          cache: "pip"
+      #- name: Set up Python 3.11
+       # uses: actions/setup-python@v5
+        #with:
+         # python-version: "3.11"
+          #cache: "pip"
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+     # - name: Install dependencies
+      #  run: pip install -r requirements.txt
 
-      - name: Run Career Agent
-        run: python main.py --now
+      #- name: Run Career Agent
+       # run: python main.py --now
 
 
