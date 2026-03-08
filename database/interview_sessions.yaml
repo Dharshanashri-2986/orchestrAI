@@ -580,3 +580,8 @@ interview_sessions:
   interview_link: /interview/unimonks_artificial_intelligence_ai.html
   current_difficulty: medium
   generated_at: '2026-03-08T01:17:34'
+- company: CareerNest
+  role: Machine Learning
+  interview_link: /interview/careernest_machine_learning.html
+  current_difficulty: medium
+  generated_at: '2026-03-08T01:17:45'
