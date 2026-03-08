@@ -55,3 +55,8 @@ interview_sessions:
   interview_link: /interview/tiktok_general_hire_machine_learning_engineer_i.html
   current_difficulty: medium
   generated_at: '2026-03-08T00:20:02'
+- company: Upstart
+  role: Machine Learning Engineer Intern
+  interview_link: /interview/upstart_machine_learning_engineer_intern.html
+  current_difficulty: medium
+  generated_at: '2026-03-08T00:20:11'
