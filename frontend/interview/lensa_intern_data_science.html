@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Mock Interview — Intern - Data Science at Lensa</title>
+<title>Mock Interview — Intern, Data Science at Lensa</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
   :root {
@@ -419,7 +419,7 @@
 
 <div class="hero">
   <h1>Interactive Mock Interview</h1>
-  <h2>Intern - Data Science &mdash; <strong>Lensa</strong></h2>
+  <h2>Intern, Data Science &mdash; <strong>Lensa</strong></h2>
   <div class="hero-badges">
     <span class="badge">👤 Dharshanashri S</span>
     <span class="badge">📅 March 08, 2026</span>
@@ -467,7 +467,7 @@
                 <span class="q-icon">⚙️</span>
                 <span class="q-title">Question 2</span>
               </div>
-              <p class="q-text">How would you approach building a Intern - Data Science pipeline from scratch?</p>
+              <p class="q-text">How would you approach building a Intern, Data Science pipeline from scratch?</p>
               <textarea class="q-textarea" placeholder="Type your answer here or practice answering out loud..."></textarea>
               <div class="q-actions">
                 <button class="btn-outline" onclick="toggleHint(this)">💡 Show Hint</button>
@@ -642,7 +642,7 @@
       </div>
       <div class="form-group" style="margin:0">
         <label>Role</label>
-        <input class="form-input" id="fb_role" value="Intern - Data Science" readonly />
+        <input class="form-input" id="fb_role" value="Intern, Data Science" readonly />
       </div>
     </div>
 
@@ -823,7 +823,7 @@ async function submitFeedback() {
 // ----- AI Interview Chat -----
 var chatHistory = [];
 var chatCompany = "Lensa";
-var chatRole = "Intern - Data Science";
+var chatRole = "Intern, Data Science";
 var currentDifficulty = "medium";
 var sessionEvaluations = [];
 var sessionCodingScore = null;
@@ -1108,8 +1108,7 @@ function showTestResults(execData) {
       <div style="display:flex;align-items:flex-start;gap:10px;padding:8px;background:rgba(0,0,0,0.15);border-radius:6px;margin-bottom:6px;border-left:3px solid ${r.passed?'#10b981':'#ef4444'};">
         <span style="font-size:1rem;">${r.passed?'✅':'❌'}</span>
         <div style="flex:1;font-size:0.8rem;">
-          <div style="color:#94a3b8;">Test ${r.test_num}: <code style="color:#e2e8f0;">${r.input?.replace(/
-/g,' | ')||'N/A'}</code></div>
+          <div style="color:#94a3b8;">Test ${r.test_num}: <code style="color:#e2e8f0;">${r.input?.replace(/\n/g,' | ')||'N/A'}</code></div>
           ${!r.passed && r.actual ? `<div style="color:#fca5a5;">Got: <code>${r.actual}</code> | Expected: <code>${r.expected}</code></div>` : ''}
           ${r.simulated ? '<div style="color:#64748b;font-size:0.7rem;">(simulated)</div>' : ''}
         </div>
