@@ -1210,9 +1210,9 @@ function showCodingEnvironment(problemText) {
     var tcHtml = tc.slice(0,2).map((t,i)=>``).join('');
     var hintsArr = (currentProblemData && currentProblemData.hints) || ['Think carefully about the data structure.', 'Consider time vs space trade-offs.', 'Can you solve it in one pass?'];
     var hintBtns = hintsArr.map((h,i)=>`<button onclick="revealHint(${i},this,'${h.replace(/'/g,"\'")}')" style="background:rgba(245,158,11,0.1);color:#fbbf24;border:1px solid rgba(245,158,11,0.3);padding:6px 12px;border-radius:6px;font-size:0.8rem;cursor:pointer;margin-right:6px;">Hint ${i+1}</button>`).join('');
-    var starterCode = (currentProblemData && currentProblemData.starter_code) || '# Write your Python solution here
+    var starterCode = (currentProblemData && currentProblemData.starter_code) || `# Write your Python solution here
 def solution():
-    pass';
+    pass`;
     var title = (currentProblemData && currentProblemData.title) || 'Coding Challenge';
     var constraints = (currentProblemData && currentProblemData.constraints) || '';
     var examples = (currentProblemData && currentProblemData.examples) || [];
@@ -1262,9 +1262,9 @@ function initMonaco(starterCode) {
     require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs' } });
     require(['vs/editor/editor.main'], function() {
         editor = monaco.editor.create(document.getElementById('monacoEditor'), {
-            value: starterCode || "# Write your Python solution here
+            value: starterCode || `# Write your Python solution here
 def solution():
-    pass",
+    pass`,
             language: 'python',
             theme: 'vs-dark',
             automaticLayout: true,
