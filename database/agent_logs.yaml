@@ -1670,3 +1670,9 @@ logs:
     Q&A for Innoknowvex - Data Science'
   status: error
   timestamp: '2026-03-08T04:16:22'
+- agent: PracticeAgent
+  action: 'Failed portal for Emoolar Technology Private Limited Artificial Intelligence
+    (AI): Gemini failed to generate interview Q&A for Emoolar Technology Private Limited
+    - Artificial Intelligence (AI)'
+  status: error
+  timestamp: '2026-03-08T04:16:25'
