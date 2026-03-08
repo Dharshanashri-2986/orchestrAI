@@ -455,3 +455,8 @@ interview_sessions:
   interview_link: /interview/thermo_fisher_data_engineer_ii.html
   current_difficulty: medium
   generated_at: '2026-03-08T01:13:28'
+- company: Cvent
+  role: Data Science Intern (Summer 2026)
+  interview_link: /interview/cvent_data_science_intern_summer_2026.html
+  current_difficulty: medium
+  generated_at: '2026-03-08T01:13:38'
