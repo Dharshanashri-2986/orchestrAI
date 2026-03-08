@@ -336,3 +336,8 @@ interview_sessions:
   interview_link: /interview/pantherx_rare_pharmacy_intern_data_science.html
   current_difficulty: medium
   generated_at: '2026-03-08T04:33:01'
+- company: Nuro
+  role: Machine Learning intern, Behavior Planning
+  interview_link: /interview/nuro_machine_learning_intern_behavior_plannin.html
+  current_difficulty: medium
+  generated_at: '2026-03-08T04:33:08'
