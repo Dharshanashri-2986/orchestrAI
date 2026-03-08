@@ -4,7 +4,7 @@ Company: Random Groups Of Companies
 Role: Data Science
 
 Resume:
-Resume extraction failed
+https://orchestrai-u3wt.onrender.com/application_packages/resume.pdf
 
 Cover Letter:
 /cover_letters/random_groups_of_companies_data_science.md
