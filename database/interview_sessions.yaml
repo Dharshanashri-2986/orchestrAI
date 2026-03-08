@@ -291,3 +291,8 @@ interview_sessions:
   interview_link: /interview/tatari_data_science_intern.html
   current_difficulty: medium
   generated_at: '2026-03-08T01:08:30'
+- company: Lensa
+  role: Business Analyst Intern
+  interview_link: /interview/lensa_business_analyst_intern.html
+  current_difficulty: medium
+  generated_at: '2026-03-08T01:08:40'
