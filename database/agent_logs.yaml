@@ -1416,3 +1416,7 @@ logs:
   action: Fetch started
   level: INFO
   timestamp: '2026-03-08T04:00:09'
+- agent: CareerAgent
+  action: 74 jobs fetched
+  level: INFO
+  timestamp: '2026-03-08T04:00:33'
