@@ -500,3 +500,8 @@ interview_sessions:
   interview_link: /interview/hughes_ml_engineering_intern.html
   current_difficulty: medium
   generated_at: '2026-03-08T01:14:58'
+- company: Airbnb
+  role: Machine Learning Engineering Intern (PhD)
+  interview_link: /interview/airbnb_machine_learning_engineering_intern_phd.html
+  current_difficulty: medium
+  generated_at: '2026-03-08T01:15:09'
