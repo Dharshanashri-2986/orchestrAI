@@ -630,3 +630,8 @@ interview_sessions:
   interview_link: /interview/lensa_artificial_intelligence_ai_intern.html
   current_difficulty: medium
   generated_at: '2026-03-08T01:19:08'
+- company: Lensa
+  role: Data Science Internship
+  interview_link: /interview/lensa_data_science_internship.html
+  current_difficulty: medium
+  generated_at: '2026-03-08T01:19:17'
