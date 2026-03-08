@@ -4,7 +4,7 @@ Company: Talent Corner HR Services
 Role: Machine Learning Engineer
 
 Resume:
-Resume extraction failed
+https://orchestrai-u3wt.onrender.com/application_packages/resume.pdf
 
 Cover Letter:
 /cover_letters/talent_corner_hr_services_machine_learning_engineer.md

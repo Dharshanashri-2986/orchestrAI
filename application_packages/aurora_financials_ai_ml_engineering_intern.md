@@ -4,7 +4,7 @@ Company: Aurora Financials
 Role: AI / ML Engineering Intern
 
 Resume:
-Resume extraction failed
+https://orchestrai-u3wt.onrender.com/application_packages/resume.pdf
 
 Cover Letter:
 /cover_letters/aurora_financials_ai_ml_engineering_intern.md

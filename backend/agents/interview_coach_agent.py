@@ -1220,7 +1220,7 @@ function showTestResults(execData) {{
       <div style="display:flex;align-items:flex-start;gap:10px;padding:8px;background:rgba(0,0,0,0.15);border-radius:6px;margin-bottom:6px;border-left:3px solid ${{r.passed?'#10b981':'#ef4444'}};">
         <span style="font-size:1rem;">${{r.passed?'✅':'❌'}}</span>
         <div style="flex:1;font-size:0.8rem;">
-          <div style="color:#94a3b8;">Test ${{r.test_num}}: <code style="color:#e2e8f0;">${{r.input?.replace(/\n/g,' | ')||'N/A'}}</code></div>
+          <div style="color:#94a3b8;">Test ${{r.test_num}}: <code style="color:#e2e8f0;">${{r.input?.replace(/\\n/g,' | ')||'N/A'}}</code></div>
           ${{!r.passed && r.actual ? `<div style="color:#fca5a5;">Got: <code>${{r.actual}}</code> | Expected: <code>${{r.expected}}</code></div>` : ''}}
           ${{r.simulated ? '<div style="color:#64748b;font-size:0.7rem;">(simulated)</div>' : ''}}
         </div>
@@ -1321,7 +1321,7 @@ function showCodingEnvironment(problemText) {{
     var tcHtml = tc.slice(0,2).map((t,i)=>``).join('');
     var hintsArr = (currentProblemData && currentProblemData.hints) || ['Think carefully about the data structure.', 'Consider time vs space trade-offs.', 'Can you solve it in one pass?'];
     var hintBtns = hintsArr.map((h,i)=>`<button onclick="revealHint(${{i}},this,'${{h.replace(/'/g,"\\'")}}')" style="background:rgba(245,158,11,0.1);color:#fbbf24;border:1px solid rgba(245,158,11,0.3);padding:6px 12px;border-radius:6px;font-size:0.8rem;cursor:pointer;margin-right:6px;">Hint ${{i+1}}</button>`).join('');
-    var starterCode = (currentProblemData && currentProblemData.starter_code) || '# Write your Python solution here\ndef solution():\n    pass';
+    var starterCode = (currentProblemData && currentProblemData.starter_code) || `# Write your Python solution here\ndef solution():\n    pass`;
     var title = (currentProblemData && currentProblemData.title) || 'Coding Challenge';
     var constraints = (currentProblemData && currentProblemData.constraints) || '';
     var examples = (currentProblemData && currentProblemData.examples) || [];
@@ -1371,7 +1371,7 @@ function initMonaco(starterCode) {{
     require.config({{ paths: {{ 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs' }} }});
     require(['vs/editor/editor.main'], function() {{
         editor = monaco.editor.create(document.getElementById('monacoEditor'), {{
-            value: starterCode || "# Write your Python solution here\ndef solution():\n    pass",
+            value: starterCode || `# Write your Python solution here\ndef solution():\n    pass`,
             language: 'python',
             theme: 'vs-dark',
             automaticLayout: true,

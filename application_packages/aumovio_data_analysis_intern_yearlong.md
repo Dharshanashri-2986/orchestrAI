@@ -4,13 +4,13 @@ Company: AUMOVIO
 Role: Data Analysis Intern (Yearlong)
 
 Resume:
-Resume extraction failed
+https://orchestrai-u3wt.onrender.com/application_packages/resume.pdf
 
 Cover Letter:
 /cover_letters/aumovio_data_analysis_intern_yearlong.md
 
 Apply Here:
-https://www.linkedin.com/jobs/view/data-analysis-intern-yearlong-at-aumovio-4342043183?position=3&pageNum=0&refId=lXR%2F9UY8D2Fcc55nTcE6KQ%3D%3D&trackingId=vxxAS6TdMv%2BhfZX7gZAAEQ%3D%3D
+https://www.linkedin.com/jobs/view/data-analysis-intern-yearlong-at-aumovio-4342043183
 
 Status:
 Ready to Apply

@@ -4,7 +4,7 @@ Company: Career Solutions
 Role: Data Science
 
 Resume:
-Resume extraction failed
+https://orchestrai-u3wt.onrender.com/application_packages/resume.pdf
 
 Cover Letter:
 /cover_letters/career_solutions_data_science.md

@@ -4,7 +4,7 @@ Company: TSTEPS PRIVATE LIMITED
 Role: Senior Machine Learning Engineer
 
 Resume:
-Resume extraction failed
+https://orchestrai-u3wt.onrender.com/application_packages/resume.pdf
 
 Cover Letter:
 /cover_letters/tsteps_private_limited_senior_machine_learning_engineer.md

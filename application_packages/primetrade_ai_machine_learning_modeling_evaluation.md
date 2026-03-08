@@ -4,7 +4,7 @@ Company: Primetrade.ai
 Role: Machine Learning (Modeling + Evaluation)
 
 Resume:
-Resume extraction failed
+https://orchestrai-u3wt.onrender.com/application_packages/resume.pdf
 
 Cover Letter:
 /cover_letters/primetrade_ai_machine_learning_modeling_evaluation.md

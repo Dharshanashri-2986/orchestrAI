@@ -1,12 +1,12 @@
 career_readiness:
-  readiness_score: 82.9
+  readiness_score: 84.9
   label: ✅ Strong Candidate
-  generated_at: '2026-03-07T11:10:53.690313+00:00'
+  generated_at: '2026-03-08T00:14:28.893443+00:00'
   components:
     skill_coverage:
       score: 98.2
       weight: 40%
-      detail: '132/136 roles fully covered. Top gaps: Git, AWS, Airflow'
+      detail: '135/139 roles fully covered. Top gaps: Git, AWS, Airflow'
     portfolio_strength:
       score: 48
       weight: 20%
@@ -16,9 +16,8 @@ career_readiness:
       weight: 20%
       detail: '90 sessions completed (target: 5) ✅ Interview-ready!'
     security_health:
-      score: 70
+      score: 80
       weight: 20%
-      detail: '6 repos scanned: 1 High, 1 Medium, 0 Low risk'
+      detail: '6 repos scanned: 0 High, 2 Medium, 0 Low risk'
   top_recommendations:
   - Strengthen your portfolio — 6 projects, 0 with live demos, 0 total stars
-  - Fix HIGH-risk security vulnerabilities in your GitHub repos

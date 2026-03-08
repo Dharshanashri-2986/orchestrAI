@@ -4,7 +4,7 @@ Company: FinZebra
 Role: AI Engineering & Learning Design
 
 Resume:
-Resume extraction failed
+https://orchestrai-u3wt.onrender.com/application_packages/resume.pdf
 
 Cover Letter:
 /cover_letters/finzebra_ai_engineering_learning_design.md

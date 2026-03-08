@@ -4,7 +4,7 @@ Company: EXL
 Role: Data Analyst Associate
 
 Resume:
-Resume extraction failed
+https://orchestrai-u3wt.onrender.com/application_packages/resume.pdf
 
 Cover Letter:
 /cover_letters/exl_data_analyst_associate.md

@@ -4,7 +4,7 @@ Company: Fairassets Technologies India Private Limited
 Role: Artificial Intelligence (AI)
 
 Resume:
-Resume extraction failed
+https://orchestrai-u3wt.onrender.com/application_packages/resume.pdf
 
 Cover Letter:
 /cover_letters/fairassets_technologies_india_private_li_artificial_intelligence_ai.md

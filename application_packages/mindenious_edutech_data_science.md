@@ -4,7 +4,7 @@ Company: Mindenious Edutech
 Role: Data Science
 
 Resume:
-Resume extraction failed
+https://orchestrai-u3wt.onrender.com/application_packages/resume.pdf
 
 Cover Letter:
 /cover_letters/mindenious_edutech_data_science.md

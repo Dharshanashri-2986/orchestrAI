@@ -4,7 +4,7 @@ Company: Resolute AI Software Private Limited
 Role: AI Engineer
 
 Resume:
-Resume extraction failed
+https://orchestrai-u3wt.onrender.com/application_packages/resume.pdf
 
 Cover Letter:
 /cover_letters/resolute_ai_software_private_limited_ai_engineer.md

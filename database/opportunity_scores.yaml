@@ -684,3 +684,18 @@
   match_score: 80
   selection_probability: Medium
   priority: Apply Now
+- company: Zetheta Algorithms Private Limited
+  role: Data Science Intern
+  match_score: 80
+  selection_probability: Medium
+  priority: Apply Now
+- company: Lensa
+  role: AI Data Science Intern
+  match_score: 75
+  selection_probability: Medium
+  priority: Strong Consideration
+- company: Genpact
+  role: Business Analyst
+  match_score: 65
+  selection_probability: Medium
+  priority: Strong Consideration

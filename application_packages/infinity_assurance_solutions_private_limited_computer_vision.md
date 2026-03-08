@@ -4,7 +4,7 @@ Company: Infinity Assurance Solutions Private Limited
 Role: Computer Vision
 
 Resume:
-Resume extraction failed
+https://orchestrai-u3wt.onrender.com/application_packages/resume.pdf
 
 Cover Letter:
 /cover_letters/infinity_assurance_solutions_private_lim_computer_vision.md

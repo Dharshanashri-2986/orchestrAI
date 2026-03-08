@@ -1,0 +1,9 @@
+C:\Users\5630\Downloads\MultiAgent_Project\MultiAgent_Project\temp.js:419
+          <div style="color:#94a3b8;">Test ${r.test_num}: <code style="color:#e2e8f0;">${r.input?.replace(/
+                                                                                                          ^
+
+SyntaxError: Invalid regular expression: missing /
+    at wrapSafe (node:internal/modules/cjs/loader:1662:18)
+    at checkSyntax (node:internal/main/check_syntax:78:3)
+
+Node.js v22.15.1
