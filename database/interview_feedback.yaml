@@ -27,3 +27,10 @@ interview_feedback:
   confidence: 6
   difficulty: 7
   logged_at: '2026-03-08T03:38:41'
+- company: RefinedScience
+  role: Data Engineering Intern
+  questions_faced:
+  - xcvb
+  confidence: 6
+  difficulty: 7
+  logged_at: '2026-03-08T03:40:19'
