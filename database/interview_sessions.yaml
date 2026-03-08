@@ -39,3 +39,8 @@ interview_sessions:
   interview_link: /interview/lensa_intern_data_science_and_analytics.html
   current_difficulty: medium
   generated_at: '2026-03-08T00:19:19'
+- company: Transcarent
+  role: Machine Learning Engineer Intern
+  interview_link: /interview/transcarent_machine_learning_engineer_intern.html
+  current_difficulty: medium
+  generated_at: '2026-03-08T00:19:40'
