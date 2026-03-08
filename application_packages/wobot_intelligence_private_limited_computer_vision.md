@@ -4,7 +4,7 @@ Company: Wobot Intelligence Private Limited
 Role: Computer Vision
 
 Resume:
-Resume extraction failed
+https://orchestrai-u3wt.onrender.com/application_packages/resume.pdf
 
 Cover Letter:
 /cover_letters/wobot_intelligence_private_limited_computer_vision.md
