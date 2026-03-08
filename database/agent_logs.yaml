@@ -1174,3 +1174,9 @@ logs:
     / Machine Learning Intern'
   status: error
   timestamp: '2026-03-08T00:02:16'
+- agent: PracticeAgent
+  action: 'Failed portal for Lensa Business Analyst (Intern) - United States: Gemini
+    failed to generate interview Q&A for Lensa - Business Analyst (Intern) - United
+    States'
+  status: error
+  timestamp: '2026-03-08T00:02:19'
