@@ -1887,3 +1887,8 @@ logs:
     - 2026 Summer (BS/MS)'
   status: error
   timestamp: '2026-03-08T04:18:20'
+- agent: PracticeAgent
+  action: 'Failed portal for ARM Institute Data Analyst Intern: Gemini failed to generate
+    interview Q&A for ARM Institute - Data Analyst Intern'
+  status: error
+  timestamp: '2026-03-08T04:18:22'
