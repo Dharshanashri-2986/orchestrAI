@@ -25,7 +25,7 @@ security_reports:
   - '[LOW] HTTP (not HTTPS) in `backend/agents/auto_fix_pr_agent.py` line 120 | Fix:
     Use HTTPS endpoints to ensure encrypted communication'
   scanned_files: 55
-  auto_fix_pr: https://github.com/Dharshanashri-2986/orchestrAI/pull/2
+  auto_fix_pr: ''
 - repo: Tamil-Movie-Database
   repo_url: https://github.com/Dharshanashri-2986/Tamil-Movie-Database
   risk_level: Medium
@@ -46,7 +46,7 @@ security_reports:
   - '[HIGH] SQL String Concat in `final.py` line 53 | Fix: Use parameterized queries
     to prevent SQL injection'
   scanned_files: 1
-  auto_fix_pr: https://github.com/Dharshanashri-2986/Tamil-Movie-Database/pull/6
+  auto_fix_pr: ''
 - repo: Persona-Echo
   repo_url: https://github.com/Dharshanashri-2986/Persona-Echo
   risk_level: Safe
@@ -87,3 +87,19 @@ security_reports:
   - No critical issues detected.
   scanned_files: 0
   auto_fix_pr: ''
+priority_security_fix:
+  repo: orchestrAI
+  repo_url: https://github.com/Dharshanashri-2986/orchestrAI
+  risk: HIGH
+  issue: SQL String Concat
+  file: backend/agents/career_strategy_agent.py
+  line: 134
+  snippet: ''
+  fix: Apply secure coding practices.
+summary:
+  total_repos: 6
+  high_risk: 0
+  medium_risk: 2
+  low_risk: 0
+  safe: 4
+  scanned_at: '2026-03-08T04:01:20'
