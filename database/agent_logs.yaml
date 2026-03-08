@@ -1469,3 +1469,8 @@ logs:
   action: PracticeAgent run initiated
   status: success
   timestamp: '2026-03-08T04:14:33'
+- agent: PracticeAgent
+  action: 'Failed portal for RefinedScience Data Engineering Intern: Gemini failed
+    to generate interview Q&A for RefinedScience - Data Engineering Intern'
+  status: error
+  timestamp: '2026-03-08T04:14:39'
