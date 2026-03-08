@@ -1550,3 +1550,9 @@ logs:
     Intern – Operations'
   status: error
   timestamp: '2026-03-08T04:15:16'
+- agent: PracticeAgent
+  action: 'Failed portal for Cohere Machine Learning Intern/Co-op  (Spring 2026):
+    Gemini failed to generate interview Q&A for Cohere - Machine Learning Intern/Co-op  (Spring
+    2026)'
+  status: error
+  timestamp: '2026-03-08T04:15:19'
