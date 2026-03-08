@@ -495,3 +495,8 @@ interview_sessions:
   interview_link: /interview/catch_sports_analytics_sports_data_analyst.html
   current_difficulty: medium
   generated_at: '2026-03-08T04:36:44'
+- company: Hughes
+  role: ML Engineering Intern
+  interview_link: /interview/hughes_ml_engineering_intern.html
+  current_difficulty: medium
+  generated_at: '2026-03-08T04:36:51'
