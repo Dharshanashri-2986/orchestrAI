@@ -1085,8 +1085,7 @@ function showTestResults(execData) {
       <div style="display:flex;align-items:flex-start;gap:10px;padding:8px;background:rgba(0,0,0,0.15);border-radius:6px;margin-bottom:6px;border-left:3px solid ${r.passed?'#10b981':'#ef4444'};">
         <span style="font-size:1rem;">${r.passed?'✅':'❌'}</span>
         <div style="flex:1;font-size:0.8rem;">
-          <div style="color:#94a3b8;">Test ${r.test_num}: <code style="color:#e2e8f0;">${r.input?.replace(/
-/g,' | ')||'N/A'}</code></div>
+          <div style="color:#94a3b8;">Test ${r.test_num}: <code style="color:#e2e8f0;">${r.input?.replace(/\n/g,' | ')||'N/A'}</code></div>
           ${!r.passed && r.actual ? `<div style="color:#fca5a5;">Got: <code>${r.actual}</code> | Expected: <code>${r.expected}</code></div>` : ''}
           ${r.simulated ? '<div style="color:#64748b;font-size:0.7rem;">(simulated)</div>' : ''}
         </div>
