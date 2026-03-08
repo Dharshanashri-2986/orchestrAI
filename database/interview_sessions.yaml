@@ -615,3 +615,8 @@ interview_sessions:
   interview_link: /interview/tech_phoenix_data_engineer_intern.html
   current_difficulty: medium
   generated_at: '2026-03-08T01:18:42'
+- company: EXL
+  role: Data Analyst Associate
+  interview_link: /interview/exl_data_analyst_associate.html
+  current_difficulty: medium
+  generated_at: '2026-03-08T01:18:50'
