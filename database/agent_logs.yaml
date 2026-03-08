@@ -1854,3 +1854,8 @@ logs:
     to generate interview Q&A for Seaman Corporation - Business Analyst Intern'
   status: error
   timestamp: '2026-03-08T04:18:03'
+- agent: PracticeAgent
+  action: 'Failed portal for Talentrift Business Analyst Intern: Gemini failed to
+    generate interview Q&A for Talentrift - Business Analyst Intern'
+  status: error
+  timestamp: '2026-03-08T04:18:06'
