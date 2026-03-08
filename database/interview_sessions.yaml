@@ -271,3 +271,8 @@ interview_sessions:
   interview_link: /interview/primetrade_ai_machine_learning_modeling_evaluation.html
   current_difficulty: medium
   generated_at: '2026-03-08T01:07:49'
+- company: Primetrade.ai
+  role: Artificial Intelligence (AI)
+  interview_link: /interview/primetrade_ai_artificial_intelligence_ai.html
+  current_difficulty: medium
+  generated_at: '2026-03-08T01:07:59'
