@@ -1250,3 +1250,8 @@ logs:
     Analyst Internship'
   status: error
   timestamp: '2026-03-08T00:02:52'
+- agent: PracticeAgent
+  action: 'Failed portal for Unimonks Artificial Intelligence (AI): Gemini failed
+    to generate interview Q&A for Unimonks - Artificial Intelligence (AI)'
+  status: error
+  timestamp: '2026-03-08T00:02:55'
