@@ -2137,3 +2137,8 @@ logs:
     Learning Engineer'
   status: error
   timestamp: '2026-03-08T04:20:38'
+- agent: PracticeAgent
+  action: 'Failed portal for Lightmatter Machine Learning Research Intern: Gemini
+    failed to generate interview Q&A for Lightmatter - Machine Learning Research Intern'
+  status: error
+  timestamp: '2026-03-08T04:20:41'
