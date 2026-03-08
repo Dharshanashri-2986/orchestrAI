@@ -95,3 +95,8 @@ interview_sessions:
   interview_link: /interview/go_offer_data_analyst.html
   current_difficulty: medium
   generated_at: '2026-03-08T04:27:28'
+- company: AUMOVIO
+  role: Data Analysis Intern (Yearlong)
+  interview_link: /interview/aumovio_data_analysis_intern_yearlong.html
+  current_difficulty: medium
+  generated_at: '2026-03-08T04:27:35'
