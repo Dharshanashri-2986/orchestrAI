@@ -2029,3 +2029,9 @@ logs:
     Science'
   status: error
   timestamp: '2026-03-08T04:19:36'
+- agent: PracticeAgent
+  action: 'Failed portal for Unknown Company – Source Incomplete Artificial Intelligence
+    Intern: Gemini failed to generate interview Q&A for Unknown Company – Source Incomplete
+    - Artificial Intelligence Intern'
+  status: error
+  timestamp: '2026-03-08T04:19:38'
