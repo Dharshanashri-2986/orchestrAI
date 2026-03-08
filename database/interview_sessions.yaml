@@ -176,3 +176,8 @@ interview_sessions:
   interview_link: /interview/mtx_group_business_analyst_intern.html
   current_difficulty: medium
   generated_at: '2026-03-08T01:04:58'
+- company: Stripe
+  role: Data Analyst, Intern (Master's degree)
+  interview_link: /interview/stripe_data_analyst_intern_master_s_degree.html
+  current_difficulty: medium
+  generated_at: '2026-03-08T01:05:07'
