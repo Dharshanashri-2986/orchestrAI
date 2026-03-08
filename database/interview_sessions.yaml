@@ -251,3 +251,8 @@ interview_sessions:
   interview_link: /interview/symonis_machine_learning.html
   current_difficulty: medium
   generated_at: '2026-03-08T01:07:12'
+- company: Cloud Back
+  role: Machine Learning
+  interview_link: /interview/cloud_back_machine_learning.html
+  current_difficulty: medium
+  generated_at: '2026-03-08T01:07:22'
