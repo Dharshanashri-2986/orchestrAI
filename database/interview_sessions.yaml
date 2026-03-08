@@ -555,3 +555,8 @@ interview_sessions:
   interview_link: /interview/unknown_company_source_incomplete_machine_learning_intern.html
   current_difficulty: medium
   generated_at: '2026-03-08T04:38:13'
+- company: OralKart
+  role: Machine Learning
+  interview_link: /interview/oralkart_machine_learning.html
+  current_difficulty: medium
+  generated_at: '2026-03-08T04:38:20'
