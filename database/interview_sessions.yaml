@@ -201,3 +201,8 @@ interview_sessions:
   interview_link: /interview/unknown_data_science_intern.html
   current_difficulty: medium
   generated_at: '2026-03-08T04:29:51'
+- company: Innoknowvex
+  role: Machine Learning
+  interview_link: /interview/innoknowvex_machine_learning.html
+  current_difficulty: medium
+  generated_at: '2026-03-08T04:29:58'
