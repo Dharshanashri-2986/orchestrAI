@@ -1604,3 +1604,8 @@ logs:
     interview Q&A for Sloan - Data Analyst Intern'
   status: error
   timestamp: '2026-03-08T04:15:43'
+- agent: PracticeAgent
+  action: 'Failed portal for Veolia Intern - Business Analyst: Gemini failed to generate
+    interview Q&A for Veolia - Intern - Business Analyst'
+  status: error
+  timestamp: '2026-03-08T04:15:48'
