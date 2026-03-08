@@ -4,7 +4,7 @@ Company: Namaah Pvt Ltd
 Role: AI/ML Engineer
 
 Resume:
-Resume extraction failed
+https://orchestrai-u3wt.onrender.com/application_packages/resume.pdf
 
 Cover Letter:
 /cover_letters/namaah_pvt_ltd_ai_ml_engineer.md
