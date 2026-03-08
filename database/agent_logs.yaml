@@ -2109,3 +2109,9 @@ logs:
     Q&A for AARP - Data Analyst Intern'
   status: error
   timestamp: '2026-03-08T04:20:23'
+- agent: PracticeAgent
+  action: 'Failed portal for TikTok Business Analyst Intern (Business Integrity) -
+    2026 Summer (BS/MS): Gemini failed to generate interview Q&A for TikTok - Business
+    Analyst Intern (Business Integrity) - 2026 Summer (BS/MS)'
+  status: error
+  timestamp: '2026-03-08T04:20:26'
