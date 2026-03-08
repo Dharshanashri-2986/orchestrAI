@@ -409,3 +409,8 @@ interview_sessions:
   interview_link: /interview/zyndra_talent_solutions_business_analyst_innovation_intern.html
   current_difficulty: medium
   generated_at: '2026-03-08T01:12:04'
+- company: Eightfold AI
+  role: Senior Machine Learning Engineer
+  interview_link: /interview/eightfold_ai_senior_machine_learning_engineer.html
+  current_difficulty: medium
+  generated_at: '2026-03-08T01:12:13'
