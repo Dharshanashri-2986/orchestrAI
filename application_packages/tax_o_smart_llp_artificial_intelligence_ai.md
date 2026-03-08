@@ -4,7 +4,7 @@ Company: Tax-O-Smart LLP
 Role: Artificial Intelligence (AI)
 
 Resume:
-Resume extraction failed
+https://orchestrai-u3wt.onrender.com/application_packages/resume.pdf
 
 Cover Letter:
 /cover_letters/tax_o_smart_llp_artificial_intelligence_ai.md
