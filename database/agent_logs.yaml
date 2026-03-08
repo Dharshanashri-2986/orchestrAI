@@ -1650,3 +1650,8 @@ logs:
     to generate interview Q&A for Zuneko Labs - Artificial Intelligence (AI)'
   status: error
   timestamp: '2026-03-08T04:16:11'
+- agent: PracticeAgent
+  action: 'Failed portal for Unnati Enterprises Data Science: Gemini failed to generate
+    interview Q&A for Unnati Enterprises - Data Science'
+  status: error
+  timestamp: '2026-03-08T04:16:14'
