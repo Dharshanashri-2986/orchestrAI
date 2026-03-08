@@ -1351,3 +1351,9 @@ logs:
     failed to generate interview Q&A for Lightmatter - Machine Learning Research Intern'
   status: error
   timestamp: '2026-03-08T00:03:46'
+- agent: PracticeAgent
+  action: 'Failed portal for Quarterhill Inc. Machine Learning Engineer Intern: Gemini
+    failed to generate interview Q&A for Quarterhill Inc. - Machine Learning Engineer
+    Intern'
+  status: error
+  timestamp: '2026-03-08T00:03:49'
