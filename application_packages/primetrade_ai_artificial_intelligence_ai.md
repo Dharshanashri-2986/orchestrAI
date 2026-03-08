@@ -4,7 +4,7 @@ Company: Primetrade.ai
 Role: Artificial Intelligence (AI)
 
 Resume:
-Resume extraction failed
+https://orchestrai-u3wt.onrender.com/application_packages/resume.pdf
 
 Cover Letter:
 /cover_letters/primetrade_ai_artificial_intelligence_ai.md
