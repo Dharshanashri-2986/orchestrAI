@@ -485,3 +485,8 @@ interview_sessions:
   interview_link: /interview/lensa_machine_learning_science_intern_summer_2.html
   current_difficulty: medium
   generated_at: '2026-03-08T01:14:27'
+- company: Learning Skills Academy
+  role: Data And ML Engineer
+  interview_link: /interview/learning_skills_academy_data_and_ml_engineer.html
+  current_difficulty: medium
+  generated_at: '2026-03-08T01:14:39'
