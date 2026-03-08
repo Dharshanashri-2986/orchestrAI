@@ -2165,3 +2165,8 @@ logs:
     - Data Science Intern'
   status: error
   timestamp: '2026-03-08T04:20:53'
+- agent: PracticeAgent
+  action: 'Failed portal for Lensa AI Data Science Intern: Gemini failed to generate
+    interview Q&A for Lensa - AI Data Science Intern'
+  status: error
+  timestamp: '2026-03-08T04:20:56'
